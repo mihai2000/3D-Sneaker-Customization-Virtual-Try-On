@@ -7,6 +7,8 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
+.env 
+
 node_modules
 dist
 dist-ssr
@@ -22,3 +24,16 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Firebase config
+firebase.js
+hosting.ZGlzdA.cache
+storage.rules
+firebase-hosting-pull-request.yml
+firebase-hosting-merge.yml
+firebase-debug.log
+apphosting.emulator.yml
+.firebase/
+.firebaserc.local
+functions/lib/
+functions/node_modules/
