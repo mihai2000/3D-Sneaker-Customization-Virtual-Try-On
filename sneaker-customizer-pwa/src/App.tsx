@@ -1,6 +1,6 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import SneakerCustomizer from './components/SneakerCustomizer';
-// import Cart from './components/Cart';
+import Cart from './components/Cart';
 
 import Home from './pages/Home';
 import Checkout from './pages/Checkout';
@@ -18,7 +18,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/customizer" element={<SneakerCustomizer />} />
-          {/* <Route path="/cart" element={<Cart />} /> */}
+          <Route path="/cart" element={<Cart />} />
           <Route path="/checkout" element={<Checkout />} />
           <Route path="/orders" element={<Orders />} />
           <Route path="/profile" element={<Profile />} />

@@ -1,8 +1,9 @@
-import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react'
-import { VitePWA } from 'vite-plugin-pwa'
+import { defineConfig } from 'vite';
+import react from '@vitejs/plugin-react';
+import { VitePWA } from 'vite-plugin-pwa';
 
 export default defineConfig({
+  base: '/',
   plugins: [
     react(),
     VitePWA({
@@ -27,4 +28,4 @@ export default defineConfig({
       },
     }),
   ],
-})
+});

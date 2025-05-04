@@ -2,7 +2,7 @@ import React, { useState, Suspense } from 'react';
 import { Canvas } from '@react-three/fiber';
 import { OrbitControls } from '@react-three/drei';
 import SneakerModel from './SneakerModel';
-// import { useCart } from '../contexts/CartContext';
+import { useCart } from '../contexts/CartContext';
 import ARViewer from './ARViewer';
 
 const SneakerCustomizer: React.FC = () => {
@@ -29,7 +29,7 @@ const SneakerCustomizer: React.FC = () => {
     { label: 'Gradient', value: '/textures/gradient.png' },
   ];
 
-  // const { addItem } = useCart();
+  const { addItem } = useCart();
 
   const handleAddToCart = () => {
     const design = {
@@ -40,7 +40,7 @@ const SneakerCustomizer: React.FC = () => {
       color,
       texture,
     };
-    // addItem(design);
+    addItem(design);
     alert('Added to cart!');
   };
 
