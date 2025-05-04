@@ -8,6 +8,7 @@ import {
   MobileNav,
 } from '@material-tailwind/react';
 import { Link } from 'react-router-dom';
+import { color } from 'three/tsl';
 
 const AppNavbar: React.FC = () => {
   const [openNav, setOpenNav] = React.useState(false);
@@ -24,17 +25,16 @@ const AppNavbar: React.FC = () => {
   }, []);
 
   return (
-    <Navbar className="sticky top-0 z-50 mx-auto max-w-screen-xl px-4 py-2 lg:px-8 lg:py-4 bg-white shadow-md">
+    <nav className="sticky top-0 z-50 mx-auto max-w-screen-xl px-4 py-2 lg:px-8 lg:py-4 bg-white shadow-md">
       <div className="container mx-auto flex items-center justify-between text-blue-gray-900">
-        <Typography
-          as="a"
-          href="/"
+        <Link
+          to="/"
           className="mr-4 cursor-pointer py-1.5 font-bold text-2xl hover:text-blue-600 transition-colors"
         >
           SneakerCustomizer
-        </Typography>
-        <div className="hidden lg:flex items-center gap-6">
-          <Typography
+        </Link>
+        <div className="lg:flex items-center gap-6">
+          {/* <Typography
             as="a"
             href="/customizer"
             className="cursor-pointer hover:text-blue-600 transition-colors"
@@ -61,17 +61,45 @@ const AppNavbar: React.FC = () => {
             className="cursor-pointer hover:text-blue-600 transition-colors"
           >
             Login
-          </Typography>
+          </Typography> */}
+          <Link
+            to="/customizer"
+            className="cursor-pointer hover:text-blue-600 px-4 py-2"
+            style={{
+              color: 'black !important',
+            }}
+          >
+            Customize
+          </Link>
+          <Link
+            to="/cart"
+            className="cursor-pointer hover:text-blue-600 px-4 py-2"
+          >
+            Cart
+          </Link>
+          <Link
+            to="/orders"
+            className="cursor-pointer hover:text-blue-600 px-4 py-2"
+          >
+            Orders
+          </Link>
+          <Link
+            to="/login"
+            className="cursor-pointer hover:text-blue-600 px-4 py-2"
+          >
+            Login
+          </Link>
         </div>
         <div className="flex items-center gap-4">
-          <Button
-            variant="gradient"
-            size="sm"
+          <button
+            // variant="gradient"
+            // size="sm"
             className="hidden lg:inline-block"
           >
             <Link to="/customizer">Get Started</Link>
-          </Button>
-          <IconButton
+          </button>
+
+          {/* <IconButton
             variant="text"
             className="ml-auto h-6 w-6 text-inherit hover:bg-transparent focus:bg-transparent active:bg-transparent lg:hidden"
             ripple={false}
@@ -106,12 +134,36 @@ const AppNavbar: React.FC = () => {
                 />
               </svg>
             )}
-          </IconButton>
+          </IconButton> */}
         </div>
       </div>
       <MobileNav open={openNav}>
         <div className="flex flex-col gap-2 py-2 lg:hidden">
-          <Typography
+          <Link
+            to="/customizer"
+            className="cursor-pointer text-black hover:text-blue-600 px-4 py-2"
+          >
+            Customize
+          </Link>
+          <Link
+            to="/cart"
+            className="cursor-pointer hover:text-blue-600 px-4 py-2"
+          >
+            Cart
+          </Link>
+          <Link
+            to="/orders"
+            className="cursor-pointer hover:text-blue-600 px-4 py-2"
+          >
+            Orders
+          </Link>
+          <Link
+            to="/login"
+            className="cursor-pointer hover:text-blue-600 px-4 py-2"
+          >
+            Login
+          </Link>
+          {/* <Typography
             as="a"
             href="/customizer"
             className="cursor-pointer hover:text-blue-600 px-4 py-2"
@@ -138,13 +190,13 @@ const AppNavbar: React.FC = () => {
             className="cursor-pointer hover:text-blue-600 px-4 py-2"
           >
             Login
-          </Typography>
-          <Button variant="gradient" size="sm" className="mx-4">
+          </Typography> */}
+          <button className="mx-4">
             <Link to="/customizer">Get Started</Link>
-          </Button>
+          </button>
         </div>
       </MobileNav>
-    </Navbar>
+    </nav>
   );
 };
 
