@@ -41,13 +41,13 @@ const AppNavbar: React.FC = () => {
           >
             Customize
           </Typography>
-          <Typography
+          {/* <Typography
             as="a"
             href="/cart"
             className="cursor-pointer hover:text-blue-600 transition-colors"
           >
             Cart
-          </Typography>
+          </Typography> */}
           <Typography
             as="a"
             href="/orders"
