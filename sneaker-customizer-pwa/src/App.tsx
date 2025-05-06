@@ -1,17 +1,16 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-
+import React from 'react';
+import Canvas from './canvas';
+import Customizer from './pages/Customizer';
 import Home from './pages/Home';
 
-function App() {
+const App: React.FC = () => {
   return (
-    <Router>
-      <div className="pt-20 px-4">
-        <Routes>
-          <Route path="/" element={<Home />} />
-        </Routes>
-      </div>
-    </Router>
+    <main className="app transition-all ease-in">
+      <Home />
+      <Canvas />
+      <Customizer />
+    </main>
   );
-}
+};
 
 export default App;

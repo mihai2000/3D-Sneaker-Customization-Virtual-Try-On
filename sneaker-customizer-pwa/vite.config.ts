@@ -12,6 +12,10 @@ export default defineConfig({
       manifest: {
         name: '3D Sneaker Customizer',
         short_name: 'Sneaker3D',
+        description: 'Customize your 3D sneakers with full creativity.',
+        start_url: '/',
+        display: 'standalone',
+        background_color: '#ffffff',
         theme_color: '#ffffff',
         icons: [
           {
@@ -23,6 +27,12 @@ export default defineConfig({
             src: 'pwa-icon-512.png',
             sizes: '512x512',
             type: 'image/png',
+          },
+          {
+            src: 'pwa-icon-512.png',
+            sizes: '512x512',
+            type: 'image/png',
+            purpose: 'any maskable',
           },
         ],
       },
