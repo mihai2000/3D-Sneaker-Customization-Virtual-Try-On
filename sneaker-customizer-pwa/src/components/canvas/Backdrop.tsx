@@ -25,7 +25,7 @@ type AccumulativeContextRef = {
 	update: (frames?: number) => void;
 };
 const Backdrop: React.FC = () => {
-	const shadows = useRef<AccumulativeContextRef>(null);
+	const shadows = useRef<AccumulativeContextRef>(null!);
 
 	const snap = useSnapshot(state);
 
