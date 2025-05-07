@@ -1,4 +1,4 @@
-import { fileIcon, logoShoe, stylishShoe } from '../assets';
+import { fileIcon, logoShoe, stylishShoe } from '../assets/index';
 
 export interface EditorTab {
   name: string;

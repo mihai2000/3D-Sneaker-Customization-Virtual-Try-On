@@ -1,6 +1,28 @@
 import { proxy } from "valtio";
 
-const state = proxy({
+export type ItemsType = {
+  laces: string;
+  mesh: string;
+  caps: string;
+  inner: string;
+  sole: string;
+  stripes: string;
+  band: string;
+  patch: string;
+};
+
+type StateType = {
+  current: keyof ItemsType | null;
+  items: ItemsType;
+  intro: boolean;
+  color: string;
+  isLogoTexture: boolean;
+  isFullTexture: boolean;
+  logoDecal: string;
+  fullDecal: string;
+};
+
+const state = proxy<StateType>({
   current: null,
   items: {
     laces: "#fff",
