@@ -24,6 +24,7 @@ type AccumulativeContextRef = {
 	reset: () => void;
 	update: (frames?: number) => void;
 };
+
 const Backdrop: React.FC = () => {
 	const shadows = useRef<AccumulativeContextRef>(null!);
 
@@ -40,6 +41,7 @@ const Backdrop: React.FC = () => {
 			);
 		}
 	});
+
 	return (
 		<AccumulativeShadows
 			ref={shadows}
