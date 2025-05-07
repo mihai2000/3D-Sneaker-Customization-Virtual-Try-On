@@ -4,14 +4,14 @@ import { ContactShadows, Environment, Center } from '@react-three/drei';
 import Backdrop from './Backdrop';
 import CameraRig from './CameraRig';
 import Shoe from './Shoe';
-
+import './index.css';
 const CanvasModel = () => {
   return (
     <Canvas
       shadows
       camera={{ position: [0, 0, 0] }}
       gl={{ preserveDrawingBuffer: true }}
-      className="w-full max-w-full h-full transition-all ease-in"
+      className="canvas-wrapper"
     >
       <ambientLight intensity={0.5} />
       <spotLight

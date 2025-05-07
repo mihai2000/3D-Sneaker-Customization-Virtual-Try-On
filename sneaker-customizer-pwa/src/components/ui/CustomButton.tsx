@@ -2,7 +2,7 @@ import React from 'react';
 import { useSnapshot } from 'valtio';
 import state from '../../store';
 import { getContrastingColor } from '../../config/helpers';
-
+import './ui.css';
 interface CustomButtonProps {
   type: 'filled' | 'outline';
   title: string;
@@ -35,7 +35,7 @@ const CustomButton: React.FC<CustomButtonProps> = ({
 
   return (
     <button
-      className={`px-2 py-1.5 flex-1 rounded-md ${customStyle}`}
+      className={`custom-button ${customStyle || ''}`}
       style={generateStyle(type)}
       onClick={handleClick}
     >

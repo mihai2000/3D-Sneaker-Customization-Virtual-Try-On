@@ -1,0 +1,187 @@
+/* color picker */
+.color-picker-wrapper {
+  position: absolute;
+  top: 1.25rem;
+  /* equivalent to top-5 */
+  z-index: 10;
+  margin-left: 0.75rem;
+  /* ml-3 */
+  display: flex;
+  left: 0.1rem;
+}
+
+.color-picker-wrapper.hidden {
+  display: none;
+}
+
+.color-label {
+  margin-left: 0.75rem;
+  font-size: 3rem;
+  line-height: 7rem;
+  font-weight: 900;
+  color: black;
+  text-transform: uppercase;
+}
+
+@media (min-width: 640px) {
+  .color-label {
+    margin-top: 0;
+  }
+}
+
+@media (min-width: 1280px) {
+  .color-label {
+    font-size: 10rem;
+    line-height: 11rem;
+  }
+}
+/* custom button */
+.custom-button {
+  padding: 0.375rem 0.5rem;
+  /* px-2 py-1.5 */
+  flex: 1;
+  border-radius: 0.375rem;
+  /* rounded-md */
+  font-weight: 600;
+  font-size: 0.875rem;
+  transition: all 0.3s ease-in;
+  cursor: pointer;
+  display: inline-block;
+  text-align: center;
+  border: none;
+}
+/* file picker */
+.file-picker-wrapper {
+  position: absolute;
+  left: 100%;
+  margin-left: 0.75rem;
+  padding: 0.75rem;
+  width: 195px;
+  height: 220px;
+  display: flex;
+  flex-direction: column;
+  border-radius: 0.375rem;
+}
+
+.file-picker-body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.file-upload-label {
+  border: 1px solid #d1d5db;
+  /* gray-300 */
+  padding: 0.375rem 0.5rem;
+  border-radius: 0.375rem;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+  font-size: 0.75rem;
+  color: #374151;
+  /* gray-700 */
+  cursor: pointer;
+  width: fit-content;
+  transition: all 0.2s ease-in;
+}
+
+.file-upload-label:focus,
+.file-upload-label:focus-visible {
+  outline: none;
+  border-color: #3b82f6;
+  /* blue-500 */
+  box-shadow: 0 0 0 1px #3b82f6;
+}
+
+.file-status-text {
+  margin-top: 0.5rem;
+  font-size: 0.75rem;
+  color: #6b7280;
+  /* gray-500 */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.file-button-group {
+  margin-top: 1rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+/* instructions */
+.instructions-wrapper {
+  position: absolute;
+  top: 1.25rem;
+  z-index: 10;
+  margin-left: 0.75rem;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  border-radius: 0.5rem;
+  left: 0.1rem;
+}
+
+.instructions-wrapper.hidden {
+  display: none;
+}
+
+.instructions-title {
+  margin-left: 0.75rem;
+  font-size: 3rem;
+  line-height: 7rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  color: black;
+}
+
+@media (min-width: 640px) {
+  .instructions-title {
+    margin-top: 0;
+  }
+}
+
+@media (min-width: 1280px) {
+  .instructions-title {
+    font-size: 10rem;
+    line-height: 11rem;
+  }
+}
+/* tab */
+.tab-wrapper {
+  width: 3.5rem;
+  /* w-14 */
+  height: 3.5rem;
+  /* h-14 */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  user-select: none;
+}
+
+.filtered-tab {
+  border-radius: 9999px;
+}
+
+.default-tab {
+  border-radius: 0.25rem;
+}
+
+.filtered-icon {
+  width: 66.6667%;
+  /* w-2/3 */
+  height: 66.6667%;
+  /* h-2/3 */
+}
+
+.default-icon {
+  width: 91.6667%;
+  /* w-11/12 */
+  height: 91.6667%;
+  /* h-11/12 */
+  object-fit: contain;
+}

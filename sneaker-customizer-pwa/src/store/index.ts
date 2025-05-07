@@ -1,4 +1,4 @@
-import { proxy } from "valtio";
+import { proxy } from 'valtio';
 
 export type ItemsType = {
   laces: string;
@@ -25,21 +25,21 @@ type StateType = {
 const state = proxy<StateType>({
   current: null,
   items: {
-    laces: "#fff",
-    mesh: "#fff",
-    caps: "#fff",
-    inner: "#fff",
-    sole: "#fff",
-    stripes: "#fff",
-    band: "#fff",
-    patch: "#fff",
+    laces: '#fff',
+    mesh: '#fff',
+    caps: '#fff',
+    inner: '#fff',
+    sole: '#fff',
+    stripes: '#fff',
+    band: '#fff',
+    patch: '#fff',
   },
   intro: true,
-  color: "#c6d4ec",
+  color: '#c6d4ec',
   isLogoTexture: true,
   isFullTexture: false,
-  logoDecal: "./threejs.png",
-  fullDecal: "./threejs.png",
+  logoDecal: '/threejs.png',
+  fullDecal: '/threejs.png',
 });
 
 export default state;
