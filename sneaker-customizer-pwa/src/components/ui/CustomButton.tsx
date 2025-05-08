@@ -7,7 +7,7 @@ interface CustomButtonProps {
   type: 'filled' | 'outline';
   title: string;
   customStyle?: string;
-  handleClick: () => void;
+  handleClick?: () => void;
 }
 
 const CustomButton: React.FC<CustomButtonProps> = ({

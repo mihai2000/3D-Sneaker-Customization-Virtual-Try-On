@@ -10,6 +10,7 @@ import {
   slideAnimation,
 } from '../config/motion';
 import './Home.css';
+import { Link } from 'react-router-dom';
 const Home: React.FC = () => {
   const snap = useSnapshot(state);
 
@@ -44,6 +45,16 @@ const Home: React.FC = () => {
                 }}
                 customStyle="custom-button"
               />
+              {/* <div> */}
+              <h1 className="home-paragraph">Welcome to 3D Shoe Customizer</h1>
+              <Link to="/try-ar">
+                <CustomButton
+                  type="filled"
+                  title="Try AR"
+                  customStyle="custom-button"
+                />
+              </Link>
+              {/* </div> */}
             </motion.div>
           </motion.div>
         </motion.section>

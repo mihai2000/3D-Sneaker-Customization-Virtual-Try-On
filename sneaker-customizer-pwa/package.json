@@ -12,6 +12,8 @@
 	"dependencies": {
 		"@babel/plugin-transform-object-rest-spread": "^7.27.2",
 		"@material-tailwind/react": "^2.1.10",
+		"@mediapipe/camera_utils": "^0.3.1675466862",
+		"@mediapipe/holistic": "^0.5.1675471629",
 		"@react-three/drei": "9.80.2",
 		"@react-three/fiber": "8.13.6",
 		"@react-three/gltfjsx": "^4.3.4",
