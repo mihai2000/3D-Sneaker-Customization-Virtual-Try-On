@@ -4,9 +4,22 @@ export default function CameraFeed() {
   const videoRef = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
-    navigator.mediaDevices
-      .getUserMedia({ video: { facingMode: { ideal: 'environment' } } })
-      .then((stream) => {
+    let stream: MediaStream | null = null;
+
+    const setupCamera = async () => {
+      try {
+        // Kill any existing streams
+        if (videoRef.current?.srcObject) {
+          const oldStream = videoRef.current.srcObject as MediaStream;
+          oldStream.getTracks().forEach((track) => track.stop());
+        }
+
+        stream = await navigator.mediaDevices.getUserMedia({
+          video: {
+            facingMode: { ideal: 'environment' },
+          },
+        });
+
         if (videoRef.current) {
           videoRef.current.srcObject = stream;
           videoRef.current.onloadedmetadata = () => {
@@ -15,7 +28,19 @@ export default function CameraFeed() {
             });
           };
         }
-      });
+      } catch (err) {
+        console.error('Failed to acquire camera feed:', err);
+      }
+    };
+
+    setupCamera();
+
+    return () => {
+      // Clean up when component unmounts
+      if (stream) {
+        stream.getTracks().forEach((track) => track.stop());
+      }
+    };
   }, []);
 
   return (
