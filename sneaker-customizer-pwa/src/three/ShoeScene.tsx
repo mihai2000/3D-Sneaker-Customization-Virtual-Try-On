@@ -1,13 +1,16 @@
 import { useEffect, useImperativeHandle, forwardRef, useRef } from 'react';
 import * as THREE from 'three';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
+import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader';
+
+type Position = { x: number; y: number; z: number };
 
 export default forwardRef(function ShoeScene(_, ref) {
   const containerRef = useRef<HTMLDivElement>(null);
   const shoeRef = useRef<THREE.Object3D>();
 
   useImperativeHandle(ref, () => ({
-    updatePosition(pos: { x: number; y: number; z: number }) {
+    updatePosition(pos: Position) {
       if (shoeRef.current) {
         shoeRef.current.position.set(pos.x, pos.y, pos.z);
       }
@@ -15,6 +18,7 @@ export default forwardRef(function ShoeScene(_, ref) {
   }));
 
   useEffect(() => {
+    // Set up scene
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(
       75,
@@ -28,22 +32,42 @@ export default forwardRef(function ShoeScene(_, ref) {
     renderer.setSize(window.innerWidth, window.innerHeight);
     containerRef.current?.appendChild(renderer.domElement);
 
+    // Lighting
     const light = new THREE.DirectionalLight(0xffffff, 1);
     light.position.set(1, 1, 1).normalize();
     scene.add(light);
 
+    // GLTF + DRACO loader setup
     const loader = new GLTFLoader();
-    loader.load('/models/shoe-draco.glb', (gltf) => {
-      shoeRef.current = gltf.scene;
-      gltf.scene.scale.set(0.1, 0.1, 0.1);
-      scene.add(gltf.scene);
-    });
+    const dracoLoader = new DRACOLoader();
+    dracoLoader.setDecoderPath('https://www.gstatic.com/draco/v1/decoders/');
+    loader.setDRACOLoader(dracoLoader);
 
+    loader.load(
+      '/models/shoe-draco.glb',
+      (gltf) => {
+        shoeRef.current = gltf.scene;
+        gltf.scene.scale.set(0.1, 0.1, 0.1);
+        scene.add(gltf.scene);
+      },
+      undefined,
+      (error) => {
+        console.error('Error loading GLB:', error);
+      }
+    );
+
+    // Render loop
     const animate = () => {
       requestAnimationFrame(animate);
       renderer.render(scene, camera);
     };
     animate();
+
+    // Clean up on unmount
+    return () => {
+      renderer.dispose();
+      containerRef.current?.removeChild(renderer.domElement);
+    };
   }, []);
 
   return (

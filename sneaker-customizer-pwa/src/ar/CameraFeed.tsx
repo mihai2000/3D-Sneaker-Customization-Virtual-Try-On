@@ -7,7 +7,11 @@ export default function CameraFeed() {
     navigator.mediaDevices.getUserMedia({ video: true }).then((stream) => {
       if (videoRef.current) {
         videoRef.current.srcObject = stream;
-        videoRef.current.play();
+        videoRef.current.onloadedmetadata = () => {
+          videoRef.current?.play().catch((e) => {
+            console.warn('Video play() interrupted:', e);
+          });
+        };
       }
     });
   }, []);
