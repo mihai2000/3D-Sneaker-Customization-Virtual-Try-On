@@ -33,7 +33,7 @@ export default forwardRef(function ShoeScene(_, ref) {
     scene.add(light);
 
     const loader = new GLTFLoader();
-    loader.load('/assets/shoe.glb', (gltf) => {
+    loader.load('/models/shoe-draco.glb', (gltf) => {
       shoeRef.current = gltf.scene;
       gltf.scene.scale.set(0.1, 0.1, 0.1);
       scene.add(gltf.scene);
