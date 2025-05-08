@@ -2,8 +2,12 @@ import { useEffect } from 'react';
 import { Holistic } from '@mediapipe/holistic';
 import { Camera } from '@mediapipe/camera_utils';
 
-// eslint-disable-next-line @typescript-eslint/no-unsafe-function-type
-export default function FootTracker({ onTrack }: { onTrack: Function }) {
+type Position = { x: number; y: number; z: number };
+type FootTrackerProps = {
+  onTrack: (pos: Position) => void;
+};
+
+export default function FootTracker({ onTrack }: FootTrackerProps) {
   useEffect(() => {
     const videoElement = document.querySelector('video') as HTMLVideoElement;
 
@@ -11,7 +15,9 @@ export default function FootTracker({ onTrack }: { onTrack: Function }) {
       locateFile: (f) =>
         `https://cdn.jsdelivr.net/npm/@mediapipe/holistic/${f}`,
     });
+
     holistic.setOptions({ modelComplexity: 1, smoothLandmarks: true });
+
     holistic.onResults((results) => {
       const landmark = results.poseLandmarks?.[27]; // right heel
       if (landmark) {
