@@ -4,16 +4,18 @@ export default function CameraFeed() {
   const videoRef = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
-    navigator.mediaDevices.getUserMedia({ video: true }).then((stream) => {
-      if (videoRef.current) {
-        videoRef.current.srcObject = stream;
-        videoRef.current.onloadedmetadata = () => {
-          videoRef.current?.play().catch((e) => {
-            console.warn('Video play() interrupted:', e);
-          });
-        };
-      }
-    });
+    navigator.mediaDevices
+      .getUserMedia({ video: { facingMode: { ideal: 'environment' } } })
+      .then((stream) => {
+        if (videoRef.current) {
+          videoRef.current.srcObject = stream;
+          videoRef.current.onloadedmetadata = () => {
+            videoRef.current?.play().catch((e) => {
+              console.warn('Video play() interrupted:', e);
+            });
+          };
+        }
+      });
   }, []);
 
   return (
