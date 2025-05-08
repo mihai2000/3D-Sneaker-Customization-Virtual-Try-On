@@ -18,6 +18,8 @@ export default forwardRef(function ShoeScene(_, ref) {
   }));
 
   useEffect(() => {
+    const container = containerRef.current;
+
     // Set up scene
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(
@@ -66,7 +68,7 @@ export default forwardRef(function ShoeScene(_, ref) {
     // Clean up on unmount
     return () => {
       renderer.dispose();
-      containerRef.current?.removeChild(renderer.domElement);
+      container?.removeChild(renderer.domElement);
     };
   }, []);
 
