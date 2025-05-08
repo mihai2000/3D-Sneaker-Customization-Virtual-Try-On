@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from "react";
-import { useSnapshot } from "valtio";
-import { Decal, useGLTF, useTexture } from "@react-three/drei";
-import * as THREE from "three";
-import state, { ItemsType } from "../../store";
+import React, { useState, useEffect } from 'react';
+import { useSnapshot } from 'valtio';
+import { Decal, useGLTF, useTexture } from '@react-three/drei';
+import * as THREE from 'three';
+import state, { ItemsType } from '../../store';
 
 interface GLTFResult extends THREE.Object3D {
   nodes: {
@@ -17,7 +17,7 @@ const Shoe: React.FC = (props) => {
   const snap = useSnapshot(state);
 
   const { nodes, materials } = useGLTF(
-    "/models/shoe-draco.glb"
+    '/models/shoe-draco.glb'
   ) as unknown as GLTFResult;
   const logoTexture = useTexture(snap.logoDecal);
   const fullTexture = useTexture(snap.fullDecal);
@@ -36,13 +36,13 @@ const Shoe: React.FC = (props) => {
         };
       }
     }
-  }, [hovered, snap.intro]);
+  }, [hovered, snap.intro, snap.items]);
 
   const handlePointerMaterialName = (object: THREE.Object3D) => {
     const mesh = object as THREE.Mesh;
     const material = mesh.material;
     if (Array.isArray(material)) {
-      return material[0]?.name ?? "";
+      return material[0]?.name ?? '';
     } else {
       return material.name;
     }
