@@ -1,81 +1,105 @@
-import { useEffect, useImperativeHandle, forwardRef, useRef } from 'react';
-import * as THREE from 'three';
-import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
-import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader';
+import { useEffect, useImperativeHandle, forwardRef, useRef } from "react";
+import * as THREE from "three";
+import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
+import { DRACOLoader } from "three/examples/jsm/loaders/DRACOLoader";
 
-type Position = { x: number; y: number; z: number };
+type FootData = {
+	position: { x: number; y: number; z: number };
+	angle: number;
+};
 
-export default forwardRef(function ShoeScene(_, ref) {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const shoeRef = useRef<THREE.Object3D>();
+type SceneHandle = {
+	updatePositions: (feet: { left: FootData; right: FootData }) => void;
+};
 
-  useImperativeHandle(ref, () => ({
-    updatePosition(pos: Position) {
-      if (shoeRef.current) {
-        shoeRef.current.position.set(pos.x, pos.y, pos.z);
-      }
-    },
-  }));
+export default forwardRef<SceneHandle>(function ShoeScene(_, ref) {
+	const containerRef = useRef<HTMLDivElement>(null);
+	const leftShoeRef = useRef<THREE.Object3D>();
+	const rightShoeRef = useRef<THREE.Object3D>();
 
-  useEffect(() => {
-    const container = containerRef.current;
+	useImperativeHandle(ref, () => ({
+		updatePositions({ left, right }) {
+			if (leftShoeRef.current) {
+				leftShoeRef.current.position.set(
+					left.position.x,
+					left.position.y,
+					left.position.z
+				);
+				leftShoeRef.current.rotation.y = -left.angle; // Invert for Three.js Y axis
+			}
 
-    // Set up scene
-    const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(
-      75,
-      window.innerWidth / window.innerHeight,
-      0.1,
-      1000
-    );
-    camera.position.z = 1.5;
+			if (rightShoeRef.current) {
+				rightShoeRef.current.position.set(
+					right.position.x,
+					right.position.y,
+					right.position.z
+				);
+				rightShoeRef.current.rotation.y = -right.angle;
+			}
+		},
+	}));
 
-    const renderer = new THREE.WebGLRenderer({ alpha: true });
-    renderer.setSize(window.innerWidth, window.innerHeight);
-    containerRef.current?.appendChild(renderer.domElement);
+	useEffect(() => {
+		const container = containerRef.current;
+		const scene = new THREE.Scene();
+		const camera = new THREE.PerspectiveCamera(
+			75,
+			window.innerWidth / window.innerHeight,
+			0.1,
+			1000
+		);
+		camera.position.z = 1.5;
 
-    // Lighting
-    const light = new THREE.DirectionalLight(0xffffff, 1);
-    light.position.set(1, 1, 1).normalize();
-    scene.add(light);
+		const renderer = new THREE.WebGLRenderer({ alpha: true });
+		renderer.setSize(window.innerWidth, window.innerHeight);
+		container?.appendChild(renderer.domElement);
 
-    // GLTF + DRACO loader setup
-    const loader = new GLTFLoader();
-    const dracoLoader = new DRACOLoader();
-    dracoLoader.setDecoderPath('https://www.gstatic.com/draco/v1/decoders/');
-    loader.setDRACOLoader(dracoLoader);
+		const light = new THREE.DirectionalLight(0xffffff, 1);
+		light.position.set(1, 1, 1).normalize();
+		scene.add(light);
 
-    loader.load(
-      '/models/shoe-draco.glb',
-      (gltf) => {
-        shoeRef.current = gltf.scene;
-        gltf.scene.scale.set(0.1, 0.1, 0.1);
-        scene.add(gltf.scene);
-      },
-      undefined,
-      (error) => {
-        console.error('Error loading GLB:', error);
-      }
-    );
+		const loader = new GLTFLoader();
+		const dracoLoader = new DRACOLoader();
+		dracoLoader.setDecoderPath("https://www.gstatic.com/draco/v1/decoders/");
+		loader.setDRACOLoader(dracoLoader);
 
-    // Render loop
-    const animate = () => {
-      requestAnimationFrame(animate);
-      renderer.render(scene, camera);
-    };
-    animate();
+		const loadShoe = (
+			ref: React.MutableRefObject<THREE.Object3D | undefined>,
+			offsetX = 0
+		) => {
+			loader.load(
+				"/models/shoe-draco.glb",
+				(gltf) => {
+					const shoe = gltf.scene;
+					shoe.scale.set(0.1, 0.1, 0.1);
+					shoe.position.x += offsetX;
+					ref.current = shoe;
+					scene.add(shoe);
+				},
+				undefined,
+				(err) => console.error("Error loading model:", err)
+			);
+		};
 
-    // Clean up on unmount
-    return () => {
-      renderer.dispose();
-      container?.removeChild(renderer.domElement);
-    };
-  }, []);
+		loadShoe(leftShoeRef, -0.05);
+		loadShoe(rightShoeRef, 0.05);
 
-  return (
-    <div
-      ref={containerRef}
-      style={{ position: 'absolute', top: 0, left: 0, zIndex: 1 }}
-    />
-  );
+		const animate = () => {
+			requestAnimationFrame(animate);
+			renderer.render(scene, camera);
+		};
+		animate();
+
+		return () => {
+			renderer.dispose();
+			container?.removeChild(renderer.domElement);
+		};
+	}, []);
+
+	return (
+		<div
+			ref={containerRef}
+			style={{ position: "absolute", top: 0, left: 0, zIndex: 1 }}
+		/>
+	);
 });

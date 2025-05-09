@@ -1,41 +1,108 @@
-import { useEffect } from 'react';
-import { Holistic } from '@mediapipe/holistic';
-import { Camera } from '@mediapipe/camera_utils';
+import { useEffect, useRef } from "react";
+import {
+	Pose,
+	POSE_LANDMARKS_LEFT,
+	POSE_LANDMARKS_RIGHT,
+} from "@mediapipe/pose";
+import { Camera } from "@mediapipe/camera_utils";
 
-type Position = { x: number; y: number; z: number };
+type FootData = {
+	position: { x: number; y: number; z: number };
+	angle: number; // in radians
+};
 type FootTrackerProps = {
-  onTrack: (pos: Position) => void;
+	onTrack: (feet: { left: FootData; right: FootData }) => void;
 };
 
 export default function FootTracker({ onTrack }: FootTrackerProps) {
-  useEffect(() => {
-    const videoElement = document.querySelector('video') as HTMLVideoElement;
+	const canvasRef = useRef<HTMLCanvasElement>(null);
 
-    const holistic = new Holistic({
-      locateFile: (f) =>
-        `https://cdn.jsdelivr.net/npm/@mediapipe/holistic/${f}`,
-    });
+	useEffect(() => {
+		const videoElement = document.querySelector("video") as HTMLVideoElement;
+		const canvas = canvasRef.current!;
+		const ctx = canvas.getContext("2d")!;
 
-    holistic.setOptions({ modelComplexity: 1, smoothLandmarks: true });
+		const pose = new Pose({
+			locateFile: (f) => `https://cdn.jsdelivr.net/npm/@mediapipe/pose/${f}`,
+		});
 
-    holistic.onResults((results) => {
-      const landmark = results.poseLandmarks?.[27]; // right heel
-      if (landmark) {
-        onTrack({ x: landmark.x, y: -landmark.y, z: -landmark.z });
-      }
-    });
+		pose.setOptions({
+			modelComplexity: 1,
+			smoothLandmarks: true,
+			minDetectionConfidence: 0.5,
+			minTrackingConfidence: 0.5,
+		});
 
-    if (videoElement) {
-      const camera = new Camera(videoElement, {
-        onFrame: async () => {
-          await holistic.send({ image: videoElement });
-        },
-        width: 640,
-        height: 480,
-      });
-      camera.start();
-    }
-  }, [onTrack]);
+		pose.onResults((results) => {
+			ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-  return null;
+			const lmk = results.poseLandmarks;
+			if (lmk) {
+				const lh = lmk[POSE_LANDMARKS_LEFT.LEFT_HEEL];
+				const lt = lmk[POSE_LANDMARKS_LEFT.LEFT_FOOT_INDEX];
+				const rh = lmk[POSE_LANDMARKS_RIGHT.RIGHT_HEEL];
+				const rt = lmk[POSE_LANDMARKS_RIGHT.RIGHT_FOOT_INDEX];
+
+				if (lh && lt && rh && rt) {
+					const getAngle = (heel: any, toe: any) =>
+						Math.atan2(toe.y - heel.y, toe.x - heel.x);
+
+					onTrack({
+						left: {
+							position: { x: lh.x, y: -lh.y, z: -lh.z },
+							angle: getAngle(lh, lt),
+						},
+						right: {
+							position: { x: rh.x, y: -rh.y, z: -rh.z },
+							angle: getAngle(rh, rt),
+						},
+					});
+
+					// Debug overlay
+					const drawPoint = (pt: any, color: string) => {
+						ctx.fillStyle = color;
+						ctx.beginPath();
+						ctx.arc(
+							pt.x * canvas.width,
+							pt.y * canvas.height,
+							8,
+							0,
+							2 * Math.PI
+						);
+						ctx.fill();
+					};
+					drawPoint(lh, "blue");
+					drawPoint(lt, "cyan");
+					drawPoint(rh, "red");
+					drawPoint(rt, "orange");
+				}
+			}
+		});
+
+		if (videoElement) {
+			const camera = new Camera(videoElement, {
+				onFrame: async () => {
+					await pose.send({ image: videoElement });
+				},
+				width: 640,
+				height: 480,
+			});
+			camera.start();
+		}
+	}, [onTrack]);
+
+	return (
+		<canvas
+			ref={canvasRef}
+			width={window.innerWidth}
+			height={window.innerHeight}
+			style={{
+				position: "absolute",
+				top: 0,
+				left: 0,
+				zIndex: 2,
+				pointerEvents: "none",
+			}}
+		/>
+	);
 }
