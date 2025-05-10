@@ -10,6 +10,7 @@ export default function XRScene() {
   useEffect(() => {
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera();
+
     const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
     renderer.setSize(window.innerWidth, window.innerHeight);
     renderer.xr.enabled = true;
@@ -28,16 +29,22 @@ export default function XRScene() {
     dracoLoader.setDecoderPath('https://www.gstatic.com/draco/v1/decoders/');
     loader.setDRACOLoader(dracoLoader);
 
+    // Add AR button only once
     const arBtn = ARButton.createButton(renderer, {
       requiredFeatures: ['hit-test'],
     });
-    document.body.appendChild(arBtn);
+    if (!document.body.contains(arBtn)) {
+      document.body.appendChild(arBtn);
+    }
 
+    // Variables
     let hitTestSource: XRHitTestSource | null = null;
     let localSpace: XRReferenceSpace | null = null;
     const lastHitMatrix = new THREE.Matrix4();
     let shoe: THREE.Object3D | null = null;
+    let controller: THREE.Group;
 
+    // Tap handler
     const onSelect = () => {
       if (!shoe) {
         loader.load('/models/nike-air-jordan.glb', (gltf) => {
@@ -51,19 +58,18 @@ export default function XRScene() {
       }
     };
 
+    // XR session start
     const handleSessionStart = async () => {
       const session = renderer.xr.getSession();
       if (!session) return;
 
       try {
         localSpace = await session.requestReferenceSpace('viewer');
-        const hitSource = await session.requestHitTestSource?.({
-          space: localSpace,
-        });
-        hitTestSource = hitSource ?? null;
+        hitTestSource =
+          (await session.requestHitTestSource?.({ space: localSpace })) ?? null;
 
-        const controller = renderer.xr.getController(0);
-        controller.addEventListener('select', onSelect);
+        controller = renderer.xr.getController(0);
+        controller.addEventListener('select' as any, onSelect);
         scene.add(controller);
       } catch (err) {
         console.warn('Hit test setup failed:', err);
@@ -72,6 +78,7 @@ export default function XRScene() {
 
     renderer.xr.addEventListener('sessionstart', handleSessionStart);
 
+    // Render loop
     renderer.setAnimationLoop((_, frame) => {
       if (frame && hitTestSource && localSpace) {
         const results = frame.getHitTestResults(hitTestSource);
@@ -90,18 +97,27 @@ export default function XRScene() {
       renderer.render(scene, camera);
     });
 
+    // Cleanup
     return () => {
+      renderer.setAnimationLoop(null); // Stop animation
       renderer.forceContextLoss();
       renderer.dispose();
+
       if (renderer.domElement.parentNode) {
         renderer.domElement.parentNode.removeChild(renderer.domElement);
       }
-      const arBtn = document.querySelector('button[style*="AR"]');
+
       if (arBtn && arBtn.parentNode) {
         arBtn.parentNode.removeChild(arBtn);
       }
-      renderer.xr.removeEventListener('sessionstart', handleSessionStart);
+
+      if (controller) {
+        controller.removeEventListener('select' as any, onSelect);
+        scene.remove(controller);
+      }
+
       hitTestSource?.cancel();
+      renderer.xr.removeEventListener('sessionstart', handleSessionStart);
     };
   }, []);
 
