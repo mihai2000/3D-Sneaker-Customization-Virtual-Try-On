@@ -9,7 +9,12 @@ export default function XRScene() {
 
   useEffect(() => {
     const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera();
+    const camera = new THREE.PerspectiveCamera(
+      70,
+      window.innerWidth / window.innerHeight,
+      0.01,
+      20
+    );
 
     const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
     renderer.setSize(window.innerWidth, window.innerHeight);
@@ -22,14 +27,19 @@ export default function XRScene() {
       containerRef.current.appendChild(renderer.domElement);
     }
 
-    scene.add(new THREE.HemisphereLight(0xffffff, 0xbbbbff, 1));
+    // Lighting
+    scene.add(new THREE.AmbientLight(0xffffff, 1));
+    const dirLight = new THREE.DirectionalLight(0xffffff, 0.6);
+    dirLight.position.set(1, 1, 1);
+    scene.add(dirLight);
 
+    // Model loader
     const loader = new GLTFLoader();
     const dracoLoader = new DRACOLoader();
     dracoLoader.setDecoderPath('https://www.gstatic.com/draco/v1/decoders/');
     loader.setDRACOLoader(dracoLoader);
 
-    // Add AR button only once
+    // Add AR button
     const arBtn = ARButton.createButton(renderer, {
       requiredFeatures: ['hit-test'],
     });
@@ -37,24 +47,36 @@ export default function XRScene() {
       document.body.appendChild(arBtn);
     }
 
-    // Variables
+    // State
     let hitTestSource: XRHitTestSource | null = null;
     let localSpace: XRReferenceSpace | null = null;
     const lastHitMatrix = new THREE.Matrix4();
     let shoe: THREE.Object3D | null = null;
     let controller: THREE.Group;
 
-    // Tap handler
+    // Tap event handler
     const onSelect = () => {
       if (!shoe) {
-        loader.load('/models/nike-air-jordan.glb', (gltf) => {
-          shoe = gltf.scene;
-          shoe.scale.set(0.2, 0.2, 0.2);
-          shoe.position.setFromMatrixPosition(lastHitMatrix);
-          scene.add(shoe);
-        });
+        loader.load(
+          '/models/nike-air-jordan.glb',
+          (gltf) => {
+            shoe = gltf.scene;
+            shoe.scale.set(0.2, 0.2, 0.2);
+            shoe.position.setFromMatrixPosition(lastHitMatrix);
+            scene.add(shoe);
+            console.log('👟 Shoe added');
+            alert('👟 Shoe added to the scene!');
+          },
+          undefined,
+          (error) => {
+            console.error('❌ Model load error:', error);
+            alert('❌ Failed to load shoe model.');
+          }
+        );
       } else {
         shoe.position.setFromMatrixPosition(lastHitMatrix);
+        console.log('📍 Shoe moved');
+        alert('📍 Shoe position updated.');
       }
     };
 
@@ -69,16 +91,22 @@ export default function XRScene() {
           (await session.requestHitTestSource?.({ space: localSpace })) ?? null;
 
         controller = renderer.xr.getController(0);
-        controller.addEventListener('select' as any, onSelect);
+        (controller as any).addEventListener(
+          'select',
+          onSelect as EventListener
+        );
         scene.add(controller);
+        console.log('🟢 Hit test initialized.');
+        alert('🟢 Hit test initialized.');
       } catch (err) {
-        console.warn('Hit test setup failed:', err);
+        console.warn('⚠️ Hit test setup failed:', err);
+        alert('⚠️ Hit test setup failed.');
       }
     };
 
     renderer.xr.addEventListener('sessionstart', handleSessionStart);
 
-    // Render loop
+    // Animation loop
     renderer.setAnimationLoop((_, frame) => {
       if (frame && hitTestSource && localSpace) {
         const results = frame.getHitTestResults(hitTestSource);
@@ -99,7 +127,7 @@ export default function XRScene() {
 
     // Cleanup
     return () => {
-      renderer.setAnimationLoop(null); // Stop animation
+      renderer.setAnimationLoop(null);
       renderer.forceContextLoss();
       renderer.dispose();
 
@@ -112,7 +140,10 @@ export default function XRScene() {
       }
 
       if (controller) {
-        controller.removeEventListener('select' as any, onSelect);
+        (controller as any).removeEventListener(
+          'select',
+          onSelect as EventListener
+        );
         scene.remove(controller);
       }
 

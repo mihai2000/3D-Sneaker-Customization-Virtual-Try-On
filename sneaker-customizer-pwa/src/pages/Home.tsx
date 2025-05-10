@@ -26,7 +26,7 @@ const Home: React.FC = () => {
             <motion.div {...headTextAnimation}>
               <h1 className="home-title">
                 Your Shoes
-                <br className="line-break" /> Your Way 3
+                <br className="line-break" /> Your Way 5
               </h1>
             </motion.div>
 
