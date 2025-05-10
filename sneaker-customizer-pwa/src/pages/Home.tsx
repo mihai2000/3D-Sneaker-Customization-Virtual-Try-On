@@ -45,7 +45,6 @@ const Home: React.FC = () => {
                 }}
                 customStyle="custom-button"
               />
-              {/* <div> */}
               <h1 className="home-paragraph">Welcome to 3D Shoe Customizer</h1>
               <Link to="/try-ar">
                 <CustomButton
@@ -54,7 +53,6 @@ const Home: React.FC = () => {
                   customStyle="custom-button"
                 />
               </Link>
-              {/* </div> */}
             </motion.div>
           </motion.div>
         </motion.section>

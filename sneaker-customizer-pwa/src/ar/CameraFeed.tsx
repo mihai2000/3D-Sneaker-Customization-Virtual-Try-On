@@ -1,129 +1,74 @@
-import { useEffect, useRef } from 'react';
+// import { useEffect, useRef } from 'react';
 
 // export default function CameraFeed() {
-// 	const videoRef = useRef<HTMLVideoElement>(null);
+//   const videoRef = useRef<HTMLVideoElement>(null);
 
-// 	useEffect(() => {
-// 		let stream: MediaStream | null = null;
+//   useEffect(() => {
+//     let stream: MediaStream | null = null;
 
-// 		const setupCamera = async () => {
-// 			try {
-// 				const devices = await navigator.mediaDevices.enumerateDevices();
-// 				const videoInputs = devices.filter((d) => d.kind === "videoinput");
-// 				const backCam =
-// 					videoInputs.find((d) => d.label.toLowerCase().includes("back")) ||
-// 					videoInputs[0];
+//     const setupCamera = async () => {
+//       try {
+//         // Slight delay for permissions UI to finish
+//         await new Promise((r) => setTimeout(r, 300));
 
-// 				if (!backCam) throw new Error("No video input device found.");
+//         // Try environment-facing camera
+//         try {
+//           stream = await navigator.mediaDevices.getUserMedia({
+//             video: { facingMode: { exact: 'environment' } },
+//           });
+//         } catch {
+//           console.warn('Back camera not available, falling back...');
+//           stream = await navigator.mediaDevices.getUserMedia({
+//             video: { facingMode: { ideal: 'environment' } },
+//           });
+//         }
 
-// 				if (videoRef.current?.srcObject) {
-// 					const oldStream = videoRef.current.srcObject as MediaStream;
-// 					oldStream.getTracks().forEach((track) => track.stop());
-// 				}
+//         if (!stream) throw new Error('No camera stream returned');
 
-// 				stream = await navigator.mediaDevices.getUserMedia({
-// 					video: {
-// 						// deviceId: { exact: backCam.deviceId },
-// 						facingMode: { ideal: "environment" }
-// 					},
-// 				});
+//         if (videoRef.current) {
+//           videoRef.current.srcObject = stream;
+//           videoRef.current.onloadedmetadata = () => {
+//             videoRef.current?.play().catch((e) => {
+//               console.warn('Video play() interrupted:', e);
+//             });
+//           };
+//         }
+//       } catch (err: any) {
+//         console.error('Failed to acquire camera feed:', err);
 
-// 				if (videoRef.current) {
-// 					videoRef.current.srcObject = stream;
-// 					videoRef.current.onloadedmetadata = () => {
-// 						videoRef.current?.play().catch((e) => {
-// 							console.warn("Video play() interrupted:", e);
-// 						});
-// 					};
-// 				}
-// 			} catch (err) {
-// 				console.error("Failed to acquire camera feed:", err);
-// 				alert("Camera access failed. Please check device permissions.");
-// 			}
-// 		};
+//         // Allow silent retry if error is NotReadableError
+//         if (err.name === 'NotReadableError') {
+//           console.warn('NotReadableError: camera busy, retrying...');
+//           setTimeout(() => setupCamera(), 500);
+//         } else {
+//           alert(
+//             'Camera access failed. Please check permissions in your browser settings.'
+//           );
+//         }
+//       }
+//     };
 
-// 		setupCamera();
+//     setupCamera();
 
-// 		return () => {
-// 			if (stream) {
-// 				stream.getTracks().forEach((track) => track.stop());
-// 			}
-// 		};
-// 	}, []);
+//     return () => {
+//       if (stream) {
+//         stream.getTracks().forEach((track) => track.stop());
+//       }
+//     };
+//   }, []);
 
-// 	return (
-// 		<video
-// 			ref={videoRef}
-// 			style={{
-// 				position: "absolute",
-// 				top: 0,
-// 				left: 0,
-// 				width: "100%",
-// 				zIndex: 0,
-// 			}}
-// 			playsInline
-// 			muted
-// 		/>
-// 	);
+//   return (
+//     <video
+//       ref={videoRef}
+//       style={{
+//         position: 'absolute',
+//         top: 0,
+//         left: 0,
+//         width: '100%',
+//         zIndex: 0,
+//       }}
+//       playsInline
+//       muted
+//     />
+//   );
 // }
-
-export default function CameraFeed() {
-  const videoRef = useRef<HTMLVideoElement>(null);
-
-  useEffect(() => {
-    let stream: MediaStream | null = null;
-
-    const setupCamera = async () => {
-      try {
-        // Attempt environment-facing first
-        try {
-          stream = await navigator.mediaDevices.getUserMedia({
-            video: { facingMode: { exact: 'environment' } },
-          });
-        } catch {
-          console.warn('Back camera not available, falling back to default.');
-          stream = await navigator.mediaDevices.getUserMedia({
-            video: { facingMode: { ideal: 'environment' } },
-          });
-        }
-
-        if (videoRef.current) {
-          videoRef.current.srcObject = stream;
-          videoRef.current.onloadedmetadata = () => {
-            videoRef.current?.play().catch((e) => {
-              console.warn('Video play() interrupted:', e);
-            });
-          };
-        }
-      } catch (err) {
-        console.error('Failed to acquire camera feed:', err);
-        alert(
-          'Camera access failed. Please check device permissions in your browser settings.'
-        );
-      }
-    };
-
-    setupCamera();
-
-    return () => {
-      if (stream) {
-        stream.getTracks().forEach((track) => track.stop());
-      }
-    };
-  }, []);
-
-  return (
-    <video
-      ref={videoRef}
-      style={{
-        position: 'absolute',
-        top: 0,
-        left: 0,
-        width: '100%',
-        zIndex: 0,
-      }}
-      playsInline
-      muted
-    />
-  );
-}
