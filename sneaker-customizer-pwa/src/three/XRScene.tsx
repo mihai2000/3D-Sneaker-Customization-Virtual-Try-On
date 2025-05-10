@@ -45,10 +45,13 @@ export default function XRScene() {
     });
 
     return () => {
-      renderer.dispose();
       if (renderer.domElement.parentNode) {
         renderer.domElement.parentNode.removeChild(renderer.domElement);
       }
+      renderer.forceContextLoss();
+      renderer.dispose();
+
+      const arBtn = document.querySelector('button[style*="AR"]');
       if (arBtn && arBtn.parentNode) {
         arBtn.parentNode.removeChild(arBtn);
       }
