@@ -4,14 +4,12 @@ import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader';
 import { ARButton } from 'three/examples/jsm/webxr/ARButton';
 
-// 👟 Shared type
 export type FootData = {
   position: { x: number; y: number; z: number };
   angle: number;
 };
 
-// 👟 Handle type
-export type SceneHandle = {
+type SceneHandle = {
   updatePositions: (feet: { left: FootData; right: FootData }) => void;
 };
 
@@ -61,9 +59,9 @@ const XRShoes = forwardRef<SceneHandle>((_, ref) => {
     }
 
     scene.add(new THREE.AmbientLight(0xffffff, 1));
-    const light = new THREE.DirectionalLight(0xffffff, 0.6);
-    light.position.set(1, 1, 1);
-    scene.add(light);
+    const dirLight = new THREE.DirectionalLight(0xffffff, 0.6);
+    dirLight.position.set(1, 1, 1);
+    scene.add(dirLight);
 
     const loader = new GLTFLoader();
     const dracoLoader = new DRACOLoader();
@@ -86,9 +84,10 @@ const XRShoes = forwardRef<SceneHandle>((_, ref) => {
     loadShoe(leftShoeRef, -0.05);
     loadShoe(rightShoeRef, 0.05);
 
-    document.body.appendChild(
-      ARButton.createButton(renderer, { requiredFeatures: ['hit-test'] })
-    );
+    const arButton = ARButton.createButton(renderer, {
+      requiredFeatures: ['hit-test'],
+    });
+    document.body.appendChild(arButton);
 
     renderer.setAnimationLoop(() => {
       renderer.render(scene, camera);
@@ -99,6 +98,9 @@ const XRShoes = forwardRef<SceneHandle>((_, ref) => {
       renderer.dispose();
       if (renderer.domElement.parentNode) {
         renderer.domElement.parentNode.removeChild(renderer.domElement);
+      }
+      if (arButton && arButton.parentNode) {
+        arButton.parentNode.removeChild(arButton);
       }
     };
   }, []);

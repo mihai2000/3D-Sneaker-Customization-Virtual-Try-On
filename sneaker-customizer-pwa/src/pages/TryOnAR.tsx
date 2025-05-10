@@ -37,7 +37,7 @@
 import { useRef } from 'react';
 import XRShoes, { FootData } from '../three/XRShoes';
 import FootTracker from '../ar/FootTracker';
-import CameraFeed from '../ar/CameraFeed';
+// import CameraFeed from '../ar/CameraFeed';
 
 export default function TryOnAR() {
   const sceneRef = useRef<{
@@ -53,7 +53,7 @@ export default function TryOnAR() {
 
   return (
     <>
-      <CameraFeed />
+      {/* <CameraFeed /> */}
       <XRShoes ref={sceneRef} />
       <FootTracker onTrack={handleFootPositions} />
       <div style={{ position: 'absolute', top: 20, left: 20, zIndex: 10 }}>
