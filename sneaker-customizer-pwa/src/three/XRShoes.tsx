@@ -281,7 +281,7 @@ const XRShoes = forwardRef<SceneHandle, XRShoesProps>(
         ref: React.MutableRefObject<THREE.Object3D | undefined>,
         offsetX: number
       ) => {
-        loader.load('/models/shoe-draco.glb', (gltf) => {
+        loader.load('/models/nike_air_jordan.glb', (gltf) => {
           const shoe = gltf.scene;
           shoe.scale.set(0.2, 0.2, 0.2);
           shoe.position.x += offsetX;
