@@ -20,6 +20,13 @@ const Home: React.FC = () => {
         <motion.section className="home-section" {...slideAnimation('left')}>
           <motion.header className="home-header" {...slideAnimation('down')}>
             <img src="./threejs.png" alt="logo" className="logo-img" />
+            <Link to="/">
+              <CustomButton
+                type="filled"
+                title="Home"
+                customStyle="custom-button"
+              />
+            </Link>
           </motion.header>
 
           <motion.div className="home-content" {...headContainerAnimation}>
@@ -31,7 +38,7 @@ const Home: React.FC = () => {
             </motion.div>
 
             <motion.div className="home-description" {...headContentAnimation}>
-              {/* <p className="home-paragraph">
+              <p className="home-paragraph">
                 Create your unique and exclusive shoes with our brand-new 3D
                 customization tool. <strong>unleash your imagination</strong>{' '}
                 and define your own style.
@@ -44,7 +51,7 @@ const Home: React.FC = () => {
                   state.intro = false;
                 }}
                 customStyle="custom-button"
-              /> */}
+              />
               <h1 className="home-paragraph">Welcome to 3D Shoe Customizer</h1>
               <Link to="/try-ar">
                 <CustomButton
