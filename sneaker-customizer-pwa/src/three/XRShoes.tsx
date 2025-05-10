@@ -164,6 +164,7 @@
 //   );
 // }
 // XRScene.tsx (non-XR 3D test version + optional WebXR support)
+// XRScene.tsx (markerless foot tracking version with optional WebXR)
 import {
   useEffect,
   useRef,
@@ -218,8 +219,6 @@ const XRShoes = forwardRef<SceneHandle, XRShoesProps>(
     const leftShoeRef = useRef<THREE.Object3D>();
     const rightShoeRef = useRef<THREE.Object3D>();
     const [logs, setLogs] = useState<string[]>([]);
-    let camera: THREE.PerspectiveCamera;
-    let renderer: THREE.WebGLRenderer;
 
     const log = (msg: string) => setLogs((prev) => [...prev.slice(-20), msg]);
 
@@ -246,7 +245,7 @@ const XRShoes = forwardRef<SceneHandle, XRShoesProps>(
 
     useEffect(() => {
       const scene = new THREE.Scene();
-      camera = new THREE.PerspectiveCamera(
+      const camera = new THREE.PerspectiveCamera(
         70,
         window.innerWidth / window.innerHeight,
         0.01,
@@ -254,7 +253,10 @@ const XRShoes = forwardRef<SceneHandle, XRShoesProps>(
       );
       camera.position.z = 2;
 
-      renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+      const renderer = new THREE.WebGLRenderer({
+        antialias: true,
+        alpha: true,
+      });
       renderer.setSize(window.innerWidth, window.innerHeight);
       renderer.xr.enabled = useWebXR;
 
@@ -297,7 +299,7 @@ const XRShoes = forwardRef<SceneHandle, XRShoesProps>(
           if (supported) {
             document.body.appendChild(
               ARButton.createButton(renderer, {
-                requiredFeatures: ['hit-test'],
+                requiredFeatures: ['local-floor'],
               })
             );
             log('✅ WebXR AR session supported');
