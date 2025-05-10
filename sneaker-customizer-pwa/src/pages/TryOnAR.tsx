@@ -34,14 +34,30 @@
 // 		</>
 // 	);
 // }
-import XRScene from '../three/XRScene';
+import { useRef } from 'react';
+import XRShoes, { FootData } from '../three/XRShoes';
+import FootTracker from '../ar/FootTracker';
+import CameraFeed from '../ar/CameraFeed';
 
 export default function TryOnAR() {
+  const sceneRef = useRef<{
+    updatePositions: (feet: { left: FootData; right: FootData }) => void;
+  }>(null);
+
+  const handleFootPositions = (positions: {
+    left: FootData;
+    right: FootData;
+  }) => {
+    sceneRef.current?.updatePositions(positions);
+  };
+
   return (
     <>
-      <XRScene />
-      {/*  <div style={{ position: 'absolute', top: 20, left: 20, zIndex: 10 }}>
-       <button
+      <CameraFeed />
+      <XRShoes ref={sceneRef} />
+      <FootTracker onTrack={handleFootPositions} />
+      <div style={{ position: 'absolute', top: 20, left: 20, zIndex: 10 }}>
+        <button
           onClick={() => (window.location.href = '/')}
           style={{
             padding: '0.75rem 1.5rem',
@@ -53,9 +69,9 @@ export default function TryOnAR() {
             cursor: 'pointer',
           }}
         >
-          Back Home
-        </button> 
-      </div>*/}
+          Back to Customizer
+        </button>
+      </div>
     </>
   );
 }

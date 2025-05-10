@@ -15,20 +15,10 @@ export default function XRScene() {
       0.01,
       20
     );
+
     const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
     renderer.setSize(window.innerWidth, window.innerHeight);
     renderer.xr.enabled = true;
-
-    const showMessage = (text: string, timeout = 3000) => {
-      const el = document.getElementById('ar-message');
-      if (el) {
-        el.innerText = text;
-        el.style.display = 'block';
-        setTimeout(() => {
-          el.style.display = 'none';
-        }, timeout);
-      }
-    };
 
     if (
       containerRef.current &&
@@ -37,52 +27,58 @@ export default function XRScene() {
       containerRef.current.appendChild(renderer.domElement);
     }
 
+    // Lighting
     scene.add(new THREE.AmbientLight(0xffffff, 1));
     const dirLight = new THREE.DirectionalLight(0xffffff, 0.6);
     dirLight.position.set(1, 1, 1);
     scene.add(dirLight);
 
+    // Loaders
     const loader = new GLTFLoader();
     const dracoLoader = new DRACOLoader();
     dracoLoader.setDecoderPath('https://www.gstatic.com/draco/v1/decoders/');
     loader.setDRACOLoader(dracoLoader);
 
+    // AR button
     const arBtn = ARButton.createButton(renderer, {
       requiredFeatures: ['hit-test'],
     });
-    if (!document.body.contains(arBtn)) document.body.appendChild(arBtn);
+    if (!document.body.contains(arBtn)) {
+      document.body.appendChild(arBtn);
+    }
 
+    // State
     let hitTestSource: XRHitTestSource | null = null;
     let localSpace: XRReferenceSpace | null = null;
     const lastHitMatrix = new THREE.Matrix4();
     let shoe: THREE.Object3D | null = null;
     let controller: THREE.Group;
 
+    // Tap to place
     const onSelect = () => {
       if (!shoe) {
         loader.load(
-          '/models/shoe-draco.glb',
+          '/models/nike-air-jordan.glb',
           (gltf) => {
             shoe = gltf.scene;
             shoe.scale.set(0.2, 0.2, 0.2);
             shoe.position.setFromMatrixPosition(lastHitMatrix);
             scene.add(shoe);
-            console.log('👟 Shoe added');
-            showMessage('👟 Shoe added to the scene!');
+            alert('👟 Shoe added to the scene!');
           },
           undefined,
           (error) => {
-            console.error('❌ Model load error:', error);
-            showMessage('❌ Failed to load shoe model.');
+            alert('❌ Failed to load shoe model.');
+            console.error(error);
           }
         );
       } else {
         shoe.position.setFromMatrixPosition(lastHitMatrix);
-        console.log('📍 Shoe moved');
-        showMessage('📍 Shoe position updated.');
+        alert('📍 Shoe position updated.');
       }
     };
 
+    // Session start
     const handleSessionStart = async () => {
       const session = renderer.xr.getSession();
       if (!session) return;
@@ -98,16 +94,16 @@ export default function XRScene() {
           onSelect as EventListener
         );
         scene.add(controller);
-        console.log('🟢 Hit test initialized.');
-        showMessage('🟢 Hit test initialized.');
+        alert('🟢 Hit test initialized.');
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
       } catch (err) {
-        console.warn('⚠️ Hit test setup failed:', err);
-        showMessage('⚠️ Hit test setup failed.');
+        alert('⚠️ Hit test setup failed.');
       }
     };
 
     renderer.xr.addEventListener('sessionstart', handleSessionStart);
 
+    // Animation
     renderer.setAnimationLoop((_, frame) => {
       if (frame && hitTestSource && localSpace) {
         const results = frame.getHitTestResults(hitTestSource);
@@ -151,26 +147,5 @@ export default function XRScene() {
     };
   }, []);
 
-  return (
-    <div ref={containerRef}>
-      <div
-        id="ar-message"
-        style={{
-          position: 'absolute',
-          top: '10px',
-          left: '50%',
-          transform: 'translateX(-50%)',
-          background: 'rgba(0,0,0,0.7)',
-          color: '#fff',
-          padding: '10px 20px',
-          borderRadius: '12px',
-          fontSize: '1rem',
-          zIndex: 999,
-          display: 'none',
-        }}
-      >
-        AR Message
-      </div>
-    </div>
-  );
+  return <div ref={containerRef} />;
 }
