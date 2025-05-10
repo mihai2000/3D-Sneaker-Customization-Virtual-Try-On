@@ -44,8 +44,6 @@ export default function TryOnAR() {
   const sceneRef = useRef<SceneHandle>(null);
 
   const handleFootPositions = (feet: { left: FootData; right: FootData }) => {
-    alert(`Tracking feet: ${JSON.stringify(feet)}`);
-    console.log('Tracking feet:', feet);
 
     sceneRef.current?.updatePositions(feet);
   };
@@ -53,7 +51,7 @@ export default function TryOnAR() {
   return (
     <>
       <CameraFeed />
-      <XRShoes ref={sceneRef} />
+      <XRShoes ref={sceneRef} useWebXR={false} />
       <FootTracker onTrack={handleFootPositions} />
       <div style={{ position: 'absolute', top: 20, left: 20, zIndex: 10 }}>
         <button

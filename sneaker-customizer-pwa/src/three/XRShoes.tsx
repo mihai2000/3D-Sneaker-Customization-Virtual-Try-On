@@ -1,120 +1,14 @@
-// import { useEffect, useRef, forwardRef, useImperativeHandle } from 'react';
-// import * as THREE from 'three';
-// import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
-// import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader';
-// import { ARButton } from 'three/examples/jsm/webxr/ARButton';
-
-// export type FootData = {
-//   position: { x: number; y: number; z: number };
-//   angle: number;
-// };
-
-// type SceneHandle = {
-//   updatePositions: (feet: { left: FootData; right: FootData }) => void;
-// };
-
-// const XRShoes = forwardRef<SceneHandle>((_, ref) => {
-//   const containerRef = useRef<HTMLDivElement>(null);
-//   const leftShoeRef = useRef<THREE.Object3D>();
-//   const rightShoeRef = useRef<THREE.Object3D>();
-
-//   useImperativeHandle(ref, () => ({
-//     updatePositions({ left, right }) {
-//       alert('Updating shoe positions');
-//       if (leftShoeRef.current) {
-//         leftShoeRef.current.position.set(
-//           left.position.x,
-//           left.position.y,
-//           left.position.z
-//         );
-//         leftShoeRef.current.rotation.y = -left.angle;
-//       }
-//       if (rightShoeRef.current) {
-//         rightShoeRef.current.position.set(
-//           right.position.x,
-//           right.position.y,
-//           right.position.z
-//         );
-//         rightShoeRef.current.rotation.y = -right.angle;
-//       }
-//     },
-//   }));
-
-//   useEffect(() => {
-//     const scene = new THREE.Scene();
-//     const camera = new THREE.PerspectiveCamera(
-//       70,
-//       window.innerWidth / window.innerHeight,
-//       0.01,
-//       20
-//     );
-//     const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-//     renderer.setSize(window.innerWidth, window.innerHeight);
-//     renderer.xr.enabled = true;
-
-//     if (
-//       containerRef.current &&
-//       !containerRef.current.contains(renderer.domElement)
-//     ) {
-//       containerRef.current.appendChild(renderer.domElement);
-//     }
-
-//     scene.add(new THREE.AmbientLight(0xffffff, 1));
-//     const dirLight = new THREE.DirectionalLight(0xffffff, 0.6);
-//     dirLight.position.set(1, 1, 1);
-//     scene.add(dirLight);
-
-//     const loader = new GLTFLoader();
-//     const dracoLoader = new DRACOLoader();
-//     dracoLoader.setDecoderPath('https://www.gstatic.com/draco/v1/decoders/');
-//     loader.setDRACOLoader(dracoLoader);
-
-//     const loadShoe = (
-//       ref: React.MutableRefObject<THREE.Object3D | undefined>,
-//       offsetX: number
-//     ) => {
-//       loader.load('/models/shoe-draco.glb', (gltf) => {
-//         const shoe = gltf.scene;
-//         shoe.scale.set(0.2, 0.2, 0.2);
-//         shoe.position.x += offsetX;
-//         ref.current = shoe;
-//         scene.add(shoe);
-//       });
-//     };
-
-//     loadShoe(leftShoeRef, -0.05);
-//     loadShoe(rightShoeRef, 0.05);
-
-//     const arButton = ARButton.createButton(renderer, {
-//       requiredFeatures: ['hit-test'],
-//     });
-//     document.body.appendChild(arButton);
-
-//     renderer.setAnimationLoop(() => {
-//       renderer.render(scene, camera);
-//     });
-
-//     return () => {
-//       renderer.setAnimationLoop(null);
-//       renderer.dispose();
-//       if (renderer.domElement.parentNode) {
-//         renderer.domElement.parentNode.removeChild(renderer.domElement);
-//       }
-//       if (arButton && arButton.parentNode) {
-//         arButton.parentNode.removeChild(arButton);
-//       }
-//     };
-//   }, []);
-
-//   return <div ref={containerRef} />;
-// });
-
-// export default XRShoes;
-// XRScene.tsx (non-XR 3D test version)
-import { useEffect, useRef, forwardRef, useImperativeHandle } from 'react';
+import {
+  useEffect,
+  useRef,
+  forwardRef,
+  useImperativeHandle,
+  useState,
+} from 'react';
 import * as THREE from 'three';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader';
+import { ARButton } from 'three/examples/jsm/webxr/ARButton';
 
 export type FootData = {
   position: { x: number; y: number; z: number };
@@ -125,12 +19,20 @@ export type SceneHandle = {
   updatePositions: (feet: { left: FootData; right: FootData }) => void;
 };
 
-const XRShoes = forwardRef<SceneHandle>((_, ref) => {
+type Props = {
+  useWebXR?: boolean;
+};
+
+const XRShoes = forwardRef<SceneHandle, Props>(({ useWebXR = false }, ref) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const leftShoeRef = useRef<THREE.Object3D>();
   const rightShoeRef = useRef<THREE.Object3D>();
-  let camera: THREE.PerspectiveCamera;
-  let renderer: THREE.WebGLRenderer;
+  const [logs, setLogs] = useState<string[]>([]);
+
+  const log = (msg: string) => {
+    console.log(msg);
+    setLogs((prev) => [...prev.slice(-10), msg]); // keep last 10 logs
+  };
 
   useImperativeHandle(ref, () => ({
     updatePositions({ left, right }) {
@@ -141,6 +43,7 @@ const XRShoes = forwardRef<SceneHandle>((_, ref) => {
           -1
         );
         leftShoeRef.current.rotation.y = -left.angle;
+        log(`👟 Left updated: ${JSON.stringify(left.position)}`);
       }
       if (rightShoeRef.current) {
         rightShoeRef.current.position.set(
@@ -149,13 +52,14 @@ const XRShoes = forwardRef<SceneHandle>((_, ref) => {
           -1
         );
         rightShoeRef.current.rotation.y = -right.angle;
+        log(`👟 Right updated: ${JSON.stringify(right.position)}`);
       }
     },
   }));
 
   useEffect(() => {
     const scene = new THREE.Scene();
-    camera = new THREE.PerspectiveCamera(
+    const camera = new THREE.PerspectiveCamera(
       70,
       window.innerWidth / window.innerHeight,
       0.01,
@@ -163,8 +67,9 @@ const XRShoes = forwardRef<SceneHandle>((_, ref) => {
     );
     camera.position.z = 2;
 
-    renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
     renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.xr.enabled = useWebXR;
 
     if (
       containerRef.current &&
@@ -193,11 +98,22 @@ const XRShoes = forwardRef<SceneHandle>((_, ref) => {
         shoe.position.x += offsetX;
         ref.current = shoe;
         scene.add(shoe);
+        log(`✅ Shoe loaded with offset ${offsetX}`);
       });
     };
 
     loadShoe(leftShoeRef, -0.3);
     loadShoe(rightShoeRef, 0.3);
+
+    if (useWebXR) {
+      const arBtn = ARButton.createButton(renderer, {
+        requiredFeatures: ['hit-test'],
+      });
+      if (!document.body.contains(arBtn)) {
+        document.body.appendChild(arBtn);
+        log('🟢 ARButton attached.');
+      }
+    }
 
     const animate = () => {
       requestAnimationFrame(animate);
@@ -206,14 +122,44 @@ const XRShoes = forwardRef<SceneHandle>((_, ref) => {
     animate();
 
     return () => {
+      renderer.setAnimationLoop(null);
       renderer.dispose();
       if (renderer.domElement.parentNode) {
         renderer.domElement.parentNode.removeChild(renderer.domElement);
       }
     };
-  }, []);
+  }, [useWebXR]);
 
-  return <div ref={containerRef} style={{ width: '100vw', height: '100vh' }} />;
+  return (
+    <>
+      <div ref={containerRef} style={{ width: '100vw', height: '100vh' }} />
+      <LogOverlay logs={logs} />
+    </>
+  );
 });
 
 export default XRShoes;
+
+function LogOverlay({ logs }: { logs: string[] }) {
+  return (
+    <div
+      style={{
+        position: 'absolute',
+        bottom: 0,
+        left: 0,
+        background: 'rgba(0,0,0,0.6)',
+        color: 'white',
+        padding: '1rem',
+        maxHeight: '160px',
+        overflowY: 'auto',
+        zIndex: 1000,
+        fontSize: '0.8rem',
+        width: '100%',
+      }}
+    >
+      {logs.map((l, i) => (
+        <div key={i}>{l}</div>
+      ))}
+    </div>
+  );
+}
