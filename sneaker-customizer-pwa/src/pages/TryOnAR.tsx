@@ -48,6 +48,7 @@ export default function TryOnAR() {
     left: FootData;
     right: FootData;
   }) => {
+    alert(`Passing foot data to scene: ${JSON.stringify(positions)}`);
     sceneRef.current?.updatePositions(positions);
   };
 

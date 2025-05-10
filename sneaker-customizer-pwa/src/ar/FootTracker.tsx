@@ -164,6 +164,16 @@ export default function FootTracker({ onTrack }: FootTrackerProps) {
               angle: angle(rh, rt),
             },
           });
+          console.log('Tracking feet:', {
+            left: {
+              position: { x: lh.x, y: -lh.y, z: -lh.z },
+              angle: angle(lh, lt),
+            },
+            right: {
+              position: { x: rh.x, y: -rh.y, z: -rh.z },
+              angle: angle(rh, rt),
+            },
+          });
 
           const draw = (p: any, color: string) => {
             ctx.fillStyle = color;
