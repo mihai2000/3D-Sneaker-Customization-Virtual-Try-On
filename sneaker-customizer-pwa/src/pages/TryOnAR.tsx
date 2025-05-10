@@ -44,6 +44,9 @@ export default function TryOnAR() {
   const sceneRef = useRef<SceneHandle>(null);
 
   const handleFootPositions = (feet: { left: FootData; right: FootData }) => {
+    alert(`Tracking feet: ${JSON.stringify(feet)}`);
+    console.log('Tracking feet:', feet);
+
     sceneRef.current?.updatePositions(feet);
   };
 
