@@ -51,7 +51,7 @@ export default function TryOnAR() {
   return (
     <>
       <CameraFeed />
-      <XRShoes ref={sceneRef} useWebXR={false} />
+      <XRShoes ref={sceneRef} useWebXR={true} />
       <FootTracker onTrack={handleFootPositions} />
       <div style={{ position: 'absolute', top: 20, left: 20, zIndex: 10 }}>
         <button
