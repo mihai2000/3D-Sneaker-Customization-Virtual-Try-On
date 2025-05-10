@@ -23,7 +23,8 @@ export default function CameraFeed() {
 
 				stream = await navigator.mediaDevices.getUserMedia({
 					video: {
-						deviceId: { exact: backCam.deviceId },
+						// deviceId: { exact: backCam.deviceId },
+						facingMode: { exact: "environment" }
 					},
 				});
 
