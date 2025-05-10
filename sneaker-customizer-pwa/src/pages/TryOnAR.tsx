@@ -34,27 +34,22 @@
 // 		</>
 // 	);
 // }
+// ✅ TryOnAR.tsx
 import { useRef } from 'react';
-import XRShoes, { FootData } from '../three/XRShoes';
+import XRShoes, { FootData, SceneHandle } from '../three/XRShoes';
 import FootTracker from '../ar/FootTracker';
-// import CameraFeed from '../ar/CameraFeed';
+import CameraFeed from '../ar/CameraFeed';
 
 export default function TryOnAR() {
-  const sceneRef = useRef<{
-    updatePositions: (feet: { left: FootData; right: FootData }) => void;
-  }>(null);
+  const sceneRef = useRef<SceneHandle>(null);
 
-  const handleFootPositions = (positions: {
-    left: FootData;
-    right: FootData;
-  }) => {
-    alert(`Passing foot data to scene: ${JSON.stringify(positions)}`);
-    sceneRef.current?.updatePositions(positions);
+  const handleFootPositions = (feet: { left: FootData; right: FootData }) => {
+    sceneRef.current?.updatePositions(feet);
   };
 
   return (
     <>
-      {/* <CameraFeed /> */}
+      <CameraFeed />
       <XRShoes ref={sceneRef} />
       <FootTracker onTrack={handleFootPositions} />
       <div style={{ position: 'absolute', top: 20, left: 20, zIndex: 10 }}>
