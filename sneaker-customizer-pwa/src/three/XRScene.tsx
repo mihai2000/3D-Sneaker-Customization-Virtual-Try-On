@@ -24,7 +24,7 @@ export default function XRScene() {
     dracoLoader.setDecoderPath('https://www.gstatic.com/draco/v1/decoders/');
     loader.setDRACOLoader(dracoLoader);
     loader.load(
-      '/models/nike-air-jordan.glb.glb',
+      '/models/nike_air_jordan.glb',
       (gltf) => {
         const shoe = gltf.scene;
         shoe.scale.set(0.2, 0.2, 0.2);
