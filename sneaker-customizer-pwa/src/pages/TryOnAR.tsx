@@ -41,7 +41,7 @@ export default function TryOnAR() {
     <>
       <XRScene />
       <div style={{ position: 'absolute', top: 20, left: 20, zIndex: 10 }}>
-        <button
+        {/* <button
           onClick={() => (window.location.href = '/')}
           style={{
             padding: '0.75rem 1.5rem',
@@ -54,7 +54,7 @@ export default function TryOnAR() {
           }}
         >
           Back Home
-        </button>
+        </button> */}
       </div>
     </>
   );
