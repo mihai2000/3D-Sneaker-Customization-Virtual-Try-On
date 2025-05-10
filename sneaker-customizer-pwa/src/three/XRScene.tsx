@@ -9,7 +9,12 @@ export default function XRScene() {
 
   useEffect(() => {
     const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(70, window.innerWidth / window.innerHeight, 0.01, 20);
+    const camera = new THREE.PerspectiveCamera(
+      70,
+      window.innerWidth / window.innerHeight,
+      0.01,
+      20
+    );
     const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
     renderer.setSize(window.innerWidth, window.innerHeight);
     renderer.xr.enabled = true;
@@ -25,7 +30,10 @@ export default function XRScene() {
       }
     };
 
-    if (containerRef.current && !containerRef.current.contains(renderer.domElement)) {
+    if (
+      containerRef.current &&
+      !containerRef.current.contains(renderer.domElement)
+    ) {
       containerRef.current.appendChild(renderer.domElement);
     }
 
@@ -39,7 +47,9 @@ export default function XRScene() {
     dracoLoader.setDecoderPath('https://www.gstatic.com/draco/v1/decoders/');
     loader.setDRACOLoader(dracoLoader);
 
-    const arBtn = ARButton.createButton(renderer, { requiredFeatures: ['hit-test'] });
+    const arBtn = ARButton.createButton(renderer, {
+      requiredFeatures: ['hit-test'],
+    });
     if (!document.body.contains(arBtn)) document.body.appendChild(arBtn);
 
     let hitTestSource: XRHitTestSource | null = null;
@@ -51,7 +61,7 @@ export default function XRScene() {
     const onSelect = () => {
       if (!shoe) {
         loader.load(
-          '/models/nike-air-jordan.glb',
+          '/models/shoe-draco.glb',
           (gltf) => {
             shoe = gltf.scene;
             shoe.scale.set(0.2, 0.2, 0.2);
@@ -79,10 +89,14 @@ export default function XRScene() {
 
       try {
         localSpace = await session.requestReferenceSpace('viewer');
-        hitTestSource = (await session.requestHitTestSource?.({ space: localSpace })) ?? null;
+        hitTestSource =
+          (await session.requestHitTestSource?.({ space: localSpace })) ?? null;
 
         controller = renderer.xr.getController(0);
-        (controller as any).addEventListener('select', onSelect as EventListener);
+        (controller as any).addEventListener(
+          'select',
+          onSelect as EventListener
+        );
         scene.add(controller);
         console.log('🟢 Hit test initialized.');
         showMessage('🟢 Hit test initialized.');
@@ -125,7 +139,10 @@ export default function XRScene() {
       }
 
       if (controller) {
-        (controller as any).removeEventListener('select', onSelect as EventListener);
+        (controller as any).removeEventListener(
+          'select',
+          onSelect as EventListener
+        );
         scene.remove(controller);
       }
 
