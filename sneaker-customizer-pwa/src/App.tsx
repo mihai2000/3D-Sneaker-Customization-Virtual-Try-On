@@ -107,6 +107,14 @@ const App: React.FC = () => {
             </Layout>
           }
         />
+        <Route
+          path="/order-success"
+          element={
+            <Layout>
+              <OrderConfirmation />
+            </Layout>
+          }
+        />
 
         <Route path="/try-ar" element={<TryOnAR />} />
         <Route path="/login" element={<Login />} />

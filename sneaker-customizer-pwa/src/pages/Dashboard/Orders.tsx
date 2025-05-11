@@ -1,35 +1,97 @@
-import { List, ListItem, ListItemText, Paper } from '@mui/material';
 import { useEffect, useState } from 'react';
+import {
+  List,
+  ListItem,
+  ListItemText,
+  Paper,
+  Typography,
+  Divider,
+  ListItemAvatar,
+  Avatar,
+  Box,
+} from '@mui/material';
+import { db } from '../../services/firebase';
+import { collection, query, where, getDocs, orderBy } from 'firebase/firestore';
 import SectionTitle from '../../components/Shared/SectionTitle';
 import { useAuth } from '../../hooks/useAuth';
-import { fetchOrders } from '../../services/orders';
+
+interface Order {
+  id: string;
+  total: number;
+  status: string;
+  createdAt?: any;
+  items: {
+    id: string;
+    name: string;
+    price: number;
+    quantity: number;
+    image: string;
+  }[];
+}
 
 export default function Orders() {
   const { user } = useAuth();
-  const [orders, setOrders] = useState<any[]>([]);
+  const [orders, setOrders] = useState<Order[]>([]);
 
   useEffect(() => {
-    const loadOrders = async () => {
+    const fetchOrders = async () => {
       if (!user) return;
-      const data = await fetchOrders(user);
-      setOrders(data);
+
+      const q = query(
+        collection(db, 'orders'),
+        where('userId', '==', user),
+        orderBy('createdAt', 'desc')
+      );
+
+      const snap = await getDocs(q);
+      const results: Order[] = snap.docs.map((doc) => ({
+        id: doc.id,
+        ...(doc.data() as Omit<Order, 'id'>),
+      }));
+
+      setOrders(results);
     };
-    loadOrders();
+
+    fetchOrders();
   }, [user]);
 
   return (
     <Paper sx={{ p: 4 }}>
       <SectionTitle title="Your Orders" />
-      <List>
-        {orders.map((order) => (
-          <ListItem key={order.id}>
-            <ListItemText
-              primary={`Order #${order.id}`}
-              secondary={`Status: ${order.status || 'Pending'} | Total: $${order.total || 0}`}
-            />
-          </ListItem>
-        ))}
-      </List>
+
+      {orders.length === 0 ? (
+        <Typography>No orders found.</Typography>
+      ) : (
+        orders.map((order) => (
+          <Box key={order.id} sx={{ mb: 4 }}>
+            <Typography variant="subtitle1" gutterBottom>
+              🧾 Order ID: {order.id}
+            </Typography>
+            <Typography variant="body2">
+              Total: ${order.total.toFixed(2)} | Status: {order.status}
+            </Typography>
+            <List dense>
+              {order.items.map((item) => (
+                <ListItem key={item.id}>
+                  <ListItemAvatar>
+                    <Avatar
+                      src={item.image}
+                      alt={item.name}
+                      variant="square"
+                      sx={{ width: 56, height: 56 }}
+                    />
+                  </ListItemAvatar>
+                  <ListItemText
+                    primary={`${item.name} × ${item.quantity}`}
+                    secondary={`$${item.price.toFixed(2)} each`}
+                  />
+                </ListItem>
+              ))}
+            </List>
+            <Divider sx={{ mt: 2 }} />
+          </Box>
+        ))
+      )}
     </Paper>
   );
 }
