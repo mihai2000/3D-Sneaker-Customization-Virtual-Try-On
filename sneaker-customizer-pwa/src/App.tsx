@@ -1,5 +1,9 @@
 import React from 'react';
-import { Route, Routes } from 'react-router-dom';
+import {
+  // Navigate,
+  Route,
+  Routes,
+} from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Canvas from './components/canvas';
@@ -11,10 +15,13 @@ import './App.css';
 import ProtectedRoute from './auth/ProtectedRoute';
 import Login from './pages/Auth/Login';
 import Register from './pages/Auth/Register';
-import Dashboard from './pages/Dashboard/Dashboard';
 import NotFound from './pages/NotFound404/NotFound';
 import Layout from './components/Layout/Layout';
 import ForgotPassword from './pages/Auth/ForgotPassword';
+import DashboardLayout from './components/Dashboard/DashboardLayout';
+import Orders from './pages/Dashboard/Orders';
+import SavedDesigns from './pages/Dashboard/SavedDesigns';
+import Profile from './pages/Dashboard/Profile';
 const App: React.FC = () => {
   return (
     <main className="app">
@@ -25,9 +32,34 @@ const App: React.FC = () => {
           element={
             <ProtectedRoute>
               <Layout>
-                <Dashboard />
+                <DashboardLayout />
               </Layout>
             </ProtectedRoute>
+          }
+        />
+        {/* <Route index element={<Navigate to="dashboard/profile" />} /> */}
+        <Route
+          path="dashboard/orders"
+          element={
+            <Layout>
+              <Orders />
+            </Layout>
+          }
+        />
+        <Route
+          path="dashboard/saved"
+          element={
+            <Layout>
+              <SavedDesigns />
+            </Layout>
+          }
+        />
+        <Route
+          path="dashboard/profile"
+          element={
+            <Layout>
+              <Profile />
+            </Layout>
           }
         />
         <Route

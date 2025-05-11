@@ -19,9 +19,11 @@ const pages = [
   { label: 'Products', path: '/products' },
   { label: 'Try AR', path: '/try-ar' },
   { label: 'Customizer', path: '/customizer' },
+  { label: 'Orders', path: '/dashboard/orders' },
+  { label: 'Saved Designs', path: '/dashboard/saved' },
 ];
 const settings = [
-  { label: 'Profile', path: '/profile' },
+  { label: 'Profile', path: '/dashboard/profile' },
   { label: 'Account', path: '/account' },
   { label: 'Dashboard', path: '/dashboard' },
   { label: 'Logout', action: 'logout' },

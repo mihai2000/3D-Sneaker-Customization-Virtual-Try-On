@@ -4,7 +4,7 @@ import { useLocation } from 'react-router-dom';
 
 const Layout = ({ children }: { children: React.ReactNode }) => {
   const location = useLocation();
-  const hideNav = ['/login', '/register'].includes(location.pathname);
+  const hideNav = ['/login', '/register', '.forgot-password'].includes(location.pathname);
 
   return (
     <>
