@@ -1,7 +1,7 @@
-import { useEffect, useState } from 'react';
 import { List, ListItem, ListItemText, Paper } from '@mui/material';
-import { useAuth } from '../../auth/useAuth';
+import { useEffect, useState } from 'react';
 import SectionTitle from '../../components/Shared/SectionTitle';
+import { useAuth } from '../../hooks/useAuth';
 import { fetchOrders } from '../../services/orders';
 
 export default function Orders() {

@@ -22,6 +22,8 @@ import DashboardLayout from './components/Dashboard/DashboardLayout';
 import Orders from './pages/Dashboard/Orders';
 import SavedDesigns from './pages/Dashboard/SavedDesigns';
 import Profile from './pages/Dashboard/Profile';
+import CartPage from './pages/Cart/Cart';
+import ProductsPage from './pages/Products/Products';
 const App: React.FC = () => {
   return (
     <main className="app">
@@ -37,7 +39,6 @@ const App: React.FC = () => {
             </ProtectedRoute>
           }
         />
-        {/* <Route index element={<Navigate to="dashboard/profile" />} /> */}
         <Route
           path="dashboard/orders"
           element={
@@ -69,6 +70,22 @@ const App: React.FC = () => {
               <Home />
               <Canvas />
               <Customizer />
+            </Layout>
+          }
+        />
+        <Route
+          path="/cart"
+          element={
+            <Layout>
+              <CartPage />
+            </Layout>
+          }
+        />
+        <Route
+          path="/products"
+          element={
+            <Layout>
+              <ProductsPage />
             </Layout>
           }
         />

@@ -1,7 +1,7 @@
+import { Box, Grid, Paper, Typography } from '@mui/material';
 import { useEffect, useState } from 'react';
-import { Typography, Grid, Paper, Box } from '@mui/material';
-import { useAuth } from '../../auth/useAuth';
 import SectionTitle from '../../components/Shared/SectionTitle';
+import { useAuth } from '../../hooks/useAuth';
 import { fetchSavedDesigns } from '../../services/designs';
 
 export default function SavedDesigns() {

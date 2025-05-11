@@ -1,14 +1,14 @@
-import { useState } from 'react';
-import { AuthContext } from './AuthContext';
-import { auth, db } from '../services/firebase';
 import {
   createUserWithEmailAndPassword,
+  sendPasswordResetEmail,
   signInWithEmailAndPassword,
   signOut,
-  sendPasswordResetEmail,
 } from 'firebase/auth';
-import { toast } from 'react-toastify';
 import { doc, setDoc } from 'firebase/firestore';
+import { useState } from 'react';
+import { toast } from 'react-toastify';
+import { AuthContext } from '../context/AuthContext';
+import { auth, db } from '../services/firebase';
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [token, setToken] = useState<string | null>(() =>
     localStorage.getItem('token')

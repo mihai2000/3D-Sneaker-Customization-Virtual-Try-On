@@ -1,7 +1,7 @@
-import { useState, useEffect } from 'react';
-import { TextField, Button, Box, Paper } from '@mui/material';
-import { useAuth } from '../../auth/useAuth';
+import { Box, Button, Paper, TextField } from '@mui/material';
+import { useEffect, useState } from 'react';
 import SectionTitle from '../../components/Shared/SectionTitle';
+import { useAuth } from '../../hooks/useAuth';
 import { fetchUserProfile, updateUserProfile } from '../../services/users';
 
 export default function Profile() {

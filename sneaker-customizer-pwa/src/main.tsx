@@ -3,18 +3,21 @@ import ReactDOM from 'react-dom/client';
 import App from './App';
 import './index.css';
 import { BrowserRouter } from 'react-router-dom';
-import { AuthProvider } from './auth/AuthProvider';
+import { AuthProvider } from './providers/AuthProvider';
+import { CartProvider } from './providers/CartProvider';
 
 const rootElement = document.getElementById('root');
 
 if (rootElement) {
   ReactDOM.createRoot(rootElement as HTMLElement).render(
     <React.StrictMode>
-      <AuthProvider>
-        <BrowserRouter>
-          <App />
-        </BrowserRouter>
-      </AuthProvider>
+      <BrowserRouter>
+        <AuthProvider>
+          <CartProvider>
+            <App />
+          </CartProvider>
+        </AuthProvider>
+      </BrowserRouter>
     </React.StrictMode>
   );
 } else {
