@@ -1,4 +1,3 @@
-// src/pages/Auth/Login.tsx
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../auth/useAuth';
@@ -9,8 +8,6 @@ import {
   TextField,
   Button,
   Paper,
-  Checkbox,
-  FormControlLabel,
 } from '@mui/material';
 
 export default function Login() {
