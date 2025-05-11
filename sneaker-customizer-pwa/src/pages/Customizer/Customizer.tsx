@@ -1,12 +1,12 @@
-import React, { useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
+import React, { useState } from 'react';
 import { useSnapshot } from 'valtio';
-import { reader } from '../config/helpers';
-import { EditorTabs, FilterTabs, DecalTypes } from '../config/constants';
-import { fadeAnimation, slideAnimation } from '../config/motion';
-import { ColorPicker, FilePicker, Tab, CustomButton } from '../components/ui';
-import state from '../store';
-import PlugDevRev from '../components/ui/PlugDevRev';
+import { ColorPicker, CustomButton, FilePicker, Tab } from '../../components/ui';
+import PlugDevRev from '../../components/ui/PlugDevRev';
+import { DecalTypes, EditorTabs, FilterTabs } from '../../config/constants';
+import { reader } from '../../config/helpers';
+import { fadeAnimation, slideAnimation } from '../../config/motion';
+import state from '../../store';
 import './customizer.css';
 interface DecalType {
   stateProperty: string;

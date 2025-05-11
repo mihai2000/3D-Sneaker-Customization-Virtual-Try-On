@@ -1,16 +1,16 @@
+import { AnimatePresence, motion } from 'framer-motion';
 import React from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { Link } from 'react-router-dom';
 import { useSnapshot } from 'valtio';
-import state from '../store';
-import { CustomButton } from '../components/ui';
+import { CustomButton } from '../../components/ui';
 import {
   headContainerAnimation,
   headContentAnimation,
   headTextAnimation,
   slideAnimation,
-} from '../config/motion';
+} from '../../config/motion';
+import state from '../../store';
 import './Home.css';
-import { Link } from 'react-router-dom';
 const Home: React.FC = () => {
   const snap = useSnapshot(state);
 
@@ -18,17 +18,6 @@ const Home: React.FC = () => {
     <AnimatePresence>
       {snap.intro && (
         <motion.section className="home-section" {...slideAnimation('left')}>
-          <motion.header className="home-header" {...slideAnimation('down')}>
-            <img src="./threejs.png" alt="logo" className="logo-img" />
-            <Link to="/">
-              <CustomButton
-                type="filled"
-                title="Home"
-                customStyle="custom-button"
-              />
-            </Link>
-          </motion.header>
-
           <motion.div className="home-content" {...headContainerAnimation}>
             <motion.div {...headTextAnimation}>
               <h1 className="home-title">

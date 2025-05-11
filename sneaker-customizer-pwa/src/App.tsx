@@ -1,49 +1,49 @@
 import React from 'react';
-import { Routes, Route } from 'react-router-dom';
-import Home from './pages/Home';
-import Customizer from './pages/Customizer';
-import TryOnAR from './pages/TryOnAR';
-import Canvas from './components/canvas';
+import { Route, Routes } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import Canvas from './components/canvas';
+import Customizer from './pages/Customizer/Customizer';
+import Home from './pages/Home/Home';
+import TryOnAR from './pages/TryOnAR';
 
 import './App.css';
+import ProtectedRoute from './auth/ProtectedRoute';
 import Login from './pages/Auth/Login';
 import Register from './pages/Auth/Register';
-import Dashboard from './pages/Auth/Dashboard';
-import ProtectedRoute from './auth/ProtectedRoute';
+import Dashboard from './pages/Dashboard/Dashboard';
 import NotFound from './pages/NotFound404/NotFound';
+import Layout from './components/Layout/Layout';
+import ForgotPassword from './pages/Auth/ForgotPassword';
 const App: React.FC = () => {
   return (
     <main className="app">
       <ToastContainer position="top-right" autoClose={3000} />
       <Routes>
-        {/* Protected Home Dashboard */}
         <Route
           path="/"
           element={
             <ProtectedRoute>
-              <Dashboard />
+              <Layout>
+                <Dashboard />
+              </Layout>
             </ProtectedRoute>
           }
         />
-
-        {/* Public Routes */}
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
-        <Route path="/try-ar" element={<TryOnAR />} />
         <Route
           path="/customizer"
           element={
-            <>
+            <Layout>
               <Home />
               <Canvas />
               <Customizer />
-            </>
+            </Layout>
           }
         />
-
-        {/* Catch-all */}
+        <Route path="/try-ar" element={<TryOnAR />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+        <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </main>

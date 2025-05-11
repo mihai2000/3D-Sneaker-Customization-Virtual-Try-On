@@ -1,22 +1,32 @@
 import { useState } from 'react';
 import { AuthContext } from './AuthContext';
-import { auth } from '../services/firebase';
+import { auth, db } from '../services/firebase';
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
+  signOut,
+  sendPasswordResetEmail,
 } from 'firebase/auth';
 import { toast } from 'react-toastify';
+import { doc, setDoc } from 'firebase/firestore';
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [token, setToken] = useState<string | null>(() =>
     localStorage.getItem('token')
   );
 
-  const logout = () => {
-    localStorage.removeItem('token');
-    setToken(null);
+  const logout = async () => {
+    try {
+      await signOut(auth);
+      localStorage.removeItem('token');
+      setToken(null);
+      toast.success('Logged out successfully!');
+    } catch (err: any) {
+      toast.error('Logout failed!');
+      console.error('Logout error:', err);
+    }
   };
 
-  const register = async (email: string, password: string) => {
+  const register = async (email: string, password: string,name?: string) => {
     try {
       const userCred = await createUserWithEmailAndPassword(
         auth,
@@ -26,7 +36,13 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       const token = await userCred.user.getIdToken();
       localStorage.setItem('token', token);
       setToken(token);
-      console.log('[AuthProvider] User registered:', email);
+      if (name) {
+        await setDoc(doc(db, 'users', userCred.user.uid), {
+          name,
+          email,
+          createdAt: new Date().toISOString()
+        });
+      }
       toast.success('Registered successfully!');
     } catch (err: any) {
       console.error('[AuthProvider] Registration error:', err);
@@ -46,12 +62,27 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       console.error('Login error:', err);
     }
   };
-
+  const forgotPassword = async (email: string) => {
+    try {
+      await sendPasswordResetEmail(auth, email);
+      toast.success('Password reset email sent!');
+    } catch (err: any) {
+      console.error('Forgot password error:', err);
+      toast.error(err.message);
+    }
+  };
   const isAuthenticated = !!token;
 
   return (
     <AuthContext.Provider
-      value={{ user: token, login, logout, isAuthenticated, register }}
+      value={{
+        user: token,
+        login,
+        logout,
+        isAuthenticated,
+        register,
+        forgotPassword,
+      }}
     >
       {children}
     </AuthContext.Provider>
