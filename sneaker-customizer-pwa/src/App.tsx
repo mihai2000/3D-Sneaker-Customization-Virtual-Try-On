@@ -24,6 +24,8 @@ import SavedDesigns from './pages/Dashboard/SavedDesigns';
 import Profile from './pages/Dashboard/Profile';
 import CartPage from './pages/Cart/Cart';
 import ProductsPage from './pages/Products/Products';
+import OrderConfirmation from './pages/Checkout/OrderConfirmation';
+import CheckoutPage from './pages/Checkout/CheckoutPage';
 const App: React.FC = () => {
   return (
     <main className="app">
@@ -89,6 +91,23 @@ const App: React.FC = () => {
             </Layout>
           }
         />
+        <Route
+          path="/order-confirmation"
+          element={
+            <Layout>
+              <OrderConfirmation />
+            </Layout>
+          }
+        />
+        <Route
+          path="/checkout"
+          element={
+            <Layout>
+              <CheckoutPage />
+            </Layout>
+          }
+        />
+
         <Route path="/try-ar" element={<TryOnAR />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />

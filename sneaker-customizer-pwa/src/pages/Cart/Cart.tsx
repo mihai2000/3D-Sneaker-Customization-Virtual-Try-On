@@ -14,9 +14,11 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
 import { useCart } from '../../hooks/useCart';
+import { useNavigate } from 'react-router';
 
 export default function CartPage() {
   const { cart, removeFromCart, clearCart, updateQuantity } = useCart();
+  const navigate = useNavigate();
 
   const total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
 
@@ -81,7 +83,11 @@ export default function CartPage() {
               <Button variant="outlined" onClick={clearCart} sx={{ mr: 1 }}>
                 Clear Cart
               </Button>
-              <Button variant="contained" color="primary">
+              <Button
+                variant="contained"
+                color="primary"
+                onClick={() => navigate('/checkout')}
+              >
                 Checkout
               </Button>
             </Box>
