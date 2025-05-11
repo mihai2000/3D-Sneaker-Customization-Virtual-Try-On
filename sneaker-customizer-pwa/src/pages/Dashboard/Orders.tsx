@@ -1,28 +1,25 @@
 import { useEffect, useState } from 'react';
-import {  List, ListItem, ListItemText, Paper } from '@mui/material';
+import { List, ListItem, ListItemText, Paper } from '@mui/material';
 import { useAuth } from '../../auth/useAuth';
-import { collection, getDocs, query, where } from 'firebase/firestore';
-import { db } from '../../services/firebase';
 import SectionTitle from '../../components/Shared/SectionTitle';
+import { fetchOrders } from '../../services/orders';
 
 export default function Orders() {
   const { user } = useAuth();
   const [orders, setOrders] = useState<any[]>([]);
 
   useEffect(() => {
-    const fetchOrders = async () => {
+    const loadOrders = async () => {
       if (!user) return;
-      const q = query(collection(db, 'orders'), where('userId', '==', user));
-      const snap = await getDocs(q);
-      setOrders(snap.docs.map((doc) => ({ id: doc.id, ...doc.data() })));
+      const data = await fetchOrders(user);
+      setOrders(data);
     };
-    fetchOrders();
+    loadOrders();
   }, [user]);
 
   return (
     <Paper sx={{ p: 4 }}>
       <SectionTitle title="Your Orders" />
-
       <List>
         {orders.map((order) => (
           <ListItem key={order.id}>

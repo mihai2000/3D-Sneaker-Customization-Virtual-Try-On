@@ -1,28 +1,25 @@
 import { useEffect, useState } from 'react';
 import { Typography, Grid, Paper, Box } from '@mui/material';
 import { useAuth } from '../../auth/useAuth';
-import { collection, getDocs, query, where } from 'firebase/firestore';
-import { db } from '../../services/firebase';
 import SectionTitle from '../../components/Shared/SectionTitle';
+import { fetchSavedDesigns } from '../../services/designs';
 
 export default function SavedDesigns() {
   const { user } = useAuth();
   const [designs, setDesigns] = useState<any[]>([]);
 
   useEffect(() => {
-    const fetchDesigns = async () => {
+    const loadDesigns = async () => {
       if (!user) return;
-      const q = query(collection(db, 'designs'), where('userId', '==', user));
-      const snap = await getDocs(q);
-      setDesigns(snap.docs.map((doc) => ({ id: doc.id, ...doc.data() })));
+      const data = await fetchSavedDesigns(user);
+      setDesigns(data);
     };
-    fetchDesigns();
+    loadDesigns();
   }, [user]);
 
   return (
     <Paper sx={{ p: 4 }}>
       <SectionTitle title="Saved Designs" />
-
       <Grid container spacing={2}>
         {designs.map((design) => (
           <Grid item xs={12} sm={6} md={4} key={design.id}>

@@ -1,9 +1,8 @@
 import { useState, useEffect } from 'react';
 import { TextField, Button, Box, Paper } from '@mui/material';
 import { useAuth } from '../../auth/useAuth';
-import { db } from '../../services/firebase';
-import { doc, getDoc, setDoc } from 'firebase/firestore';
 import SectionTitle from '../../components/Shared/SectionTitle';
+import { fetchUserProfile, updateUserProfile } from '../../services/users';
 
 export default function Profile() {
   const { user } = useAuth();
@@ -11,23 +10,29 @@ export default function Profile() {
   const [email, setEmail] = useState('');
 
   useEffect(() => {
+    if (!user) return;
+
     const loadProfile = async () => {
-      if (!user) return;
-      const docRef = doc(db, 'users', user);
-      const docSnap = await getDoc(docRef);
-      if (docSnap.exists()) {
-        const data = docSnap.data();
+      try {
+        const data = await fetchUserProfile(user);
         setName(data.name || '');
         setEmail(data.email || '');
+      } catch (err) {
+        console.error('Failed to load user profile', err);
       }
     };
+
     loadProfile();
   }, [user]);
 
   const handleSave = async () => {
     if (!user) return;
-    await setDoc(doc(db, 'users', user), { name, email }, { merge: true });
-    alert('Profile updated!');
+    try {
+      await updateUserProfile(user, { name, email });
+      alert('Profile updated!');
+    } catch (err) {
+      console.error('Profile update failed', err);
+    }
   };
 
   return (
