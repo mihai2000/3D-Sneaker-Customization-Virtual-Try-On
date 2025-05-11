@@ -8,6 +8,10 @@ export default defineConfig({
     react(),
     VitePWA({
       registerType: 'autoUpdate',
+      workbox: {
+        // ⬇️ Set the max file size to 5 MB
+        maximumFileSizeToCacheInBytes: 5 * 1024 * 1024,
+      },
       includeAssets: ['vite.svg', 'robots.txt'],
       manifest: {
         name: '3D Sneaker Customizer',
