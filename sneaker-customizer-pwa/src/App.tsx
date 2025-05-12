@@ -14,7 +14,6 @@ import Login from './pages/Auth/Login';
 import Register from './pages/Auth/Register';
 import ForgotPassword from './pages/Auth/ForgotPassword';
 
-import DashboardLayout from './components/Dashboard/DashboardLayout';
 import Orders from './pages/Dashboard/Orders';
 import SavedDesigns from './pages/Dashboard/SavedDesigns';
 import Profile from './pages/Dashboard/Profile';
@@ -28,6 +27,7 @@ import NotFound from './pages/NotFound404/NotFound';
 import { Elements } from '@stripe/react-stripe-js';
 import { stripePromise } from './services/stripe';
 import CanvasModel from './components/canvas/CanvasModel';
+import Dashboard from './pages/Dashboard/Dashboard';
 
 const App: React.FC = () => {
   return (
@@ -45,13 +45,13 @@ const App: React.FC = () => {
           element={
             <ProtectedRoute>
               <Layout>
-                <DashboardLayout />
+                <Dashboard />
               </Layout>
             </ProtectedRoute>
           }
         />
         <Route
-          path="/dashboard/orders"
+          path="/orders"
           element={
             <ProtectedRoute>
               <Layout>
@@ -61,7 +61,7 @@ const App: React.FC = () => {
           }
         />
         <Route
-          path="/dashboard/saved"
+          path="/saved"
           element={
             <ProtectedRoute>
               <Layout>
@@ -71,7 +71,7 @@ const App: React.FC = () => {
           }
         />
         <Route
-          path="/dashboard/profile"
+          path="/profile"
           element={
             <ProtectedRoute>
               <Layout>

@@ -18,13 +18,13 @@ import { useAuth } from '../../hooks/useAuth';
 const pages = [
   { label: 'Try AR', path: '/try-ar' },
   { label: 'Customizer', path: '/customizer' },
-  { label: 'Orders', path: '/dashboard/orders' },
-  { label: 'Saved Designs', path: '/dashboard/saved' },
+  { label: 'Orders', path: '/orders' },
+  { label: 'Saved Designs', path: '/saved' },
   { label: 'Cart', path: '/cart' },
   { label: 'Products', path: '/products' },
 ];
 const settings = [
-  { label: 'Profile', path: '/dashboard/profile' },
+  { label: 'Profile', path: '/profile' },
   { label: 'Account', path: '/account' },
   { label: 'Dashboard', path: '/dashboard' },
   { label: 'Logout', action: 'logout' },
