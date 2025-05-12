@@ -15,7 +15,8 @@ export const saveDesignToFirestore = async () => {
 	if (!user) throw new Error("User not authenticated");
 
 	const db = getFirestore();
-	const previewUrl = await uploadPreviewImage();
+	const preview = await uploadPreviewImage();
+	if (!preview) throw new Error("Preview upload failed");
 
 	const design = {
 		userId: user.uid,
@@ -24,7 +25,8 @@ export const saveDesignToFirestore = async () => {
 		fullDecal: state.fullDecal,
 		isLogoTexture: state.isLogoTexture,
 		isFullTexture: state.isFullTexture,
-		previewImageUrl: previewUrl,
+		previewImageUrl: preview.url,
+		previewImagePath: preview.path,
 		createdAt: serverTimestamp(),
 	};
 
