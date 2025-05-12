@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react';
 import SectionTitle from '../../components/Shared/SectionTitle';
 import { useAuth } from '../../hooks/useAuth';
 import { fetchSavedDesigns } from '../../services/designs';
-import { format } from 'date-fns';
+// import { format } from 'date-fns';
 import { useNavigate } from 'react-router-dom';
 import state, { ItemsType } from '../../store';
 import CustomButton from '../../components/ui/CustomButton';
@@ -125,8 +125,8 @@ export default function SavedDesigns() {
                     src={design.previewImageUrl}
                     alt="Preview"
                     style={{
-                      width: '50px',
-                      height: '50px',
+                      width: '270px',
+                      height: '180px',
                       objectFit: 'cover',
                       borderRadius: '4px',
                     }}
@@ -134,7 +134,7 @@ export default function SavedDesigns() {
                 </Box>
               )}
 
-              <Typography variant="subtitle1" gutterBottom>
+              {/* <Typography variant="subtitle1" gutterBottom>
                 Design ID: {design.id}
               </Typography>
 
@@ -143,7 +143,7 @@ export default function SavedDesigns() {
                 {design.createdAt?.toDate
                   ? format(design.createdAt.toDate(), 'PPPpp')
                   : 'N/A'}
-              </Typography>
+              </Typography> */}
 
               <Typography variant="body2" gutterBottom>
                 Logo: {design.isLogoTexture ? 'Yes' : 'No'} | Full:{' '}
