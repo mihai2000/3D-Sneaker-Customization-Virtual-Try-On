@@ -13,8 +13,9 @@ export default function Profile() {
     if (!user) return;
 
     const loadProfile = async () => {
+      
       try {
-        const data = await fetchUserProfile(user);
+        const data = await fetchUserProfile(user.uid);
         setName(data.name || '');
         setEmail(data.email || '');
       } catch (err) {
@@ -28,7 +29,7 @@ export default function Profile() {
   const handleSave = async () => {
     if (!user) return;
     try {
-      await updateUserProfile(user, { name, email });
+      await updateUserProfile(user.uid, { name, email });
       alert('Profile updated!');
     } catch (err) {
       console.error('Profile update failed', err);

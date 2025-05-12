@@ -1,8 +1,8 @@
-import { collection, getDocs, query, where } from 'firebase/firestore';
-import { db } from './firebase';
+import { getFirestore, collection, getDocs } from "firebase/firestore";
 
-export const fetchSavedDesigns = async (userId: string) => {
-  const q = query(collection(db, 'designs'), where('userId', '==', userId));
-  const snap = await getDocs(q);
-  return snap.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+export const fetchSavedDesigns = async (user: { uid: string }) => {
+	const db = getFirestore();
+	const designsRef = collection(db, "users", user.uid, "designs");
+	const snapshot = await getDocs(designsRef);
+	return snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
 };

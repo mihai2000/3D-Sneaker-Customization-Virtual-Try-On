@@ -1,7 +1,8 @@
 import { createContext } from 'react';
+import { User } from 'firebase/auth';
 
 export interface AuthContextProps {
-  user: string | null;
+  user: User | null;
   login: (email: string, password: string) => Promise<void>;
   logout: () => Promise<void>;
   isAuthenticated: boolean;

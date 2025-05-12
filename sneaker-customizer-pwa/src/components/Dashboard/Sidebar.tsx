@@ -15,9 +15,9 @@ import {
   export const drawerWidth = 240;
   
   const navItems = [
-    { label: 'Orders', path: '/dashboard/orders' },
-    { label: 'Saved Designs', path: '/dashboard/saved' },
-    { label: 'Profile', path: '/dashboard/profile' },
+    { label: 'Orders', path: '/orders' },
+    { label: 'Saved Designs', path: '/saved' },
+    { label: 'Profile', path: '/profile' },
   ];
   
   

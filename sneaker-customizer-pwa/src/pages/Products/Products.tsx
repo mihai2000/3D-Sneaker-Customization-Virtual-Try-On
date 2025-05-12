@@ -29,7 +29,7 @@ export default function ProductsPage() {
 
       // Remove query string after delay
       const timer = setTimeout(() => {
-        navigate(location.pathname, { replace: true });
+      navigate(location.pathname, { replace: true });
       }, 4000);
 
       return () => clearTimeout(timer);
