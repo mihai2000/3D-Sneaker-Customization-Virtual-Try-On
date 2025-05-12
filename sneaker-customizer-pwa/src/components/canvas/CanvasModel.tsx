@@ -4,7 +4,7 @@ import { ContactShadows, Environment, Center } from "@react-three/drei";
 import Backdrop from "./Backdrop";
 import CameraRig from "./CameraRig";
 import Shoe from "./Shoe";
-import "./index.css";
+import "./Canvas.css";
 const CanvasModel = () => {
 	return (
 		<Canvas

@@ -20,6 +20,7 @@ type StateType = {
   isFullTexture: boolean;
   logoDecal: string;
   fullDecal: string;
+  currentDesignId: string | null;
 };
 
 const state = proxy<StateType>({
@@ -40,6 +41,7 @@ const state = proxy<StateType>({
   isFullTexture: false,
   logoDecal: '/threejs.png',
   fullDecal: '/threejs.png',
+  currentDesignId: null,
 });
 
 export default state;

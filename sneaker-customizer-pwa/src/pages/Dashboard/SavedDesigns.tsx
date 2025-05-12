@@ -1,10 +1,11 @@
 import { Box, Grid, Paper, Typography, Button } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
+import AddIcon from '@mui/icons-material/Add';
 import { useEffect, useState } from 'react';
 import SectionTitle from '../../components/Shared/SectionTitle';
 import { useAuth } from '../../hooks/useAuth';
 import { fetchSavedDesigns } from '../../services/designs';
-// import { format } from 'date-fns';
+import { format } from 'date-fns';
 import { useNavigate } from 'react-router-dom';
 import state, { ItemsType } from '../../store';
 import CustomButton from '../../components/ui/CustomButton';
@@ -20,14 +21,13 @@ type DesignData = {
   isFullTexture?: boolean;
   createdAt?: any;
   previewImageUrl?: string;
-  previewImagePath?: string; // ✅ Add this to support deletion
+  previewImagePath?: string;
 };
 
 export default function SavedDesigns() {
   const { user } = useAuth();
   const [designs, setDesigns] = useState<DesignData[]>([]);
   const navigate = useNavigate();
-
   const db = getFirestore();
 
   const loadDesigns = async () => {
@@ -59,7 +59,14 @@ export default function SavedDesigns() {
     state.isLogoTexture = !!design.isLogoTexture;
     state.isFullTexture = !!design.isFullTexture;
     state.intro = false;
+    state.currentDesignId = design.id; // ✅ for update
 
+    navigate('/customizer');
+  };
+
+  const handleCreateNew = () => {
+    state.currentDesignId = null;
+    state.intro = true;
     navigate('/customizer');
   };
 
@@ -68,7 +75,6 @@ export default function SavedDesigns() {
     const design = designs.find((d) => d.id === designId);
     if (!design) return;
 
-    // ✅ Delete preview image from Storage if available
     if (design.previewImagePath) {
       try {
         const storage = getStorage();
@@ -79,7 +85,6 @@ export default function SavedDesigns() {
       }
     }
 
-    // Delete design document from Firestore
     const ref = doc(db, 'users', user.uid, 'designs', designId);
     await deleteDoc(ref);
     loadDesigns();
@@ -91,7 +96,18 @@ export default function SavedDesigns() {
 
   return (
     <Paper sx={{ p: 4 }}>
-      <SectionTitle title="Saved Designs" />
+      <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 2 }}>
+        <SectionTitle title="Saved Designs" />
+        <Button
+          variant="contained"
+          color="primary"
+          startIcon={<AddIcon />}
+          onClick={handleCreateNew}
+        >
+          New Design
+        </Button>
+      </Box>
+
       <Grid container spacing={2}>
         {designs.map((design) => (
           <Grid item xs={12} sm={6} md={4} key={design.id}>
@@ -101,18 +117,16 @@ export default function SavedDesigns() {
                 borderRadius: 2,
                 p: 2,
                 backgroundColor: '#f9f9f9',
-                position: 'relative',
               }}
             >
-              {/* 🖼️ Preview Image */}
               {design.previewImageUrl && (
                 <Box sx={{ mb: 1, display: 'flex', justifyContent: 'center' }}>
                   <img
                     src={design.previewImageUrl}
                     alt="Preview"
                     style={{
-                      width: '300px',
-                      height: '200px',
+                      width: '50px',
+                      height: '50px',
                       objectFit: 'cover',
                       borderRadius: '4px',
                     }}
@@ -120,7 +134,7 @@ export default function SavedDesigns() {
                 </Box>
               )}
 
-              {/* <Typography variant="subtitle1" gutterBottom>
+              <Typography variant="subtitle1" gutterBottom>
                 Design ID: {design.id}
               </Typography>
 
@@ -129,7 +143,7 @@ export default function SavedDesigns() {
                 {design.createdAt?.toDate
                   ? format(design.createdAt.toDate(), 'PPPpp')
                   : 'N/A'}
-              </Typography> */}
+              </Typography>
 
               <Typography variant="body2" gutterBottom>
                 Logo: {design.isLogoTexture ? 'Yes' : 'No'} | Full:{' '}
@@ -148,14 +162,8 @@ export default function SavedDesigns() {
                     </li>
                   ))}
               </ul>
-              <Box
-                sx={{
-                  mt: 2,
-                  display: 'flex',
-                  gap: 1,
-                  justifyContent: 'space-between',
-                }}
-              >
+
+              <Box sx={{ mt: 2, display: 'flex', gap: 1 }}>
                 <CustomButton
                   type="filled"
                   title="Load & Edit"
