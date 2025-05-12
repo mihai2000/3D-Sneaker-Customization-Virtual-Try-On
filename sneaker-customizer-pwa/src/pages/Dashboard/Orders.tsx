@@ -11,7 +11,7 @@ import {
   Box,
 } from '@mui/material';
 import { db } from '../../services/firebase';
-import { collection, query, where, getDocs, orderBy } from 'firebase/firestore';
+import { collection, query, where, getDocs } from 'firebase/firestore';
 import SectionTitle from '../../components/Shared/SectionTitle';
 import { useAuth } from '../../hooks/useAuth';
 
@@ -39,8 +39,7 @@ export default function Orders() {
 
       const q = query(
         collection(db, 'orders'),
-        where('userId', '==', user),
-        orderBy('createdAt', 'desc')
+        where('userId', '==', user.uid)
       );
 
       const snap = await getDocs(q);
@@ -48,6 +47,7 @@ export default function Orders() {
         id: doc.id,
         ...(doc.data() as Omit<Order, 'id'>),
       }));
+      results.sort((a, b) => b.createdAt?.seconds - a.createdAt?.seconds);
 
       setOrders(results);
     };

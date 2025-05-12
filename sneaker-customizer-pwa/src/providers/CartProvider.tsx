@@ -23,7 +23,6 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
 	const [cart, setCart] = useState<CartItem[]>([]);
 	const { user } = useAuth();
 
-	// 🔄 Load cart from Firestore (Option A: subcollection per user)
 	useEffect(() => {
 		const loadCart = async () => {
 			if (!user) return;
