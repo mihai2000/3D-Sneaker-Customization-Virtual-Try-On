@@ -1,16 +1,23 @@
-import { Box, Grid, Paper, Typography, Button } from '@mui/material';
+import {
+  Box,
+  Grid,
+  Paper,
+  Typography,
+  Button,
+  Fab,
+  Tooltip,
+} from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import AddIcon from '@mui/icons-material/Add';
 import { useEffect, useState } from 'react';
 import SectionTitle from '../../components/Shared/SectionTitle';
 import { useAuth } from '../../hooks/useAuth';
 import { fetchSavedDesigns } from '../../services/designs';
-// import { format } from 'date-fns';
 import { useNavigate } from 'react-router-dom';
 import state, { ItemsType } from '../../store';
-import CustomButton from '../../components/ui/CustomButton';
 import { getFirestore, doc, deleteDoc } from 'firebase/firestore';
 import { getStorage, ref as storageRef, deleteObject } from 'firebase/storage';
+import './SavedDesigns.scss';
 
 type DesignData = {
   id: string;
@@ -59,7 +66,7 @@ export default function SavedDesigns() {
     state.isLogoTexture = !!design.isLogoTexture;
     state.isFullTexture = !!design.isFullTexture;
     state.intro = false;
-    state.currentDesignId = design.id; // ✅ for update
+    state.currentDesignId = design.id;
 
     navigate('/customizer');
   };
@@ -95,92 +102,91 @@ export default function SavedDesigns() {
   }, [user]);
 
   return (
-    <Paper sx={{ p: 4 }}>
-      <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 2 }}>
+    <Paper sx={{ p: 4 }} className="darke">
+      <Box
+        sx={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          mb: 3,
+        }}
+      >
         <SectionTitle title="Saved Designs" />
-        <Button
-          variant="contained"
-          color="primary"
-          startIcon={<AddIcon />}
-          onClick={handleCreateNew}
-        >
-          New Design
-        </Button>
+        <Tooltip title="Create New Design">
+          <Fab
+            color="primary"
+            onClick={handleCreateNew}
+            sx={{
+              boxShadow: '0 3px 10px rgba(0,0,0,0.3)',
+              background: 'linear-gradient(45deg, #2196f3, #1e88e5)',
+              color: 'white',
+              '&:hover': {
+                background: 'linear-gradient(45deg, #1976d2, #1565c0)',
+              },
+            }}
+          >
+            <AddIcon />
+          </Fab>
+        </Tooltip>
       </Box>
 
-      <Grid container spacing={2}>
+      <Grid container spacing={3} className="saved-designs">
         {designs.map((design) => (
           <Grid item xs={12} sm={6} md={4} key={design.id}>
-            <Box
-              sx={{
-                border: '1px solid #ccc',
-                borderRadius: 2,
-                p: 2,
-                backgroundColor: '#f9f9f9',
-              }}
-            >
+            <Paper className="design-card" elevation={3}>
               {design.previewImageUrl && (
-                <Box sx={{ mb: 1, display: 'flex', justifyContent: 'center' }}>
-                  <img
-                    src={design.previewImageUrl}
-                    alt="Preview"
-                    style={{
-                      width: '270px',
-                      height: '180px',
-                      objectFit: 'cover',
-                      borderRadius: '4px',
-                    }}
-                  />
-                </Box>
+                <div className="preview">
+                  <img src={design.previewImageUrl} alt="Preview" />
+                  <div className="overlay">
+                    Logo: {design.isLogoTexture ? 'Yes' : 'No'} | Full:{' '}
+                    {design.isFullTexture ? 'Yes' : 'No'}
+                  </div>
+                </div>
               )}
 
-              {/* <Typography variant="subtitle1" gutterBottom>
-                Design ID: {design.id}
-              </Typography>
+              <Box p={2}>
+                <Typography variant="body2" mt={1}>
+                  <strong>Colors:</strong>
+                </Typography>
+                <ul className="colors-list">
+                  {design.items &&
+                    Object.entries(design.items).map(([part, color]) => (
+                      <li key={part}>
+                        {part}
+                        <span
+                          style={{
+                            backgroundColor:
+                              color.toLowerCase() === '#fff'
+                                ? '#e0e0e0'
+                                : 'transparent',
+                            borderRadius: '4px',
+                            color,
+                          }}
+                        >
+                          {color}
+                        </span>
+                      </li>
+                    ))}
+                </ul>
 
-              <Typography variant="body2" gutterBottom>
-                Created:{' '}
-                {design.createdAt?.toDate
-                  ? format(design.createdAt.toDate(), 'PPPpp')
-                  : 'N/A'}
-              </Typography> */}
-
-              <Typography variant="body2" gutterBottom>
-                Logo: {design.isLogoTexture ? 'Yes' : 'No'} | Full:{' '}
-                {design.isFullTexture ? 'Yes' : 'No'}
-              </Typography>
-
-              <Typography variant="body2" gutterBottom>
-                Colors:
-              </Typography>
-              <ul style={{ paddingLeft: '1rem' }}>
-                {design.items &&
-                  Object.entries(design.items).map(([part, color]) => (
-                    <li key={part}>
-                      <strong>{part}</strong>:{' '}
-                      <span style={{ color }}>{color}</span>
-                    </li>
-                  ))}
-              </ul>
-
-              <Box sx={{ mt: 2, display: 'flex', gap: 1 }}>
-                <CustomButton
-                  type="filled"
-                  title="Load & Edit"
-                  customStyle="text-xs"
-                  handleClick={() => handleLoadDesign(design)}
-                />
-                <Button
-                  variant="outlined"
-                  color="error"
-                  size="small"
-                  startIcon={<DeleteIcon />}
-                  onClick={() => handleDelete(design.id)}
-                >
-                  Delete
-                </Button>
+                <Box className="card-footer">
+                  <Button
+                    className="load-btn"
+                    startIcon={<AddIcon />}
+                    onClick={() => handleLoadDesign(design)}
+                  >
+                    Load & Edit
+                  </Button>
+                  <Button
+                    className="delete-btn"
+                    startIcon={<DeleteIcon />}
+                    onClick={() => handleDelete(design.id)}
+                  >
+                    Delete
+                  </Button>
+                </Box>
               </Box>
-            </Box>
+            </Paper>
           </Grid>
         ))}
       </Grid>
