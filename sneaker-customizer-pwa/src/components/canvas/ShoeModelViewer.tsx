@@ -12,7 +12,6 @@ interface Props {
 	modelUrl: string;
 	shoeName: string;
 }
-
 const ShoeModelViewer: React.FC<Props> = ({
 	isOpen,
 	onClose,

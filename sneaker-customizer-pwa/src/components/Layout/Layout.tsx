@@ -15,8 +15,6 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
 				style={{
 					position: "relative",
 					height: "100vh",
-					// width: "100vw",
-					overflow: "hidden",
 				}}
 			>
 				{children}

@@ -1,106 +1,105 @@
-@import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,wght@0,200;0,600;1,900&display=swap');
-@import url('https://rsms.me/inter/inter.css');
+@import url("https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,wght@0,200;0,600;1,900&display=swap");
+@import url("https://rsms.me/inter/inter.css");
 
 html {
-  font-family: 'Inter', sans-serif;
+	font-family: "Inter", sans-serif;
 }
 
 @supports (font-variation-settings: normal) {
-  html {
-    font-family: 'Inter var', sans-serif;
-  }
+	html {
+		font-family: "Inter var", sans-serif;
+	}
 }
 html,
 body,
 #root {
-  height: 100%;
-  margin: 0;
-  padding: 0;
-  overflow: hidden;
+	height: 100%;
+	margin: 0;
+	padding: 0;
 }
 .glassmorphism {
-  background: rgba(255, 255, 255, 0.25);
-  box-shadow: 0 2px 30px 0 rgba(31, 38, 135, 0.07);
-  backdrop-filter: blur(4px);
-  -webkit-backdrop-filter: blur(4px);
-  border: 1px solid rgba(255, 255, 255, 0.18);
+	background: rgba(255, 255, 255, 0.25);
+	box-shadow: 0 2px 30px 0 rgba(31, 38, 135, 0.07);
+	backdrop-filter: blur(4px);
+	-webkit-backdrop-filter: blur(4px);
+	border: 1px solid rgba(255, 255, 255, 0.18);
 }
 
-input[type='file'] {
-  z-index: -1;
-  position: absolute;
-  opacity: 0;
+input[type="file"] {
+	z-index: -1;
+	position: absolute;
+	opacity: 0;
 }
 
 .sketch-picker {
-  width: 170px !important;
-  background: rgba(255, 255, 255, 0.25) !important;
-  box-shadow: 0 2px 30px 0 rgba(31, 38, 135, 0.07) !important;
-  backdrop-filter: blur(4px) !important;
-  -webkit-backdrop-filter: blur(4px) !important;
-  border: 1px solid rgba(255, 255, 255, 0.18) !important;
-  border-radius: 6px !important;
+	width: 170px !important;
+	background: rgba(255, 255, 255, 0.25) !important;
+	box-shadow: 0 2px 30px 0 rgba(31, 38, 135, 0.07) !important;
+	backdrop-filter: blur(4px) !important;
+	-webkit-backdrop-filter: blur(4px) !important;
+	border: 1px solid rgba(255, 255, 255, 0.18) !important;
+	border-radius: 6px !important;
 }
 
 .sketch-picker > div:nth-child(3) {
-  display: none !important;
+	display: none !important;
 }
 
 /* Dev rev styles */
 
 .custom-launcher-selector {
-  width: 80px;
-  height: 80px;
-  background: #efeded;
-  bottom: 50px;
-  right: 40px;
-  margin: 20px;
-  position: fixed;
-  cursor: pointer;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+	width: 80px;
+	height: 80px;
+	background: #efeded;
+	bottom: 50px;
+	right: 40px;
+	margin: 20px;
+	position: fixed;
+	cursor: pointer;
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
 }
 
 .waving-palm {
-  animation: wave 2s infinite;
-  font-size: 1.5rem;
+	animation: wave 2s infinite;
+	font-size: 1.5rem;
 }
 
 @keyframes wave {
-  0% {
-    transform: rotate(0);
-  }
+	0% {
+		transform: rotate(0);
+	}
 
-  25% {
-    transform: rotate(-25deg);
-  }
+	25% {
+		transform: rotate(-25deg);
+	}
 
-  50% {
-    transform: rotate(0);
-  }
+	50% {
+		transform: rotate(0);
+	}
 
-  75% {
-    transform: rotate(25deg);
-  }
+	75% {
+		transform: rotate(25deg);
+	}
 
-  100% {
-    transform: rotate(0);
-  }
+	100% {
+		transform: rotate(0);
+	}
 }
 
 .spacing-container-styles {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 100vh;
 }
 
 .loading-text-styles {
-  font-size: 48px;
-  color: #fff;
-  display: flex;
-  align-items: center;
+	font-size: 48px;
+	color: #fff;
+	display: flex;
+	align-items: center;
 }
 
 .typing-dots-styles {
-  animation: typing 1s infinite;
+	animation: typing 1s infinite;
 }

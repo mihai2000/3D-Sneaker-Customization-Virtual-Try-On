@@ -18,7 +18,6 @@ import SavedDesigns from "./pages/Dashboard/SavedDesigns";
 import Profile from "./pages/Dashboard/Profile";
 
 import CartPage from "./pages/Cart/Cart";
-// import ProductsPage from "./pages/Products/Products";
 import OrderConfirmation from "./pages/Checkout/OrderConfirmation";
 import CheckoutPage from "./pages/Checkout/CheckoutPage";
 import NotFound from "./pages/NotFound404/NotFound";
@@ -30,8 +29,7 @@ import Dashboard from "./pages/Dashboard/Dashboard";
 import ProductGallery from "./pages/Products/ProductGallery";
 import CustomizerPage from "./pages/Customizer/CustomizerPage";
 import Home from "./pages/Home/Home";
-import ProductsPage from "./pages/Products/Products";
-
+import "./App.css";
 const App: React.FC = () => {
 	return (
 		<main className="app">
@@ -124,19 +122,15 @@ const App: React.FC = () => {
 				<Route
 					path="/products"
 					element={
-						<Layout>
-							<ProductsPage />
-						</Layout>
+						<ProtectedRoute>
+							<Layout>
+								{/* <ProductsPage /> */}
+								<ProductGallery />
+							</Layout>
+						</ProtectedRoute>
 					}
 				/>
-				<Route
-					path="/modern-products"
-					element={
-						<Layout>
-							<ProductGallery />
-						</Layout>
-					}
-				/>
+
 				<Route
 					path="/cart"
 					element={

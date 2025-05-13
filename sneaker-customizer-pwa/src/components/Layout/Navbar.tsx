@@ -22,7 +22,6 @@ const pages = [
 	{ label: "Saved Designs", path: "/saved" },
 	{ label: "Cart", path: "/cart" },
 	{ label: "Products", path: "/products" },
-	{ label: "Modern Products", path: "/modern-products" },
 ];
 const settings = [
 	{ label: "Profile", path: "/profile" },
