@@ -1,123 +1,69 @@
-import {
-  Card,
-  CardContent,
-  CardMedia,
-  Typography,
-  Button,
-  Box,
-  Chip,
-} from '@mui/material';
+import { motion } from 'framer-motion';
+import { ShoppingCart } from 'lucide-react';
 import { useCart } from '../../hooks/useCart';
 import { toast } from 'react-toastify';
+import './ProductComponents.scss';
 
-export default function ProductCard({ product }: { product: any }) {
+export function ProductCard({
+  shoe,
+  onSelect,
+}: {
+  shoe: any;
+  onSelect: () => void;
+}) {
   const { addToCart } = useCart();
 
-  const handleAddToCart = () => {
+  const handleAddToCart = (e: React.MouseEvent) => {
+    e.stopPropagation(); // prevent opening viewer
     addToCart({
-      id: product.id,
-      name: product.name,
-      price: product.price,
+      id: shoe.id,
+      name: shoe.name,
+      price: shoe.price,
       quantity: 1,
-      image: product.image,
+      image: shoe.image,
     });
-    toast.success(`${product.name} added to cart!`);
+    toast.success(`${shoe.name} added to cart!`);
   };
 
   return (
-    <Card
-      sx={{
-        maxWidth: 345,
-        height: '100%',
-        borderRadius: 3,
-        boxShadow: 3,
-        transition: 'transform 0.2s ease-in-out',
-        '&:hover': { transform: 'scale(1.02)' },
-        display: 'flex',
-        flexDirection: 'column',
-      }}
+    <motion.div
+      layout
+      initial={{ opacity: 0, scale: 0.9 }}
+      animate={{ opacity: 1, scale: 1 }}
+      exit={{ opacity: 0, scale: 0.9 }}
+      whileHover={{ y: -10 }}
+      className="product-card"
+      onClick={onSelect}
     >
-      <Box
-        sx={{
-          position: 'relative',
-          height: 220,
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-        }}
-      >
-        <CardMedia
-          component="img"
-          image={product.image}
-          alt={product.name}
-          sx={{
-            maxHeight: '100%',
-            maxWidth: '100%',
-            objectFit: 'contain',
-            p: 2,
-          }}
-        />
-        <Chip
-          label={`${product.price} RON`}
-          color="primary"
-          size="small"
-          sx={{
-            position: 'absolute',
-            top: 12,
-            right: 12,
-            fontWeight: 'bold',
-            backgroundColor: '#111',
-            color: '#fff',
-          }}
-        />
-      </Box>
+      <div className="card-glow" />
+      <div className="card-inner">
+        <div className="image-container">
+          <motion.img
+            src={shoe.image}
+            alt={shoe.name}
+            className="product-image"
+            whileHover={{ scale: 1.1 }}
+            transition={{ duration: 0.4 }}
+          />
+        </div>
 
-      <CardContent sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
-        <Typography variant="h6" component="div" fontWeight={600}>
-          {product.name}
-        </Typography>
-
-        <Button
-          variant="contained"
-          onClick={handleAddToCart}
-          sx={{ mt: 1, borderRadius: 2, fontWeight: 'bold' }}
-        >
-          Add to Cart
-        </Button>
-      </CardContent>
-    </Card>
+        <div className="product-details">
+          <h2 className="product-title">{shoe.name}</h2>
+          <p className="product-description">{shoe.description}</p>
+          <div className="product-footer">
+            <span className="product-price">${shoe.price}</span>
+            <motion.button
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              onClick={handleAddToCart}
+              className="add-to-cart-button"
+            >
+              <ShoppingCart className="cart-icon" />
+              Add to Cart
+            </motion.button>
+          </div>
+        </div>
+      </div>
+    </motion.div>
   );
 }
-// import React from 'react';
-// import { motion } from 'framer-motion';
-// import './ProductCard.scss';
-
-// interface Props {
-//   product: any;
-//   onClick: () => void;
-// }
-
-// const ProductCard: React.FC<Props> = ({ product, onClick }) => {
-//   return (
-//     <motion.div
-//       className="product-card"
-//       layout
-//       initial={{ opacity: 0, scale: 0.9 }}
-//       animate={{ opacity: 1, scale: 1 }}
-//       exit={{ opacity: 0, scale: 0.9 }}
-//       transition={{ duration: 0.3 }}
-//       onClick={onClick}
-//     >
-//       <div className="image-wrapper">
-//         <img src={product.image} alt={product.name} />
-//       </div>
-//       <div className="card-content">
-//         <h2>{product.name}</h2>
-//         <p>{product.description}</p>
-//         <span className="price">{product.price} RON</span>
-//       </div>
-//     </motion.div>
-//   );
-// };
-
-// export default ProductCard;

@@ -1,44 +1,46 @@
-import { Box, TextField, Chip, Stack } from "@mui/material";
-import React from "react";
+import { Chip } from '@mui/material';
+import { Search } from 'lucide-react';
+import './ProductComponents.scss'
+export function ProductFilter({
+  categories,
+  selectedCategory,
+  setSelectedCategory,
+  searchQuery,
+  setSearchQuery,
+}: {
+  categories: string[];
+  selectedCategory: string;
+  setSelectedCategory: (category: string) => void;
+  searchQuery: string;
+  setSearchQuery: (query: string) => void;
+}) {
+  return (
+    <div className="search-section">
+      <div className="search-bar-wrapper">
+        <div className="search-bar">
+          <Search className="search-icon" />
+          <input
+            type="text"
+            placeholder="Search products..."
+            className="search-input"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+          />
+        </div>
+      </div>
 
-const categories = ["All", "Men", "Women", "Unisex", "Kids"];
-
-interface Props {
-	search: string;
-	setSearch: (v: string) => void;
-	selectedCategory: string;
-	setSelectedCategory: (v: string) => void;
+      <div className="category-filters">
+        {categories.map((cat) => (
+          <Chip
+            key={cat}
+            label={cat}
+            color={cat === selectedCategory ? 'primary' : 'default'}
+            onClick={() => setSelectedCategory(cat)}
+            clickable
+            sx={{ mr: 1 }}
+          />
+        ))}
+      </div>
+    </div>
+  );
 }
-
-const ProductFilters: React.FC<Props> = ({
-	search,
-	setSearch,
-	selectedCategory,
-	setSelectedCategory,
-}) => {
-	return (
-		<Box sx={{ mb: 4 }}>
-			<TextField
-				label="Search products"
-				variant="outlined"
-				value={search}
-				onChange={(e) => setSearch(e.target.value)}
-				fullWidth
-				sx={{ mb: 2 }}
-			/>
-			<Stack direction="row" spacing={1}>
-				{categories.map((cat) => (
-					<Chip
-						key={cat}
-						label={cat}
-						color={cat === selectedCategory ? "primary" : "default"}
-						onClick={() => setSelectedCategory(cat)}
-						clickable
-					/>
-				))}
-			</Stack>
-		</Box>
-	);
-};
-
-export default ProductFilters;

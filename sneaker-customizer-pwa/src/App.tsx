@@ -125,7 +125,7 @@ const App: React.FC = () => {
             <ProtectedRoute>
               <Layout>
                 {/* <ProductsPage /> */}
-                <ProductGallery product={undefined} />
+                <ProductGallery />
               </Layout>
             </ProtectedRoute>
           }
