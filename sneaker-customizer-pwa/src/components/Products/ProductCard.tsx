@@ -88,3 +88,36 @@ export default function ProductCard({ product }: { product: any }) {
     </Card>
   );
 }
+// import React from 'react';
+// import { motion } from 'framer-motion';
+// import './ProductCard.scss';
+
+// interface Props {
+//   product: any;
+//   onClick: () => void;
+// }
+
+// const ProductCard: React.FC<Props> = ({ product, onClick }) => {
+//   return (
+//     <motion.div
+//       className="product-card"
+//       layout
+//       initial={{ opacity: 0, scale: 0.9 }}
+//       animate={{ opacity: 1, scale: 1 }}
+//       exit={{ opacity: 0, scale: 0.9 }}
+//       transition={{ duration: 0.3 }}
+//       onClick={onClick}
+//     >
+//       <div className="image-wrapper">
+//         <img src={product.image} alt={product.name} />
+//       </div>
+//       <div className="card-content">
+//         <h2>{product.name}</h2>
+//         <p>{product.description}</p>
+//         <span className="price">{product.price} RON</span>
+//       </div>
+//     </motion.div>
+//   );
+// };
+
+// export default ProductCard;
