@@ -121,7 +121,11 @@
   .design-card {
     background-color: #1f1f1f;
     color: #e0e0e0;
+    box-shadow: 0 2px 10px rgba(255, 255, 255, 0.04);
 
+    &:hover {
+      box-shadow: 0 10px 24px rgba(255, 255, 255, 0.08);
+    }
     .colors-list span {
       background-color: rgba(255, 255, 255, 0.1);
     }

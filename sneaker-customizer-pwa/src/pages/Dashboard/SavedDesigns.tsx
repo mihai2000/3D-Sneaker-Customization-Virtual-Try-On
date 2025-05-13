@@ -1,12 +1,4 @@
-import {
-  Box,
-  Grid,
-  Paper,
-  Typography,
-  Button,
-  Fab,
-  Tooltip,
-} from '@mui/material';
+import { Box, Grid, Typography, Button, Fab, Tooltip } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import AddIcon from '@mui/icons-material/Add';
 import { useEffect, useState } from 'react';
@@ -102,7 +94,10 @@ export default function SavedDesigns() {
   }, [user]);
 
   return (
-    <Paper sx={{ p: 4 }} className="darke">
+    <Box
+      sx={{ p: 4 }}
+      // className="dark"
+    >
       <Box
         sx={{
           display: 'flex',
@@ -133,7 +128,7 @@ export default function SavedDesigns() {
       <Grid container spacing={3} className="saved-designs">
         {designs.map((design) => (
           <Grid item xs={12} sm={6} md={4} key={design.id}>
-            <Paper className="design-card" elevation={3}>
+            <Box className="design-card">
               {design.previewImageUrl && (
                 <div className="preview">
                   <img src={design.previewImageUrl} alt="Preview" />
@@ -186,10 +181,10 @@ export default function SavedDesigns() {
                   </Button>
                 </Box>
               </Box>
-            </Paper>
+            </Box>
           </Grid>
         ))}
       </Grid>
-    </Paper>
+    </Box>
   );
 }
