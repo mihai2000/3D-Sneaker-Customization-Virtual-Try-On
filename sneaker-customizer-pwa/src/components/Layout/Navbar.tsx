@@ -22,7 +22,7 @@ import AdbIcon from '@mui/icons-material/Adb';
 import { styled } from '@mui/system';
 import { useAuth } from '../../hooks/useAuth';
 import LinkButton from './LinkButton';
-import { resetState } from '../../store';
+import state, { resetState } from '../../store';
 
 // Menu definitions
 const pages = [
@@ -97,10 +97,10 @@ export default function ResponsiveAppBar() {
   };
   const handleNavClick = (path: string) => {
     if (path === '/customizer') {
+      state.intro = true;
       resetState();
-      document.body.style.cursor = 'auto';
     }
-
+    document.body.style.cursor = 'auto';
     navigate(path);
     setDrawerOpen(false);
   };
@@ -155,7 +155,7 @@ export default function ResponsiveAppBar() {
               {pages.map((page) => (
                 <NavButton
                   key={page.label}
-                  to="#"
+                  to={page.path}
                   onClick={() => handleNavClick(page.path)}
                 >
                   {page.label}
