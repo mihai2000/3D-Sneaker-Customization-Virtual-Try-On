@@ -1,11 +1,9 @@
 /* color picker */
 .color-picker-wrapper {
-  position: absolute;
-  top: 1.25rem;
-  /* equivalent to top-5 */
+  position: relative;
+  margin-top: 6rem;
   z-index: 10;
   margin-left: 0.75rem;
-  /* ml-3 */
   display: flex;
   left: 0.1rem;
 }
@@ -52,7 +50,7 @@
 }
 /* file picker */
 .file-picker-wrapper {
-  position: absolute;
+  position: relative;
   left: 100%;
   margin-left: 0.75rem;
   padding: 0.75rem;
@@ -109,7 +107,7 @@
 }
 /* instructions */
 .instructions-wrapper {
-  position: absolute;
+  position: relative;
   top: 1.25rem;
   z-index: 10;
   margin-left: 0.75rem;

@@ -1,8 +1,7 @@
 /* Left sidebar panel */
 .customizer-sidebar {
   position: absolute;
-  top: 0;
-  left: 0;
+  top: 70px;
   z-index: 10;
 }
 
@@ -10,7 +9,8 @@
 .editor-container {
   display: flex;
   align-items: center;
-  min-height: 100vh;
+  height: 500px;
+  /* min-height: 100vh; */
 }
 
 /* Editor glass panel */
@@ -30,7 +30,7 @@
 /* Top right back button */
 .customizer-back-btn {
   position: absolute;
-  top: 1.25rem;
+  top: 6rem;
   right: 1.25rem;
   z-index: 10;
 }
@@ -54,11 +54,9 @@
 
 /* Bottom center filter buttons */
 .customizer-filter-tabs {
-  position: absolute;
+  position: relative;
   z-index: 10;
-  bottom: 6rem;
-  right: 0;
-  left: 0;
+  bottom: 10rem;
   width: 100%;
   display: flex;
   justify-content: center;
