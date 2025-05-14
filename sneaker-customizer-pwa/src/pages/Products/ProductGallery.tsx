@@ -1,5 +1,9 @@
 import { useEffect, useState } from "react";
-import { AnimatePresence, motion } from "framer-motion";
+import {
+	// AnimatePresence,
+	motion,
+} from "framer-motion";
+import { Box, Pagination } from "@mui/material";
 import "./ProductGallery.scss";
 import ShoeModelViewer from "../../components/canvas/ShoeModelViewer";
 import { fetchProducts } from "../../services/products";
@@ -14,6 +18,9 @@ export default function ProductPage() {
 	const [selectedCategory, setSelectedCategory] = useState("All");
 	const [searchQuery, setSearchQuery] = useState("");
 	const [selectedShoe, setSelectedShoe] = useState<any | null>(null);
+
+	const [currentPage, setCurrentPage] = useState(1);
+	const itemsPerPage = 5;
 
 	useEffect(() => {
 		const load = async () => {
@@ -31,7 +38,14 @@ export default function ProductPage() {
 				(selectedCategory === "All" || p.category === selectedCategory)
 		);
 		setFiltered(result);
+		setCurrentPage(1); // reset to first page when filters change
 	}, [products, searchQuery, selectedCategory]);
+
+	const pageCount = Math.ceil(filtered.length / itemsPerPage);
+	const paginatedProducts = filtered.slice(
+		(currentPage - 1) * itemsPerPage,
+		currentPage * itemsPerPage
+	);
 
 	return (
 		<div className="featured-products-container">
@@ -49,16 +63,43 @@ export default function ProductPage() {
 				transition={{ duration: 0.5 }}
 				className="product-grid"
 			>
-				<AnimatePresence>
-					{filtered.map((shoe) => (
-						<ProductCard
-							key={shoe.id}
-							shoe={shoe}
-							onSelect={() => setSelectedShoe(shoe)}
-						/>
-					))}
-				</AnimatePresence>
+				{/* <AnimatePresence> */}
+				{paginatedProducts.map((shoe) => (
+					<ProductCard
+						key={shoe.id}
+						shoe={shoe}
+						onSelect={() => setSelectedShoe(shoe)}
+					/>
+				))}
+				{/* </AnimatePresence> */}
 			</motion.div>
+
+			{pageCount > 1 && (
+				<Box sx={{ display: "flex", justifyContent: "center", mt: 4 }}>
+					<Pagination
+						count={pageCount}
+						page={currentPage}
+						onChange={(e, value) => setCurrentPage(value)}
+						color="primary"
+						size="large"
+						shape="rounded"
+						sx={{
+							"& .MuiPaginationItem-root": {
+								color: "#fff",
+								borderColor: "#374151",
+								backgroundColor: "#1f2937",
+							},
+							"& .Mui-selected": {
+								backgroundColor: "#3b82f6 !important",
+								color: "#fff",
+							},
+							"& .MuiPaginationItem-root:hover": {
+								backgroundColor: "#2d3748",
+							},
+						}}
+					/>
+				</Box>
+			)}
 
 			{selectedShoe && (
 				<ShoeModelViewer
