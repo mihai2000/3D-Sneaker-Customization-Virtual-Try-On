@@ -11,11 +11,12 @@ import PlugDevRev from '../../components/ui/PlugDevRev';
 import { DecalTypes, EditorTabs, FilterTabs } from '../../config/constants';
 import { reader } from '../../config/helpers';
 import { fadeAnimation, slideAnimation } from '../../config/motion';
-import state from '../../store';
-import './customizer.css';
-import SaveDesignButton from '../../components/ui/SaveDesignedButton';
+import state, { resetState } from '../../store';
 import { useNavigate, useParams } from 'react-router';
 import { fetchSavedDesignById } from '../../services/designs';
+import { saveDesignToFirestore } from '../../utils/saveDesignToFirestore';
+import { toast } from 'react-toastify';
+import './Customizer.css';
 interface DecalType {
   stateProperty: string;
   filterTab: string;
@@ -105,10 +106,27 @@ const Customizer: React.FC = () => {
   };
   const navigate = useNavigate();
 
-  const handleCustomize = () => {
+  const handleCustomizerPage = () => {
     document.body.style.cursor = 'auto';
     state.intro = true;
     navigate('/customizer');
+  };
+  const handleResetDesign = () => {
+    resetState();
+  };
+  const [loading, setLoading] = useState(false);
+
+  const handleSave = async () => {
+    try {
+      setLoading(true);
+      await saveDesignToFirestore();
+      toast.success('Design saved successfully!');
+    } catch (err: any) {
+      console.error('Save design error:', err);
+      toast.error('Failed to save design');
+    } finally {
+      setLoading(false);
+    }
   };
   return (
     <AnimatePresence>
@@ -135,13 +153,28 @@ const Customizer: React.FC = () => {
           </motion.div>
 
           <motion.div className="customizer-back-btn" {...fadeAnimation}>
-            <div style={{ display: 'flex', gap: '0.5rem' }}>
+            <div
+              style={{
+                display: 'flex',
+                flexDirection: 'column',
+                gap: '0.5rem',
+              }}
+            >
               <CustomButton
                 title="Go Back"
                 customStyle="custom-button"
-                handleClick={handleCustomize}
+                handleClick={handleCustomizerPage}
               />
-              <SaveDesignButton />
+              <CustomButton
+                title={loading ? 'Saving...' : 'Save Design'}
+                customStyle="text-xs"
+                handleClick={handleSave}
+              />
+              <CustomButton
+                title="Reset Design"
+                customStyle="custom-button"
+                handleClick={handleResetDesign}
+              />
             </div>
           </motion.div>
 
