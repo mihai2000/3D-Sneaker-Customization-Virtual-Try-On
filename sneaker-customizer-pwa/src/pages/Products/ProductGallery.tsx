@@ -76,7 +76,7 @@ export default function ProductPage() {
           <Pagination
             count={pageCount}
             page={currentPage}
-            onChange={(e, value) => setCurrentPage(value)}
+            onChange={(_, value) => setCurrentPage(value)}
             color="primary"
             size="large"
             shape="rounded"
