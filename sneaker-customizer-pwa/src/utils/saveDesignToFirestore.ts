@@ -10,6 +10,7 @@ import { getAuth } from 'firebase/auth';
 import state from '../store';
 import { uploadPreviewImage } from './uploadPreviewImage';
 import { toast } from 'react-toastify';
+import { DesignData } from '../types/designs';
 export const saveDesignToFirestore = async () => {
   const auth = getAuth();
   const user = auth.currentUser;
@@ -20,7 +21,7 @@ export const saveDesignToFirestore = async () => {
   const preview = await uploadPreviewImage();
   if (!preview) throw new Error('Preview upload failed');
 
-  const designData = {
+  const designData: Omit<DesignData, 'id'> = {
     userId: user.uid,
     items: state.items,
     logoDecal: state.logoDecal,
@@ -31,6 +32,7 @@ export const saveDesignToFirestore = async () => {
     previewImagePath: preview?.path || '',
     createdAt: serverTimestamp(),
   };
+
   if (state.currentDesignId) {
     const docRef = doc(db, 'users', user.uid, 'designs', state.currentDesignId);
     await updateDoc(docRef, designData); // 🔁 Update

@@ -1,146 +1,172 @@
-import { AnimatePresence, motion } from "framer-motion";
-import React, { useState } from "react";
-import { useSnapshot } from "valtio";
+import { AnimatePresence, motion } from 'framer-motion';
+import React, { useEffect, useState } from 'react';
+import { useSnapshot } from 'valtio';
 import {
-	ColorPicker,
-	CustomButton,
-	FilePicker,
-	Tab,
-} from "../../components/ui";
-import PlugDevRev from "../../components/ui/PlugDevRev";
-import { DecalTypes, EditorTabs, FilterTabs } from "../../config/constants";
-import { reader } from "../../config/helpers";
-import { fadeAnimation, slideAnimation } from "../../config/motion";
-import state from "../../store";
-import "./customizer.css";
-import SaveDesignButton from "../../components/ui/SaveDesignedButton";
+  ColorPicker,
+  CustomButton,
+  FilePicker,
+  Tab,
+} from '../../components/ui';
+import PlugDevRev from '../../components/ui/PlugDevRev';
+import { DecalTypes, EditorTabs, FilterTabs } from '../../config/constants';
+import { reader } from '../../config/helpers';
+import { fadeAnimation, slideAnimation } from '../../config/motion';
+import state from '../../store';
+import './customizer.css';
+import SaveDesignButton from '../../components/ui/SaveDesignedButton';
+import { useNavigate, useParams } from 'react-router';
+import { fetchSavedDesignById } from '../../services/designs';
 interface DecalType {
-	stateProperty: string;
-	filterTab: string;
+  stateProperty: string;
+  filterTab: string;
 }
 
 const Customizer: React.FC = () => {
-	const snap = useSnapshot(state);
+  const snap = useSnapshot(state);
 
-	const [file, setFile] = useState<File | null>(null);
-	const [activeEditorTab, setActiveEditorTab] = useState<string>("");
-	const [activeFilterTab, setActiveFilterTab] = useState<{
-		[key: string]: boolean;
-	}>({
-		logoShoe: true,
-		stylishShoe: false,
-	});
+  const [file, setFile] = useState<File | null>(null);
+  const [activeEditorTab, setActiveEditorTab] = useState<string>('');
+  const [activeFilterTab, setActiveFilterTab] = useState<{
+    [key: string]: boolean;
+  }>({
+    logoShoe: true,
+    stylishShoe: false,
+  });
 
-	const generateTabContent = () => {
-		switch (activeEditorTab) {
-			case "filepicker":
-				return (
-					<FilePicker
-						file={file}
-						setFile={(file: File) => setFile(file)}
-						readFile={readFile}
-					/>
-				);
-			default:
-				return null;
-		}
-	};
+  const generateTabContent = () => {
+    switch (activeEditorTab) {
+      case 'filepicker':
+        return (
+          <FilePicker
+            file={file}
+            setFile={(file: File) => setFile(file)}
+            readFile={readFile}
+          />
+        );
+      default:
+        return null;
+    }
+  };
 
-	const handleDecals = (type: string, result: string | ArrayBuffer | null) => {
-		const decalType: DecalType = DecalTypes[type];
-		(state as any)[decalType.stateProperty] = result;
+  const { designId } = useParams();
 
-		if (!activeFilterTab[decalType.filterTab]) {
-			handleActiveFilterTab(decalType.filterTab);
-		}
-	};
+  useEffect(() => {
+    if (designId) {
+      (async () => {
+        const data = await fetchSavedDesignById(designId);
+        if (data) {
+          state.currentDesignId = data.id || null;
+          Object.assign(state.items, data.items ?? {});
+          state.logoDecal = data.logoDecal ?? '';
+          state.fullDecal = data.fullDecal ?? '';
+          state.isLogoTexture = !!data.isLogoTexture;
+          state.isFullTexture = !!data.isFullTexture;
+          state.intro = false;
+        }
+      })();
+    }
+  }, [designId]);
 
-	const handleActiveFilterTab = (tabName: string) => {
-		switch (tabName) {
-			case "logoShoe":
-				state.isLogoTexture = !activeFilterTab[tabName];
-				break;
-			case "stylishShoe":
-				state.isFullTexture = !activeFilterTab[tabName];
-				break;
-			default:
-				state.isFullTexture = false;
-				state.isLogoTexture = true;
-				break;
-		}
+  const handleDecals = (type: string, result: string | ArrayBuffer | null) => {
+    const decalType: DecalType = DecalTypes[type];
+    (state as any)[decalType.stateProperty] = result;
 
-		setActiveFilterTab((prevState) => ({
-			...prevState,
-			[tabName]: !prevState[tabName],
-		}));
-	};
+    if (!activeFilterTab[decalType.filterTab]) {
+      handleActiveFilterTab(decalType.filterTab);
+    }
+  };
 
-	const readFile = (type: string) => {
-		if (!file) return;
-		reader(file).then((result) => {
-			handleDecals(type, result);
-			setActiveEditorTab("");
-		});
-	};
+  const handleActiveFilterTab = (tabName: string) => {
+    switch (tabName) {
+      case 'logoShoe':
+        state.isLogoTexture = !activeFilterTab[tabName];
+        break;
+      case 'stylishShoe':
+        state.isFullTexture = !activeFilterTab[tabName];
+        break;
+      default:
+        state.isFullTexture = false;
+        state.isLogoTexture = true;
+        break;
+    }
 
-	return (
-		<AnimatePresence>
-			{!snap.intro && (
-				<>
-					<motion.div
-						key="custom"
-						className="customizer-sidebar"
-						{...slideAnimation("left")}
-					>
-						<ColorPicker />
-						<div className="editor-container">
-							<div className="editor-tab-panel glassmorphism">
-								{EditorTabs.map((tab) => (
-									<Tab
-										key={tab.name}
-										tab={tab}
-										handleClick={() => setActiveEditorTab(tab.name)}
-									/>
-								))}
-								{generateTabContent()}
-							</div>
-						</div>
-					</motion.div>
+    setActiveFilterTab((prevState) => ({
+      ...prevState,
+      [tabName]: !prevState[tabName],
+    }));
+  };
 
-					<motion.div className="customizer-back-btn" {...fadeAnimation}>
-						<div style={{ display: "flex", gap: "0.5rem" }}>
-							<CustomButton
-								type="filled"
-								title="Go Back"
-								customStyle="custom-button"
-								handleClick={() => (state.intro = true)}
-							/>
-							<SaveDesignButton />
-						</div>
-					</motion.div>
+  const readFile = (type: string) => {
+    if (!file) return;
+    reader(file).then((result) => {
+      handleDecals(type, result);
+      setActiveEditorTab('');
+    });
+  };
+  const navigate = useNavigate();
 
-					<motion.div
-						className="customizer-filter-tabs"
-						{...slideAnimation("up")}
-					>
-						{FilterTabs.map((tab) => (
-							<Tab
-								key={tab.name}
-								tab={tab}
-								isFilteredTab
-								isActiveTab={activeFilterTab[tab.name]}
-								handleClick={() => handleActiveFilterTab(tab.name)}
-							/>
-						))}
-					</motion.div>
+  const handleCustomize = () => {
+    document.body.style.cursor = 'auto';
+    state.intro = true;
+    navigate('/customizer');
+  };
+  return (
+    <AnimatePresence>
+      {!snap.intro && (
+        <>
+          <motion.div
+            key="custom"
+            className="customizer-sidebar"
+            {...slideAnimation('left')}
+          >
+            <ColorPicker />
+            <div className="editor-container">
+              <div className="editor-tab-panel glassmorphism">
+                {EditorTabs.map((tab) => (
+                  <Tab
+                    key={tab.name}
+                    tab={tab}
+                    handleClick={() => setActiveEditorTab(tab.name)}
+                  />
+                ))}
+                {generateTabContent()}
+              </div>
+            </div>
+          </motion.div>
 
-					<motion.div>
-						<PlugDevRev />
-					</motion.div>
-				</>
-			)}
-		</AnimatePresence>
-	);
+          <motion.div className="customizer-back-btn" {...fadeAnimation}>
+            <div style={{ display: 'flex', gap: '0.5rem' }}>
+              <CustomButton
+                title="Go Back"
+                customStyle="custom-button"
+                handleClick={handleCustomize}
+              />
+              <SaveDesignButton />
+            </div>
+          </motion.div>
+
+          <motion.div
+            className="customizer-filter-tabs"
+            {...slideAnimation('up')}
+          >
+            {FilterTabs.map((tab) => (
+              <Tab
+                key={tab.name}
+                tab={tab}
+                isFilteredTab
+                isActiveTab={activeFilterTab[tab.name]}
+                handleClick={() => handleActiveFilterTab(tab.name)}
+              />
+            ))}
+          </motion.div>
+
+          <motion.div>
+            <PlugDevRev />
+          </motion.div>
+        </>
+      )}
+    </AnimatePresence>
+  );
 };
 
 export default Customizer;

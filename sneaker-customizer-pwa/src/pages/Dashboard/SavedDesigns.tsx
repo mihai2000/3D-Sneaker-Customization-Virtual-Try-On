@@ -6,22 +6,11 @@ import SectionTitle from '../../components/Shared/SectionTitle';
 import { useAuth } from '../../hooks/useAuth';
 import { fetchSavedDesigns } from '../../services/designs';
 import { useNavigate } from 'react-router-dom';
-import state, { ItemsType } from '../../store';
+import state, { ItemsType, resetState } from '../../store';
 import { getFirestore, doc, deleteDoc } from 'firebase/firestore';
 import { getStorage, ref as storageRef, deleteObject } from 'firebase/storage';
 import './SavedDesigns.scss';
-
-type DesignData = {
-  id: string;
-  items?: Record<string, string>;
-  logoDecal?: string;
-  fullDecal?: string;
-  isLogoTexture?: boolean;
-  isFullTexture?: boolean;
-  createdAt?: any;
-  previewImageUrl?: string;
-  previewImagePath?: string;
-};
+import { DesignData } from '../../types/designs';
 
 export default function SavedDesigns() {
   const { user } = useAuth();
@@ -60,13 +49,13 @@ export default function SavedDesigns() {
     state.intro = false;
     state.currentDesignId = design.id;
 
-    navigate('/customizer');
+    navigate(`/create-design/${design.id}`);
   };
 
   const handleCreateNew = () => {
-    state.currentDesignId = null;
+    resetState();
     state.intro = true;
-    navigate('/customizer');
+    navigate('/create-design');
   };
 
   const handleDelete = async (designId: string) => {

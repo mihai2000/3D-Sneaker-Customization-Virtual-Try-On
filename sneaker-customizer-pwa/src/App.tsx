@@ -1,36 +1,43 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-import Layout from './components/Layout/Layout';
 import ProtectedRoute from './auth/ProtectedRoute';
+import Layout from './components/Layout/Layout';
 
 import Customizer from './pages/Customizer/Customizer';
 import TryOnAR from './pages/TryOnAR';
 
+import ForgotPassword from './pages/Auth/ForgotPassword';
 import Login from './pages/Auth/Login';
 import Register from './pages/Auth/Register';
-import ForgotPassword from './pages/Auth/ForgotPassword';
 
 import Orders from './pages/Dashboard/Orders';
-import SavedDesigns from './pages/Dashboard/SavedDesigns';
 import Profile from './pages/Dashboard/Profile';
+import SavedDesigns from './pages/Dashboard/SavedDesigns';
 
 import CartPage from './pages/Cart/Cart';
-import OrderConfirmation from './pages/Checkout/OrderConfirmation';
 import CheckoutPage from './pages/Checkout/CheckoutPage';
+import OrderConfirmation from './pages/Checkout/OrderConfirmation';
 import NotFound from './pages/NotFound404/NotFound';
 
 import { Elements } from '@stripe/react-stripe-js';
-import { stripePromise } from './services/stripe';
-import CanvasModel from './components/canvas/CanvasModel';
-import Dashboard from './pages/Dashboard/Dashboard';
-import ProductGallery from './pages/Products/ProductGallery';
-import CustomizerPage from './pages/Customizer/CustomizerPage';
-import Home from './pages/Home/Home';
 import './App.css';
+import CanvasEditor from './components/canvas/Canvas/CanvasEditor/CanvasEditor';
+import Dashboard from './pages/Dashboard/Dashboard';
+import Home from './pages/Home/Home';
+import ProductGallery from './pages/Products/ProductGallery';
+import { stripePromise } from './services/stripe';
+import CanvasPreview from './components/canvas/Canvas/CanvasPreview/CanvasPreview';
+import CustomizerPage from './pages/Customizer/CustomizerPage';
+
 const App: React.FC = () => {
+  useEffect(() => {
+    return () => {
+      document.body.style.cursor = 'auto';
+    };
+  }, []);
   return (
     <main className="app">
       <ToastContainer position="top-right" autoClose={3000} />
@@ -93,30 +100,30 @@ const App: React.FC = () => {
         />
 
         {/* Customizer - protected */}
+
         <Route
           path="/customizer"
           element={
             <ProtectedRoute>
               <Layout>
                 <CustomizerPage />
-                <CanvasModel />
-                <Customizer />
+                <CanvasPreview />
               </Layout>
             </ProtectedRoute>
           }
         />
 
-        {/* <Route
-					path="/create-design"
-					element={
-						<ProtectedRoute>
-						<Layout>
-							<Customizer />
-							<CanvasModel />
-						</Layout>
-						</ProtectedRoute>
-					}
-					/> */}
+        <Route
+          path="/create-design/:designId?"
+          element={
+            <ProtectedRoute>
+              <Layout>
+                <CanvasEditor />
+                <Customizer />
+              </Layout>
+            </ProtectedRoute>
+          }
+        />
 
         {/* Public Pages */}
         <Route

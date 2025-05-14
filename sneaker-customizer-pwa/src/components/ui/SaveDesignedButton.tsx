@@ -22,7 +22,6 @@ const SaveDesignButton: React.FC = () => {
   return (
     <div style={{ marginTop: "1rem" }}>
       <CustomButton
-        type="filled"
         title={loading ? "Saving..." : "Save Design"}
         customStyle="text-xs"
         handleClick={handleSave}

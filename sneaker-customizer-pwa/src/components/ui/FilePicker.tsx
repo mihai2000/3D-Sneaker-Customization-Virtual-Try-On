@@ -30,13 +30,11 @@ const FilePicker: React.FC<FilePickerProps> = ({ file, setFile, readFile }) => {
         </p>
         <div className="file-button-group">
           <CustomButton
-            type="outline"
             title="logo"
             handleClick={() => readFile('logo')}
             customStyle="text-xs"
           />
           <CustomButton
-            type="filled"
             title="full"
             handleClick={() => readFile('full')}
             customStyle="text-xs"

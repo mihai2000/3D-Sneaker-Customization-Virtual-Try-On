@@ -22,6 +22,7 @@ import AdbIcon from '@mui/icons-material/Adb';
 import { styled } from '@mui/system';
 import { useAuth } from '../../hooks/useAuth';
 import LinkButton from './LinkButton';
+import { resetState } from '../../store';
 
 // Menu definitions
 const pages = [
@@ -94,7 +95,15 @@ export default function ResponsiveAppBar() {
       navigate(item.path);
     }
   };
+  const handleNavClick = (path: string) => {
+    if (path === '/customizer') {
+      resetState();
+      document.body.style.cursor = 'auto';
+    }
 
+    navigate(path);
+    setDrawerOpen(false);
+  };
   return (
     <HideOnScroll>
       <GlassAppBar position="fixed" elevation={0}>
@@ -144,7 +153,11 @@ export default function ResponsiveAppBar() {
               }}
             >
               {pages.map((page) => (
-                <NavButton key={page.label} to={page.path}>
+                <NavButton
+                  key={page.label}
+                  to="#"
+                  onClick={() => handleNavClick(page.path)}
+                >
                   {page.label}
                 </NavButton>
               ))}
@@ -212,7 +225,10 @@ export default function ResponsiveAppBar() {
             </Typography>
             <Divider sx={{ borderColor: '#222' }} />
             {pages.map((page) => (
-              <MenuItem key={page.label} component={Link} to={page.path}>
+              <MenuItem
+                key={page.label}
+                onClick={() => handleNavClick(page.path)}
+              >
                 <Typography sx={{ color: 'white' }}>{page.label}</Typography>
               </MenuItem>
             ))}

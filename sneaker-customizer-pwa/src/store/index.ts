@@ -22,6 +22,25 @@ type StateType = {
   fullDecal: string;
   currentDesignId: string | null;
 };
+export const resetState = () => {
+  state.current = null;
+  state.items = {
+    laces: '#fff',
+    mesh: '#fff',
+    caps: '#fff',
+    inner: '#fff',
+    sole: '#fff',
+    stripes: '#fff',
+    band: '#fff',
+    patch: '#fff',
+  };
+  state.color = '#c6d4ec';
+  state.isLogoTexture = true;
+  state.isFullTexture = false;
+  state.logoDecal = '/threejs.png';
+  state.fullDecal = '/threejs.png';
+  state.currentDesignId = null;
+};
 
 const state = proxy<StateType>({
   current: null,
