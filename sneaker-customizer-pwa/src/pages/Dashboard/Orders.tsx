@@ -134,6 +134,29 @@ export default function Orders() {
 
 	useEffect(() => {
 		const fetchOrders = async () => {
+			// mock data test
+			// if (user) {
+			// 	// Show static mock data for testing
+			// 	setOrders([
+			// 		{
+			// 			id: "test-order-123",
+			// 			total: 149.97,
+			// 			status: "succeeded",
+			// 			createdAt: { seconds: Date.now() / 1000 },
+			// 			items: [
+			// 				{
+			// 					id: "shoe-001",
+			// 					name: "Nike Air Max 270",
+			// 					price: 49.99,
+			// 					quantity: 3,
+			// 					image:
+			// 						"https://firebasestorage.googleapis.com/v0/b/threed-sneakers-customisation.firebasestorage.app/o/Puma_RS-X.avif?alt=media&token=195a87b3-cfa7-49e9-b7ba-b83cb09210db",
+			// 				},
+			// 			],
+			// 		},
+			// 	]);
+			// 	return;
+			// }
 			if (!user) return;
 
 			const q = query(
@@ -169,18 +192,6 @@ export default function Orders() {
 						gap: 2,
 					}}
 				>
-					{/* <svg
-						width="160"
-						height="160"
-						viewBox="0 0 24 24"
-						fill="none"
-						xmlns="http://www.w3.org/2000/svg"
-					>
-						<path
-							d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2Zm10 0c-1.1 0-1.99.9-1.99 2S15.9 22 17 22s2-.9 2-2-.9-2-2-2ZM7.16 14h9.62c.75 0 1.41-.41 1.75-1.03l3.58-6.49A1 1 0 0 0 21.25 5H6.21l-.94-2H1v2h2l3.6 7.59-1.35 2.44C4.52 15.37 5.48 17 7 17h12v-2H7.42c-.14 0-.25-.11-.25-.25L7.16 14Z"
-							fill="#ccc"
-						/>
-					</svg> */}
 					<img
 						src={emptyOrdersImg}
 						alt="No Orders"
@@ -190,7 +201,7 @@ export default function Orders() {
 						No Orders Yet
 					</Typography>
 					<Typography variant="body2" color="text.secondary">
-						You haven’t placed any orders. Once you do, they’ll show up here.
+						You haven't placed any orders. Once you do, they'll show up here.
 					</Typography>
 					<Button
 						variant="contained"
