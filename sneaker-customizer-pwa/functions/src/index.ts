@@ -16,10 +16,10 @@ const stripe = new Stripe(functions.config().stripe.secret, {
 // -------------------------
 export const createPaymentIntent = functions.https.onCall(
 	async (
-		data: { amount: number; currency?: string },
+		data: { amount: number; currency?: string; items?: any },
 		context: functions.https.CallableContext
 	) => {
-		const { amount, currency = "ron" } = data;
+		const { amount, currency = "ron", items } = data;
 
 		if (!context.auth) {
 			throw new functions.https.HttpsError(
@@ -34,6 +34,7 @@ export const createPaymentIntent = functions.https.onCall(
 				currency,
 				metadata: {
 					uid: context.auth.uid,
+					items: JSON.stringify(items ?? []),
 				},
 			});
 
@@ -57,6 +58,10 @@ app.post("/webhook", async (req: express.Request, res: express.Response) => {
 	const sig = req.headers["stripe-signature"]!;
 	const endpointSecret = functions.config().stripe.webhook;
 
+	if (!sig || !endpointSecret) {
+		return res.status(400).send("Missing signature or secret.");
+	}
+
 	let event: Stripe.Event;
 
 	try {
@@ -69,44 +74,49 @@ app.post("/webhook", async (req: express.Request, res: express.Response) => {
 	const paymentIntent = event.data.object as Stripe.PaymentIntent;
 	const uid = paymentIntent.metadata?.uid;
 
-	switch (event.type) {
-		case "payment_intent.succeeded":
-			console.log("✅ Payment succeeded:", paymentIntent.id);
-			if (uid) {
-				const items = paymentIntent.metadata?.items
-					? JSON.parse(paymentIntent.metadata.items)
-					: [];
-				await db.collection("orders").add({
-					userId: uid,
-					items,
-					amount: paymentIntent.amount,
-					status: "succeeded",
-					createdAt: admin.firestore.FieldValue.serverTimestamp(),
-				});
-			}
-			break;
+	try {
+		switch (event.type) {
+			case "payment_intent.succeeded":
+				console.log("✅ Payment succeeded:", paymentIntent.id);
+				if (uid) {
+					const items = paymentIntent.metadata?.items
+						? JSON.parse(paymentIntent.metadata.items)
+						: [];
+					await db.collection("orders").add({
+						userId: uid,
+						items,
+						amount: paymentIntent.amount,
+						status: "succeeded",
+						createdAt: admin.firestore.FieldValue.serverTimestamp(),
+					});
+				}
+				break;
 
-		case "payment_intent.payment_failed":
-			console.warn(
-				"❌ Payment failed:",
-				paymentIntent.last_payment_error?.message
-			);
-			if (uid) {
-				await db.collection("orders").add({
-					userId: uid,
-					amount: paymentIntent.amount,
-					status: "failed",
-					error: paymentIntent.last_payment_error?.message,
-					createdAt: admin.firestore.FieldValue.serverTimestamp(),
-				});
-			}
-			break;
+			case "payment_intent.payment_failed":
+				console.warn(
+					"❌ Payment failed:",
+					paymentIntent.last_payment_error?.message
+				);
+				if (uid) {
+					await db.collection("orders").add({
+						userId: uid,
+						amount: paymentIntent.amount,
+						status: "failed",
+						error: paymentIntent.last_payment_error?.message,
+						createdAt: admin.firestore.FieldValue.serverTimestamp(),
+					});
+				}
+				break;
 
-		default:
-			console.log(`Unhandled event type ${event.type}`);
+			default:
+				console.log(`Unhandled event type ${event.type}`);
+		}
+		return res.status(200).json({ received: true });
+	} catch (err) {
+		console.error("🔥 Error handling webhook:", err);
+		return res.status(500).send("Webhook internal error.");
 	}
-
-	return res.status(200).json({ received: true });
 });
 
 export const handleStripeWebhook = functions.https.onRequest(app);
+
