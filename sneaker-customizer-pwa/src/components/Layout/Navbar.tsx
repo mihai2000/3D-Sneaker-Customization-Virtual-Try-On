@@ -29,7 +29,7 @@ const pages = [
   { label: 'Try AR', path: '/try-ar' },
   { label: 'Customizer', path: '/customizer' },
   { label: 'Orders', path: '/orders' },
-  { label: 'Saved Designs', path: '/saved' },
+  { label: 'Saved Designs', path: '/saved-designs' },
   { label: 'Cart', path: '/cart' },
   { label: 'Products', path: '/products' },
 ];

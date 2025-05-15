@@ -16,7 +16,7 @@ import {
   
   const navItems = [
     { label: 'Orders', path: '/orders' },
-    { label: 'Saved Designs', path: '/saved' },
+    { label: 'Saved Designs', path: '/saved-designs' },
     { label: 'Profile', path: '/profile' },
   ];
   

@@ -79,7 +79,7 @@ const App: React.FC = () => {
           }
         />
         <Route
-          path="/saved"
+          path="/saved-designs"
           element={
             <ProtectedRoute>
               <Layout>
