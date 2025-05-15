@@ -21,6 +21,8 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
           position: 'relative',
           minHeight: '100dvh',
           overflow: 'hidden',
+          // background: 'linear-gradient(to bottom, #0e0e11, #08090c)',
+          color: '#fff',
           paddingTop: `${appBarHeight}px`,
         }}
       >

@@ -1,86 +1,74 @@
-// import { Box, Typography, Button } from "@mui/material";
-// import { useNavigate } from "react-router";
-// import emptyCartImage from "../../assets/empty-cart.png"; // adjust the path as needed
-
-// export default function EmptyCart() {
-// 	const navigate = useNavigate();
-
-// 	return (
-// 		<Box
-// 			sx={{
-// 				textAlign: "center",
-// 				py: 6,
-// 				display: "flex",
-// 				flexDirection: "column",
-// 				alignItems: "center",
-// 				gap: 2,
-// 			}}
-// 		>
-// 			<img
-// 				src={emptyCartImage}
-// 				alt="Empty Cart"
-// 				style={{ width: "220px", maxWidth: "100%" }}
-// 			/>
-// 			<Typography variant="h6" sx={{ mt: 2 }}>
-// 				Your cart is empty.
-// 			</Typography>
-// 			<Typography variant="body2" color="text.secondary">
-// 				Looks like you haven’t added anything to your cart. Go ahead and explore
-// 				out many items.
-// 			</Typography>
-// 			<Button variant="contained" onClick={() => navigate("/products")}>
-// 				Go Shopping
-// 			</Button>
-// 		</Box>
-// 	);
-// }
-import { Typography, Button, Paper } from "@mui/material";
-import { useNavigate } from "react-router";
-import emptyCartImage from "../../assets/empty-cart.png";
+import { Typography, Button, Box } from '@mui/material';
+import { useNavigate } from 'react-router';
+import emptyCartImage from '../../assets/empty-cart.png';
 
 export default function EmptyCart() {
-	const navigate = useNavigate();
+  const navigate = useNavigate();
 
-	return (
-		<Paper
-			sx={{
-				background: "radial-gradient(circle at top, #0e0e11, #08090c)",
-				minHeight: "80vh",
-				display: "flex",
-				alignItems: "center",
-				justifyContent: "center",
-				px: 3,
-				py: 6,
-				flexDirection: "column",
-				textAlign: "center",
-				borderRadius: 4,
-				boxShadow: "0 10px 30px rgba(0,0,0,0.3)",
-			}}
-		>
-			<img
-				src={emptyCartImage}
-				alt="Empty Cart"
-				style={{
-					width: 220,
-					maxWidth: "100%",
-					filter: "brightness(0.9)",
-					marginBottom: 20,
-				}}
-			/>
-			<Typography variant="h6" sx={{ color: "#fff", mb: 1 }}>
-				Your cart is empty.
-			</Typography>
-			<Typography variant="body2" sx={{ color: "#aaa", maxWidth: 400 }}>
-				Looks like you haven’t added anything to your cart yet. Start browsing
-				and add some items you love!
-			</Typography>
-			<Button
-				variant="contained"
-				sx={{ mt: 3 }}
-				onClick={() => navigate("/products")}
-			>
-				Go Shopping
-			</Button>
-		</Paper>
-	);
+  return (
+    <Box
+      sx={{
+        minHeight: '100vh',
+        background:
+          'linear-gradient(-45deg, #0f0f11, #1e1f29, #121317, #090a0f)',
+        backgroundSize: '400% 400%',
+        animation: 'gradientMove 20s ease infinite',
+        p: 4,
+      }}
+    >
+      <Box
+        sx={{
+          backdropFilter: 'blur(12px)',
+          backgroundColor: 'rgba(255, 255, 255, 0.03)',
+          border: '1px solid rgba(255, 255, 255, 0.08)',
+          borderRadius: 4,
+          p: 4,
+          maxWidth: 900,
+          mx: 'auto',
+          boxShadow: '0 0 30px rgba(0, 0, 0, 0.6)',
+        }}
+      >
+        <Box
+          sx={{
+            textAlign: 'center',
+            py: 6,
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            gap: 2,
+          }}
+        >
+          <img
+            src={emptyCartImage}
+            alt="Empty Cart"
+            style={{ width: '220px', maxWidth: '100%', borderRadius: 12 }}
+          />
+          <Typography variant="h6" fontWeight={500} sx={{ color: 'white' }}>
+            Your cart is empty.
+          </Typography>
+          <Typography variant="body2" sx={{ color: '#aaa' }}>
+            Looks like you haven’t added anything to your cart yet. Start
+            browsing and add some items you love!
+          </Typography>
+          <Button
+            sx={{
+              mt: 2,
+              px: 3,
+              py: 1,
+              fontWeight: 600,
+              color: '#fff',
+              background: 'linear-gradient(90deg, #3A5EFF, #3E9DF7)',
+              borderRadius: 2,
+              '&:hover': {
+                background: 'linear-gradient(90deg, #3E9DF7, #3A5EFF)',
+              },
+            }}
+            onClick={() => navigate('/products')}
+          >
+            Start Shopping
+          </Button>
+        </Box>
+      </Box>
+    </Box>
+  );
 }
