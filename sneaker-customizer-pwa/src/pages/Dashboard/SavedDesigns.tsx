@@ -74,20 +74,40 @@ export default function SavedDesigns() {
 		const design = designs.find((d) => d.id === designId);
 		if (!design) return;
 
-		if (design.previewImagePath) {
-			try {
-				const storage = getStorage();
+		try {
+			const storage = getStorage();
+
+			// 🔥 Delete preview image
+			if (design.previewImagePath) {
 				const imgRef = storageRef(storage, design.previewImagePath);
 				await deleteObject(imgRef);
-			} catch (err) {
-				console.warn("Failed to delete preview image:", err);
 			}
+
+			// 🔥 Delete GLB model if path is known
+			if (design.modelUrl) {
+				// Try to infer the model path from its URL
+				const pathStart = design.modelUrl.indexOf("/o/") + 3;
+				const pathEnd = design.modelUrl.indexOf("?alt=");
+				if (pathStart > 2 && pathEnd > pathStart) {
+					const encodedPath = design.modelUrl.substring(pathStart, pathEnd);
+					const decodedPath = decodeURIComponent(encodedPath);
+					const modelRef = storageRef(storage, decodedPath);
+					await deleteObject(modelRef);
+				}
+			}
+		} catch (err) {
+			console.warn("Failed to delete assets from storage:", err);
 		}
 
+		// 🧼 Delete Firestore document
 		const ref = doc(db, "users", user.uid, "designs", designId);
 		await deleteDoc(ref);
+
+		// 🧹 Refresh UI
 		loadDesigns();
+		toast.success("Design and its files were deleted.");
 	};
+
 	const { addToCart } = useCart();
 
 	const existingNames = cart.map((c) => c.name);
