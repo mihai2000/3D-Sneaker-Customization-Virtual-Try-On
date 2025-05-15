@@ -1,0 +1,104 @@
+/* Left sidebar panel */
+.customizer-sidebar {
+  position: absolute;
+  top: 70px;
+  z-index: 10;
+}
+
+/* Editor tab container */
+.editor-container {
+  display: flex;
+  align-items: center;
+  height: 500px;
+  /* min-height: 100vh; */
+}
+
+/* Editor glass panel */
+.editor-tab-panel {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: flex-start;
+  gap: 1rem;
+  padding: 1rem;
+  margin-left: 1rem;
+  min-width: 55px;
+  width: 55px;
+  border-radius: 0.5rem;
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+.editor-tab-panel.expanded {
+  width: auto;
+  min-width: 220px;
+  padding: 1rem;
+  align-items: flex-start;
+  gap: 1rem;
+}
+/* Top right back button */
+.customizer-back-btn {
+  position: absolute;
+  top: 6rem;
+  right: 1.25rem;
+  z-index: 10;
+}
+
+/* Button shared class */
+.custom-button {
+  width: fit-content;
+  padding: 0.7rem 1.4rem;
+  font-weight: 600;
+  font-size: 0.875rem;
+  border-radius: 0.5rem;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  transition: all 0.3s ease;
+  cursor: pointer;
+  backdrop-filter: blur(6px);
+  background: linear-gradient(135deg, #1a1c2c, #13141d);
+  color: #c0dfff;
+  box-shadow: 0 0 8px rgba(0, 170, 255, 0.15);
+}
+
+.custom-button:hover {
+  background: linear-gradient(135deg, #243049, #1a2c42);
+  box-shadow: 0 0 14px rgba(0, 170, 255, 0.3);
+  color: #ffffff;
+}
+.custom-button.go-back {
+  background: linear-gradient(135deg, #1a1c2c, #12131a);
+}
+
+.custom-button.save {
+  background: linear-gradient(135deg, #3a5eff, #5a86ff);
+  color: white;
+  box-shadow: 0 0 10px rgba(58, 94, 255, 0.4);
+}
+
+.custom-button.save:hover {
+  background: linear-gradient(135deg, #537eff, #7ca6ff);
+  box-shadow: 0 0 16px rgba(58, 94, 255, 0.6);
+}
+
+.custom-button.reset {
+  background: linear-gradient(135deg, #4b1b1b, #7e2a2a);
+  color: white;
+  box-shadow: 0 0 10px rgba(255, 77, 77, 0.3);
+}
+
+.custom-button.reset:hover {
+  background: linear-gradient(135deg, #aa3939, #7e2a2a);
+  box-shadow: 0 0 14px rgba(255, 77, 77, 0.5);
+}
+/* Bottom center filter buttons */
+.customizer-filter-tabs {
+  position: relative;
+  z-index: 10;
+  bottom: 10rem;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+}

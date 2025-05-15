@@ -4,16 +4,15 @@ import { Suspense } from 'react';
 import Backdrop from '../../Backdrop';
 import CameraRig from '../../CameraRig';
 import Shoe from '../../Shoe';
-import '../Canvas.css';
+import '../Canvas.scss';
 import defaultState from '../../../../store/default';
-
 const CanvasPreview = () => {
   return (
     <Canvas
       shadows
       camera={{ position: [0, 0, 0] }}
       gl={{ preserveDrawingBuffer: true }}
-      className="canvas-wrapper"
+      className="canvas-wrapper preview-glow-bg"
     >
       <ambientLight intensity={0.5} />
       <spotLight

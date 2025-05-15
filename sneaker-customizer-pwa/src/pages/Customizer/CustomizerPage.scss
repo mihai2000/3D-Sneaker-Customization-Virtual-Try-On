@@ -102,3 +102,31 @@
   border: 1px solid red;
   width: fit-content;
 }
+
+/* 💠 Glow-text on title */
+.gradient-text {
+  background: linear-gradient(90deg, #42a5f5, #9575cd);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0 0 12px rgba(66, 165, 245, 0.2);
+}
+
+/* 🧊 Subtle text glow */
+.glow-soft {
+  text-shadow: 0 0 8px rgba(255, 255, 255, 0.1);
+}
+
+/* ✨ Neon-style button glow */
+.glow-button {
+  background: linear-gradient(90deg, #42a5f5, #7e57c2);
+  color: white;
+  box-shadow: 0 0 16px rgba(66, 165, 245, 0.3);
+  border-radius: 10px;
+  transition: all 0.3s ease-in-out;
+}
+
+.glow-button:hover {
+  background: linear-gradient(90deg, #5c6bc0, #42a5f5);
+  box-shadow: 0 0 24px rgba(126, 87, 194, 0.5);
+}

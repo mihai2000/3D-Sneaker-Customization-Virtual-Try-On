@@ -10,8 +10,8 @@ interface FilePickerProps {
 
 const FilePicker: React.FC<FilePickerProps> = ({ file, setFile, readFile }) => {
   return (
-    <div className="file-picker-wrapper glassmorphism ">
-      <div className="flex flex-1 flex-col">
+    <div className="file-picker-wrapper glassmorphismFile ">
+      <div className="file-picker-body">
         <input
           id="file-upload"
           type="file"

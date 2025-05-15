@@ -26,13 +26,6 @@ body,
   border: 1px solid rgba(255, 255, 255, 0.18);
 }
 
-input[type='file'] {
-  z-index: -1;
-  position: absolute;
-  opacity: 0;
-}
-
-
 /* Dev rev styles */
 
 .custom-launcher-selector {
