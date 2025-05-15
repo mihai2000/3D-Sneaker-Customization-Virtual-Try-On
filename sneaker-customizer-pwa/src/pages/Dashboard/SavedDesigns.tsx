@@ -15,6 +15,8 @@ import { DesignData } from "../../types/designs";
 import "./SavedDesigns.scss";
 import EmptySavedDesigns from "../../components/canvas/SavedDesign/EmptySavedDesign";
 import SavedDesignsSkeleton from "../../components/canvas/SavedDesign/SavedDesignsSkeleton";
+import { toast } from "react-toastify";
+import { AddShoppingCart } from "@mui/icons-material";
 
 export default function SavedDesigns() {
 	const { user } = useAuth();
@@ -86,7 +88,27 @@ export default function SavedDesigns() {
 		await deleteDoc(ref);
 		loadDesigns();
 	};
+	const { addToCart } = useCart();
 
+	const existingNames = cart.map((c) => c.name);
+	const generateName = () => {
+		let n = 1;
+		const prefix = "Custom product ";
+		while (existingNames.includes(`${prefix}${n}`)) n++;
+		return `${prefix}${n}`;
+	};
+
+	const handleAddToCart = (design: DesignData) => {
+		const name = generateName();
+		addToCart({
+			id: design.id,
+			name,
+			price: 0.2,
+			quantity: 1,
+			image: design.previewImageUrl,
+		});
+		toast.success(`${name} added to cart!`);
+	};
 	useEffect(() => {
 		loadDesigns();
 	}, [loadDesigns]);
@@ -184,6 +206,14 @@ export default function SavedDesigns() {
 											>
 												Load & Edit
 											</Button>
+
+											<Button
+												className="load-btn"
+												startIcon={<AddShoppingCart />}
+												onClick={() => handleAddToCart(design)}
+											>
+												Add to Cart
+											</Button>
 											<Button
 												className="delete-btn"
 												startIcon={<DeleteIcon />}
@@ -203,7 +233,6 @@ export default function SavedDesigns() {
 			{selectedDesign && (
 				<DesignViewer
 					design={selectedDesign}
-					existingNames={cart.map((c) => c.name)}
 					onClose={() => setSelectedDesign(null)}
 				/>
 			)}
