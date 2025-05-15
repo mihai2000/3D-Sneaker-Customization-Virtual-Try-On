@@ -11,9 +11,14 @@ import state from "../store";
 import { uploadPreviewImage } from "./uploadPreviewImage";
 import { toast } from "react-toastify";
 import { DesignData } from "../types/designs";
-import { uploadModelFile } from "./uploadModelFile";
 
-export const saveDesignToFirestore = async () => {
+export const saveDesignToFirestore = async ({
+	modelUrl,
+	modelPath,
+}: {
+	modelUrl: string;
+	modelPath: string;
+}) => {
 	const auth = getAuth();
 	const user = auth.currentUser;
 
@@ -24,9 +29,6 @@ export const saveDesignToFirestore = async () => {
 	const preview = await uploadPreviewImage();
 	if (!preview) throw new Error("Preview upload failed");
 
-	const glbUpload = await uploadModelFile();
-	if (!glbUpload) throw new Error("Model upload failed");
-
 	const designData: Omit<DesignData, "id"> = {
 		userId: user.uid,
 		items: state.items,
@@ -36,7 +38,10 @@ export const saveDesignToFirestore = async () => {
 		isFullTexture: state.isFullTexture,
 		previewImageUrl: preview?.url || "",
 		previewImagePath: preview?.path || "",
-		modelUrl: glbUpload.url,
+		// modelUrl: glbUpload.url,
+		modelUrl,
+		modelPath,
+
 		createdAt: serverTimestamp(),
 	};
 

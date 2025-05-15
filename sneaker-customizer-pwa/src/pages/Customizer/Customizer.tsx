@@ -1,5 +1,5 @@
 import { AnimatePresence, motion } from "framer-motion";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useSnapshot } from "valtio";
 import {
 	ColorPicker,
@@ -17,6 +17,10 @@ import { fetchSavedDesignById } from "../../services/designs";
 import { saveDesignToFirestore } from "../../utils/saveDesignToFirestore";
 import { toast } from "react-toastify";
 import "./Customizer.css";
+import {
+	exportModifiedModel,
+	uploadModelFile,
+} from "../../utils/uploadModelFile";
 interface DecalType {
 	stateProperty: string;
 	filterTab: string;
@@ -115,23 +119,31 @@ const Customizer: React.FC = () => {
 		resetState();
 	};
 	const [loading, setLoading] = useState(false);
+	const canvasRef = useRef<any>();
 
 	const handleSave = async () => {
 		try {
 			setLoading(true);
-			const isNew = !state.currentDesignId;
-			await saveDesignToFirestore();
-			toast.success("Design saved successfully!");
-			if (isNew) {
-				navigate("/saved-designs");
-			}
-		} catch (err: any) {
-			console.error("Save design error:", err);
-			toast.error("Failed to save design");
+
+			const shoe = canvasRef.current?.getScene();
+			if (!shoe) throw new Error("Shoe model not available");
+
+			const blob = await exportModifiedModel(shoe);
+			const { url, path } = await uploadModelFile(blob);
+
+			// Pass the URL to Firestore or update your existing logic
+			await saveDesignToFirestore({ modelUrl: url, modelPath: path });
+
+			toast.success("Design saved and uploaded!");
+			navigate("/saved-designs");
+		} catch (err) {
+			console.error(err);
+			toast.error("Failed to save model");
 		} finally {
 			setLoading(false);
 		}
 	};
+
 	return (
 		<AnimatePresence>
 			{!snap.intro && (

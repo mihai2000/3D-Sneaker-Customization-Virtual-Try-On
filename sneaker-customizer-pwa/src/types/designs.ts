@@ -9,5 +9,6 @@ export type DesignData = {
 	previewImageUrl: string;
 	previewImagePath: string;
 	modelUrl: string;
+	modelPath: string;
 	createdAt?: any;
 };
