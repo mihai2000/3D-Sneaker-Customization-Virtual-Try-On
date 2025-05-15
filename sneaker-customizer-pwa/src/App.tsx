@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, {  useRef } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -33,11 +33,6 @@ import CanvasPreview from './components/canvas/Canvas/CanvasPreview/CanvasPrevie
 import CustomizerPage from './pages/Customizer/CustomizerPage';
 
 const App: React.FC = () => {
-  useEffect(() => {
-    return () => {
-      document.body.style.cursor = 'auto';
-    };
-  }, []);
   const canvasRef = useRef<any>();
 
   return (
