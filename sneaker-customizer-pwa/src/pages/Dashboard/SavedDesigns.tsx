@@ -63,7 +63,7 @@ export default function SavedDesigns() {
 
 	const handleCreateNew = () => {
 		resetState();
-		state.intro = true;
+		state.intro = false;
 		navigate("/create-design");
 	};
 
