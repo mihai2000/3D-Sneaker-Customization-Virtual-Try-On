@@ -11,14 +11,45 @@ export default function SavedDesignsSkeleton() {
 			<Grid container spacing={3}>
 				{Array.from({ length: 6 }).map((_, idx) => (
 					<Grid item xs={12} sm={6} md={4} key={idx}>
-						<Card sx={{ borderRadius: 2 }}>
-							<Skeleton variant="rectangular" height={180} animation="wave" />
+						<Card
+							sx={{
+								borderRadius: 3,
+								background: "rgba(255, 255, 255, 0.03)",
+								backdropFilter: "blur(10px)",
+								border: "1px solid rgba(255, 255, 255, 0.08)",
+								boxShadow: "0 0 20px rgba(0, 0, 0, 0.3)",
+							}}
+						>
+							<Skeleton
+								variant="rectangular"
+								height={180}
+								animation="wave"
+								sx={{ bgcolor: "rgba(255,255,255,0.05)" }}
+							/>
 							<CardContent>
-								<Skeleton variant="text" width="60%" />
-								<Skeleton variant="text" width="40%" />
+								<Skeleton
+									variant="text"
+									width="60%"
+									sx={{ bgcolor: "rgba(255,255,255,0.06)" }}
+								/>
+								<Skeleton
+									variant="text"
+									width="40%"
+									sx={{ bgcolor: "rgba(255,255,255,0.06)" }}
+								/>
 								<Box sx={{ mt: 2, display: "flex", gap: 1 }}>
-									<Skeleton variant="rectangular" width={80} height={36} />
-									<Skeleton variant="rectangular" width={80} height={36} />
+									<Skeleton
+										variant="rectangular"
+										width={80}
+										height={36}
+										sx={{ bgcolor: "rgba(255,255,255,0.05)" }}
+									/>
+									<Skeleton
+										variant="rectangular"
+										width={80}
+										height={36}
+										sx={{ bgcolor: "rgba(255,255,255,0.05)" }}
+									/>
 								</Box>
 							</CardContent>
 						</Card>

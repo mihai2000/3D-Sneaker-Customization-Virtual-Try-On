@@ -1,9 +1,18 @@
-import { Typography } from '@mui/material';
+import { Typography } from "@mui/material";
 
 export default function SectionTitle({ title }: { title: string }) {
-  return (
-    <Typography variant="h5" sx={{ mt: 3, mb: 2 }}>
-      {title}
-    </Typography>
-  );
+	return (
+		<Typography
+			variant="h4"
+			sx={{
+				color: "#fff",
+				textAlign: "center",
+				fontWeight: 700,
+				mb: 3,
+				width: "100%",
+			}}
+		>
+			{title}
+		</Typography>
+	);
 }

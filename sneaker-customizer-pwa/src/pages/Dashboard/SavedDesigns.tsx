@@ -1,6 +1,6 @@
 import AddIcon from "@mui/icons-material/Add";
 import DeleteIcon from "@mui/icons-material/Delete";
-import { Box, Button, Fab, Grid, Tooltip, Typography } from "@mui/material";
+import { Box, Button, Grid, Typography } from "@mui/material";
 import { deleteDoc, doc, getFirestore } from "firebase/firestore";
 import { deleteObject, getStorage, ref as storageRef } from "firebase/storage";
 import { useCallback, useEffect, useState } from "react";
@@ -17,7 +17,7 @@ import EmptySavedDesigns from "../../components/canvas/SavedDesign/EmptySavedDes
 import SavedDesignsSkeleton from "../../components/canvas/SavedDesign/SavedDesignsSkeleton";
 import { toast } from "react-toastify";
 import { AddShoppingCart } from "@mui/icons-material";
-
+import BrushIcon from "@mui/icons-material/Brush";
 export default function SavedDesigns() {
 	const { user } = useAuth();
 	const { cart } = useCart();
@@ -133,6 +133,17 @@ export default function SavedDesigns() {
 		loadDesigns();
 	}, [loadDesigns]);
 
+	useEffect(() => {
+		const style = document.createElement("style");
+		style.innerHTML = `
+			@keyframes gradientMove {
+				0% { background-position: 0% 50%; }
+				50% { background-position: 100% 50%; }
+				100% { background-position: 0% 50%; }
+			}
+		`;
+		document.head.appendChild(style);
+	}, []);
 	if (loading) {
 		return (
 			<Box sx={{ p: 4 }}>
@@ -140,14 +151,26 @@ export default function SavedDesigns() {
 			</Box>
 		);
 	}
+
 	return (
 		<>
 			{designs.length === 0 ? (
-				<EmptySavedDesigns onCreateNew={handleCreateNew} />
+				<Box
+					sx={{
+						background: "radial-gradient(circle at top, #0e0e11, #08090c)",
+						minHeight: "100vh",
+						py: 6,
+					}}
+				>
+					<EmptySavedDesigns onCreateNew={handleCreateNew} />
+				</Box>
 			) : (
 				<Box
-					sx={{ p: 4 }}
-					// className="dark"
+					sx={{
+						background: "radial-gradient(circle at top, #0e0e11, #08090c)",
+						minHeight: "100vh",
+						py: 6,
+					}}
 				>
 					<Box
 						sx={{
@@ -155,29 +178,30 @@ export default function SavedDesigns() {
 							justifyContent: "space-between",
 							alignItems: "center",
 							mb: 3,
+							px: 4,
 						}}
 					>
 						<SectionTitle title="Saved Designs" />
-						<Tooltip title="Create New Design">
-							<Fab
-								color="primary"
-								onClick={handleCreateNew}
-								sx={{
-									boxShadow: "0 3px 10px rgba(0,0,0,0.3)",
-									background: "linear-gradient(45deg, #2196f3, #1e88e5)",
-									color: "white",
-									"&:hover": {
-										background: "linear-gradient(45deg, #1976d2, #1565c0)",
-									},
-								}}
-							>
-								<AddIcon />
-							</Fab>
-						</Tooltip>
+						<Button className="morph-button create" onClick={handleCreateNew}>
+							<AddIcon className="icon" />
+							<span className="label">Create New</span>
+						</Button>
 					</Box>
-					<Grid container spacing={3} className="saved-designs">
+					<Grid container spacing={3} className="saved-designs" sx={{ px: 4 }}>
 						{designs.map((design) => (
-							<Grid item xs={12} sm={6} md={4} key={design.id}>
+							<Grid
+								item
+								xs={12}
+								sm={6}
+								md={4}
+								lg={3}
+								sx={{
+									minWidth: 340,
+									display: "flex",
+									justifyContent: "center",
+								}}
+								key={design.id}
+							>
 								<Box className="design-card">
 									{design.previewImageUrl && (
 										<div
@@ -200,47 +224,85 @@ export default function SavedDesigns() {
 										<ul className="colors-list">
 											{design.items &&
 												Object.entries(design.items).map(([part, color]) => (
-													<li key={part}>
-														{part}
-														<span
-															style={{
-																backgroundColor:
-																	color.toLowerCase() === "#fff"
-																		? "#e0e0e0"
-																		: "transparent",
-																borderRadius: "4px",
-																color,
+													<li
+														key={part}
+														style={{
+															display: "flex",
+															alignItems: "center",
+															marginBottom: 6,
+														}}
+													>
+														<Typography
+															variant="body2"
+															sx={{
+																width: 60,
+																textTransform: "capitalize",
+																color: "#ddd",
+																fontWeight: 500,
 															}}
 														>
-															{color}
-														</span>
+															{part}
+														</Typography>
+														<Box
+															sx={{
+																display: "flex",
+																alignItems: "center",
+																ml: 1,
+																px: 1.5,
+																py: 0.5,
+																backgroundColor: "#1e1e1e",
+																borderRadius: "999px",
+																boxShadow:
+																	"inset 0 0 2px rgba(255,255,255,0.1)",
+															}}
+														>
+															<Box
+																sx={{
+																	width: 14,
+																	height: 14,
+																	borderRadius: "4px",
+																	backgroundColor: color,
+																	border: "1px solid rgba(255,255,255,0.15)",
+																	mr: 1,
+																}}
+															/>
+															<Typography
+																variant="caption"
+																sx={{ color: "#aaa", fontSize: "0.75rem" }}
+															>
+																{color}
+															</Typography>
+														</Box>
 													</li>
 												))}
 										</ul>
 
-										<Box className="card-footer">
-											<Button
-												className="load-btn"
-												startIcon={<AddIcon />}
-												onClick={() => handleLoadDesign(design)}
-											>
-												Load & Edit
-											</Button>
+										<Box sx={{ overflow: "visible", width: "100%" }}>
+											<Box className="card-footer">
+												<Button
+													className="morph-button edit"
+													onClick={() => handleLoadDesign(design)}
+												>
+													<BrushIcon className="icon" />
+													<span className="label">Load & Edit</span>
+												</Button>
 
-											<Button
-												className="load-btn"
-												startIcon={<AddShoppingCart />}
-												onClick={() => handleAddToCart(design)}
-											>
-												Add to Cart
-											</Button>
-											<Button
-												className="delete-btn"
-												startIcon={<DeleteIcon />}
-												onClick={() => handleDelete(design.id)}
-											>
-												Delete
-											</Button>
+												<Button
+													className="morph-button cart"
+													onClick={() => handleAddToCart(design)}
+												>
+													<AddShoppingCart className="icon" />
+													<span className="label">Add to Cart</span>
+												</Button>
+
+												<Button
+													className="morph-button delete"
+													onClick={() => handleDelete(design.id)}
+												>
+													<DeleteIcon className="icon" />
+													<span className="label">Delete</span>
+												</Button>
+											</Box>
 										</Box>
 									</Box>
 								</Box>
