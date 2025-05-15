@@ -5,10 +5,9 @@ import Backdrop from "../../Backdrop";
 import CameraRig from "../../CameraRig";
 import Shoe from "../../Shoe";
 import "../Canvas.css";
-import * as THREE from "three";
 
-const CanvasEditor = forwardRef((props, ref) => {
-	const shoeRef = useRef<THREE.Group>(null);
+const CanvasEditor = forwardRef((_, ref) => {
+	const shoeRef = useRef<any>();
 
 	// Expose the shoe group via ref
 	useImperativeHandle(ref, () => ({

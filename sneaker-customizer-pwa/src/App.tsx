@@ -120,7 +120,8 @@ const App: React.FC = () => {
 					element={
 						<ProtectedRoute>
 							<Layout>
-								<CanvasEditor ref={canvasRef} />; <Customizer />
+								<CanvasEditor ref={canvasRef} />
+								<Customizer />
 							</Layout>
 						</ProtectedRoute>
 					}
@@ -132,7 +133,6 @@ const App: React.FC = () => {
 					element={
 						<ProtectedRoute>
 							<Layout>
-								{/* <ProductsPage /> */}
 								<ProductGallery />
 							</Layout>
 						</ProtectedRoute>

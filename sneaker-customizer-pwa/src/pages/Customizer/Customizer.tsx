@@ -21,6 +21,7 @@ import {
 	exportModifiedModel,
 	uploadModelFile,
 } from "../../utils/uploadModelFile";
+import CanvasEditor from "../../components/canvas/Canvas/CanvasEditor/CanvasEditor";
 interface DecalType {
 	stateProperty: string;
 	filterTab: string;
@@ -135,6 +136,8 @@ const Customizer: React.FC = () => {
 			await saveDesignToFirestore({ modelUrl: url, modelPath: path });
 
 			toast.success("Design saved and uploaded!");
+			document.body.style.cursor = "auto";
+
 			navigate("/saved-designs");
 		} catch (err) {
 			console.error(err);
@@ -145,76 +148,79 @@ const Customizer: React.FC = () => {
 	};
 
 	return (
-		<AnimatePresence>
-			{!snap.intro && (
-				<>
-					<motion.div
-						key="custom"
-						className="customizer-sidebar"
-						{...slideAnimation("left")}
-					>
-						<ColorPicker />
-						<div className="editor-container">
-							<div className="editor-tab-panel glassmorphism">
-								{EditorTabs.map((tab) => (
-									<Tab
-										key={tab.name}
-										tab={tab}
-										handleClick={() => setActiveEditorTab(tab.name)}
-									/>
-								))}
-								{generateTabContent()}
-							</div>
-						</div>
-					</motion.div>
-
-					<motion.div className="customizer-back-btn" {...fadeAnimation}>
-						<div
-							style={{
-								display: "flex",
-								flexDirection: "column",
-								gap: "0.5rem",
-							}}
+		<>
+			<AnimatePresence>
+				{!snap.intro && (
+					<>
+						<motion.div
+							key="custom"
+							className="customizer-sidebar"
+							{...slideAnimation("left")}
 						>
-							<CustomButton
-								title="Go Back"
-								customStyle="custom-button"
-								handleClick={handleCustomizerPage}
-							/>
-							<CustomButton
-								title={loading ? "Saving..." : "Save Design"}
-								customStyle="text-xs"
-								handleClick={handleSave}
-							/>
-							<CustomButton
-								title="Reset Design"
-								customStyle="custom-button"
-								handleClick={handleResetDesign}
-							/>
-						</div>
-					</motion.div>
+							<ColorPicker />
+							<div className="editor-container">
+								<div className="editor-tab-panel glassmorphism">
+									{EditorTabs.map((tab) => (
+										<Tab
+											key={tab.name}
+											tab={tab}
+											handleClick={() => setActiveEditorTab(tab.name)}
+										/>
+									))}
+									{generateTabContent()}
+								</div>
+							</div>
+						</motion.div>
 
-					<motion.div
-						className="customizer-filter-tabs"
-						{...slideAnimation("up")}
-					>
-						{FilterTabs.map((tab) => (
-							<Tab
-								key={tab.name}
-								tab={tab}
-								isFilteredTab
-								isActiveTab={activeFilterTab[tab.name]}
-								handleClick={() => handleActiveFilterTab(tab.name)}
-							/>
-						))}
-					</motion.div>
+						<motion.div className="customizer-back-btn" {...fadeAnimation}>
+							<div
+								style={{
+									display: "flex",
+									flexDirection: "column",
+									gap: "0.5rem",
+								}}
+							>
+								<CustomButton
+									title="Go Back"
+									customStyle="custom-button"
+									handleClick={handleCustomizerPage}
+								/>
+								<CustomButton
+									title={loading ? "Saving..." : "Save Design"}
+									customStyle="text-xs"
+									handleClick={handleSave}
+								/>
+								<CustomButton
+									title="Reset Design"
+									customStyle="custom-button"
+									handleClick={handleResetDesign}
+								/>
+							</div>
+						</motion.div>
 
-					<motion.div>
-						<PlugDevRev />
-					</motion.div>
-				</>
-			)}
-		</AnimatePresence>
+						<motion.div
+							className="customizer-filter-tabs"
+							{...slideAnimation("up")}
+						>
+							{FilterTabs.map((tab) => (
+								<Tab
+									key={tab.name}
+									tab={tab}
+									isFilteredTab
+									isActiveTab={activeFilterTab[tab.name]}
+									handleClick={() => handleActiveFilterTab(tab.name)}
+								/>
+							))}
+						</motion.div>
+
+						<motion.div>
+							<PlugDevRev />
+						</motion.div>
+					</>
+				)}
+				<CanvasEditor ref={canvasRef} />
+			</AnimatePresence>
+		</>
 	);
 };
 
