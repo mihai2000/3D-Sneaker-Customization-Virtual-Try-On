@@ -5,6 +5,7 @@ import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 import { X, Maximize2, Minimize2, RotateCw } from "lucide-react";
 import "./ShoeModelViewer.scss";
+import { DRACOLoader } from "three/examples/jsm/loaders/DRACOLoader";
 
 interface Props {
 	isOpen: boolean;
@@ -51,6 +52,10 @@ const ShoeModelViewer: React.FC<Props> = ({
 		controls.enableDamping = true;
 
 		const loader = new GLTFLoader();
+		const dracoLoader = new DRACOLoader();
+		dracoLoader.setDecoderPath("/draco/");
+		loader.setDRACOLoader(dracoLoader);
+
 		loader.load(
 			modelUrl,
 			(gltf) => {

@@ -36,7 +36,7 @@ export const saveDesignToFirestore = async () => {
 		isFullTexture: state.isFullTexture,
 		previewImageUrl: preview?.url || "",
 		previewImagePath: preview?.path || "",
-		modelUrl: "/models/shoe-draco.glb",
+		modelUrl: glbUpload.url,
 		createdAt: serverTimestamp(),
 	};
 
