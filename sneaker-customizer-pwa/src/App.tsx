@@ -1,4 +1,4 @@
-import React, {  useRef } from 'react';
+import React, { useRef } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -10,7 +10,7 @@ import Customizer from './pages/Customizer/Customizer';
 import TryOnAR from './pages/TryOnAR';
 
 import ForgotPassword from './pages/Auth/ForgotPassword';
-import Login from './pages/Auth/Login';
+// import Login from './pages/Auth/LoginForm';
 import Register from './pages/Auth/Register';
 
 import Orders from './pages/Dashboard/Orders';
@@ -31,6 +31,8 @@ import ProductGallery from './pages/Products/ProductGallery';
 import { stripePromise } from './services/stripe';
 import CanvasPreview from './components/canvas/Canvas/CanvasPreview/CanvasPreview';
 import CustomizerPage from './pages/Customizer/CustomizerPage';
+import Login from './pages/Auth/Login';
+import { ThemeProvider } from './context/ThemeContext';
 
 const App: React.FC = () => {
   const canvasRef = useRef<any>();
@@ -51,9 +53,30 @@ const App: React.FC = () => {
       />
       <Routes>
         {/* Public Routes (no layout) */}
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
-        <Route path="/forgot-password" element={<ForgotPassword />} />
+        <Route
+          path="/login"
+          element={
+            <ThemeProvider>
+              <Login />
+            </ThemeProvider>
+          }
+        />
+        <Route
+          path="/register"
+          element={
+            <ThemeProvider>
+              <Register />
+            </ThemeProvider>
+          }
+        />
+        <Route
+          path="/forgot-password"
+          element={
+            <ThemeProvider>
+              <ForgotPassword />
+            </ThemeProvider>
+          }
+        />
 
         <Route
           path="/"

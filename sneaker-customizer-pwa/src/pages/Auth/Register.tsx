@@ -9,6 +9,7 @@ import {
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../hooks/useAuth';
+import { useThemeContext } from '../../context/ThemeContext';
 
 export default function Register() {
   const [name, setName] = useState('');
@@ -16,6 +17,7 @@ export default function Register() {
   const [password, setPassword] = useState('');
   const { register } = useAuth();
   const navigate = useNavigate();
+  const { theme } = useThemeContext();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -29,53 +31,80 @@ export default function Register() {
 
   return (
     <Container
-      component="main"
       maxWidth="xs"
       sx={{
+        minHeight: '100vh',
+        minWidth: '100vw',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        minHeight: '100vh',
+        background: theme.bg,
       }}
     >
-      <Paper elevation={6} sx={{ p: 4, borderRadius: 3, width: '100%' }}>
-        <Typography component="h1" variant="h5" align="center">
-          Sign up
+      <Paper elevation={0} sx={{ ...theme.paper, p: 5, width: '20%' }}>
+        <Typography
+          variant="h4"
+          fontWeight={700}
+          textAlign="center"
+          sx={{ color: theme.titleColor }}
+        >
+          Sign Up
         </Typography>
-        <Box component="form" onSubmit={handleSubmit} sx={{ mt: 3 }}>
+
+        <Box component="form" onSubmit={handleSubmit} sx={{ mt: 4 }}>
           <TextField
             fullWidth
-            margin="normal"
             label="Name"
-            type="text"
             value={name}
             onChange={(e) => setName(e.target.value)}
+            sx={{
+              mb: 2,
+              input: { color: 'white' },
+              label: { color: '#ccc' },
+            }}
           />
           <TextField
             fullWidth
-            margin="normal"
             label="Email"
             type="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
+            sx={{
+              mb: 2,
+              input: { color: 'white' },
+              label: { color: '#ccc' },
+            }}
           />
           <TextField
             fullWidth
-            margin="normal"
             label="Password"
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
+            sx={{
+              mb: 3,
+              input: { color: 'white' },
+              label: { color: '#ccc' },
+            }}
           />
-          <Button type="submit" fullWidth variant="contained" sx={{ mt: 2 }}>
-            Sign up
+          <Button
+            type="submit"
+            fullWidth
+            variant="contained"
+            sx={theme.buttonStyle}
+          >
+            Sign Up
           </Button>
-          <Typography variant="body2" align="center" sx={{ mt: 2 }}>
-            Already have an account? <Link to="/login">Sign in</Link>
-          </Typography>
         </Box>
+
+        <Typography align="center" sx={{ mt: 2, color: '#bbb' }}>
+          Already have an account?{' '}
+          <Link to="/login" style={{ color: theme.linkColor }}>
+            Sign in
+          </Link>
+        </Typography>
       </Paper>
     </Container>
   );
