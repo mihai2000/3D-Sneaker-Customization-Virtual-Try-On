@@ -94,8 +94,18 @@
     max-width: 600px;
     max-height: 600px;
     z-index: 0;
-    filter: blur(16px);
-    background: radial-gradient(circle, #250565 0%, transparent 70%);
+
+    background: radial-gradient(
+      circle,
+      rgba(175, 0, 255, 0.4),
+      transparent 70%
+    );
+    filter: blur(80px) saturate(160%);
+    opacity: 0.5;
+    transition: all 0.3s ease;
+
+    animation: morphAlien 16s ease-in-out infinite;
+
     clip-path: path(
       'M400,100 Q380,30 300,80 Q180,0 100,100 Q0,180 80,300 Q0,400 100,420 Q180,520 300,460 Q400,540 420,420 Q520,380 460,300 Q540,180 400,100'
     );
@@ -123,6 +133,25 @@
     }
   }
 
+  @keyframes morphAlien {
+    0% {
+      clip-path: path(
+        'M400,100 Q380,30 300,80 Q180,0 100,100 Q0,180 80,300 Q0,400 100,420 Q180,520 300,460 Q400,540 420,420 Q520,380 460,300 Q540,180 400,100'
+      );
+    }
+
+    50% {
+      clip-path: path(
+        'M420,140 Q390,50 310,100 Q200,10 110,120 Q10,200 100,310 Q20,410 110,440 Q190,520 310,480 Q430,540 450,420 Q540,370 470,290 Q550,200 420,140'
+      );
+    }
+
+    100% {
+      clip-path: path(
+        'M400,100 Q380,30 300,80 Q180,0 100,100 Q0,180 80,300 Q0,400 100,420 Q180,520 300,460 Q400,540 420,420 Q520,380 460,300 Q540,180 400,100'
+      );
+    }
+  }
   canvas {
     width: 100% !important;
     height: 100% !important;
