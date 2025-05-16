@@ -9,7 +9,7 @@ import {
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../hooks/useAuth';
-import { useThemeContext } from '../../context/ThemeContext';
+import { useThemeContext } from '../../hooks/useTheme';
 
 export default function Register() {
   const [name, setName] = useState('');
@@ -57,11 +57,7 @@ export default function Register() {
             label="Name"
             value={name}
             onChange={(e) => setName(e.target.value)}
-            sx={{
-              mb: 2,
-              input: { color: 'white' },
-              label: { color: '#ccc' },
-            }}
+            sx={theme.textFieldStyles}
           />
           <TextField
             fullWidth
@@ -70,11 +66,7 @@ export default function Register() {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
-            sx={{
-              mb: 2,
-              input: { color: 'white' },
-              label: { color: '#ccc' },
-            }}
+            sx={theme.textFieldStyles}
           />
           <TextField
             fullWidth
@@ -83,11 +75,7 @@ export default function Register() {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
-            sx={{
-              mb: 3,
-              input: { color: 'white' },
-              label: { color: '#ccc' },
-            }}
+            sx={theme.textFieldStyles}
           />
           <Button
             type="submit"

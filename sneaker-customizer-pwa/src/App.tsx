@@ -32,7 +32,7 @@ import { stripePromise } from './services/stripe';
 import CanvasPreview from './components/canvas/Canvas/CanvasPreview/CanvasPreview';
 import CustomizerPage from './pages/Customizer/CustomizerPage';
 import Login from './pages/Auth/Login';
-import { ThemeProvider } from './context/ThemeContext';
+import { ThemeProvider } from './providers/ThemeProvider';
 
 const App: React.FC = () => {
   const canvasRef = useRef<any>();
