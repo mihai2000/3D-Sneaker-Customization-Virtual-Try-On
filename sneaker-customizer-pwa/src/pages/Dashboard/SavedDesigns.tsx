@@ -431,7 +431,7 @@ export default function SavedDesigns() {
     addToCart({
       id: design.id,
       name,
-      price: 0.2,
+      price: 0.5,
       quantity: 1,
       image: design.previewImageUrl,
     });

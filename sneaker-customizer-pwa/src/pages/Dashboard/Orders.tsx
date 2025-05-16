@@ -233,7 +233,7 @@ export default function Orders() {
                       },
                     }}
                   >
-                    Total: <strong>${order.total.toFixed(2)}</strong> | Status:{' '}
+                    Total: <strong>RON{order.total.toFixed(2)}</strong> | Status:{' '}
                     {order.status}
                   </Typography>
                   <List dense>
@@ -254,7 +254,7 @@ export default function Orders() {
                         </ListItemAvatar>
                         <ListItemText
                           primary={`${item.name} × ${item.quantity}`}
-                          secondary={`$${item.price.toFixed(2)} each`}
+                          secondary={`RON ${item.price.toFixed(2)} each`}
                           primaryTypographyProps={{
                             color: 'white',
                             fontWeight: 500,

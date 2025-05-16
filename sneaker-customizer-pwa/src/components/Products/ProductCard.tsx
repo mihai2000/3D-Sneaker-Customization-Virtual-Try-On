@@ -51,7 +51,7 @@ export function ProductCard({
 					<h2 className="product-title">{shoe.name}</h2>
 					<p className="product-description">{shoe.description}</p>
 					<div className="product-footer">
-						<span className="product-price">${shoe.price}</span>
+						<span className="product-price">RON{shoe.price}</span>
 						<motion.button
 							whileHover={{ scale: 1.05 }}
 							whileTap={{ scale: 0.95 }}

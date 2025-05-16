@@ -27,7 +27,12 @@ export const createPaymentIntent = functions.https.onCall(
 				"User must be authenticated."
 			);
 		}
-
+		if (amount < 200) {
+			throw new functions.https.HttpsError(
+				"invalid-argument",
+				"Amount must be at least RON 2.00."
+			);
+		}
 		try {
 			const paymentIntent = await stripe.paymentIntents.create({
 				amount,
@@ -119,4 +124,3 @@ app.post("/webhook", async (req: express.Request, res: express.Response) => {
 });
 
 export const handleStripeWebhook = functions.https.onRequest(app);
-

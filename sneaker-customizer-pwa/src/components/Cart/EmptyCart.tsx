@@ -1,74 +1,99 @@
-import { Typography, Button, Box } from '@mui/material';
-import { useNavigate } from 'react-router';
-import emptyCartImage from '../../assets/empty-cart.png';
+import { Typography, Button, Box } from "@mui/material";
+import { useNavigate } from "react-router";
+import emptyCartImage from "../../assets/empty-cart.png";
 
 export default function EmptyCart() {
-  const navigate = useNavigate();
+	const navigate = useNavigate();
 
-  return (
-    <Box
-      sx={{
-        minHeight: '100vh',
-        background:
-          'linear-gradient(-45deg, #0f0f11, #1e1f29, #121317, #090a0f)',
-        backgroundSize: '400% 400%',
-        animation: 'gradientMove 20s ease infinite',
-        p: 4,
-      }}
-    >
-      <Box
-        sx={{
-          backdropFilter: 'blur(12px)',
-          backgroundColor: 'rgba(255, 255, 255, 0.03)',
-          border: '1px solid rgba(255, 255, 255, 0.08)',
-          borderRadius: 4,
-          p: 4,
-          maxWidth: 900,
-          mx: 'auto',
-          boxShadow: '0 0 30px rgba(0, 0, 0, 0.6)',
-        }}
-      >
-        <Box
-          sx={{
-            textAlign: 'center',
-            py: 6,
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            gap: 2,
-          }}
-        >
-          <img
-            src={emptyCartImage}
-            alt="Empty Cart"
-            style={{ width: '220px', maxWidth: '100%', borderRadius: 12 }}
-          />
-          <Typography variant="h6" fontWeight={500} sx={{ color: 'white' }}>
-            Your cart is empty.
-          </Typography>
-          <Typography variant="body2" sx={{ color: '#aaa' }}>
-            Looks like you haven’t added anything to your cart yet. Start
-            browsing and add some items you love!
-          </Typography>
-          <Button
-            sx={{
-              mt: 2,
-              px: 3,
-              py: 1,
-              fontWeight: 600,
-              color: '#fff',
-              background: 'linear-gradient(90deg, #3A5EFF, #3E9DF7)',
-              borderRadius: 2,
-              '&:hover': {
-                background: 'linear-gradient(90deg, #3E9DF7, #3A5EFF)',
-              },
-            }}
-            onClick={() => navigate('/products')}
-          >
-            Start Shopping
-          </Button>
-        </Box>
-      </Box>
-    </Box>
-  );
+	return (
+		<Box
+			sx={{
+				minHeight: "100vh",
+				display: "flex",
+				alignItems: "center",
+				justifyContent: "center",
+				p: 4,
+			}}
+		>
+			<Box
+				// violet
+				// sx={{
+				// 	p: 6,
+				// 	maxWidth: 700,
+				// 	width: "100%",
+				// 	textAlign: "center",
+				// 	borderRadius: 4,
+				// 	border: "1px solid rgba(200, 100, 255, 0.2)",
+				// 	background: "rgba(30, 20, 40, 0.8)",
+				// 	boxShadow: `0 0 20px rgba(180, 100, 255, 0.3), 0 0 60px rgba(120, 60, 220, 0.15)`,
+				// 	backdropFilter: "blur(12px)",
+				// }}
+				// blue ice
+				sx={{
+					p: 6,
+					maxWidth: 700,
+					width: "100%",
+					textAlign: "center",
+					borderRadius: 4,
+					border: "1px solid rgba(0, 200, 255, 0.15)",
+					background: "rgba(20, 25, 35, 0.85)",
+					boxShadow: `0 0 24px rgba(0, 229, 255, 0.3), 0 0 80px rgba(0, 229, 255, 0.1)`,
+					backdropFilter: "blur(14px)",
+				}}
+			>
+				<img
+					src={emptyCartImage}
+					alt="Empty Cart"
+					style={{
+						width: "220px",
+						maxWidth: "100%",
+						borderRadius: 16,
+						marginBottom: "1.5rem",
+					}}
+				/>
+				<Typography variant="h5" fontWeight={700} color="white" gutterBottom>
+					Your cart is feeling lonely
+				</Typography>
+				<Typography variant="body2" sx={{ color: "#ccc", mb: 3 }}>
+					Looks like you haven’t added anything yet. Find something you love and
+					bring it here.
+				</Typography>
+				<Button
+					onClick={() => navigate("/products")}
+					// violet
+					// sx={{
+					// 	px: 4,
+					// 	py: 1.2,
+					// 	fontWeight: 600,
+					// 	fontSize: "0.875rem",
+					// 	borderRadius: 2,
+					// 	background: "linear-gradient(90deg, #7e57c2, #ab47bc)",
+					// 	color: "#fff",
+					// 	boxShadow: "0 0 10px rgba(140, 90, 200, 0.4)",
+					// 	"&:hover": {
+					// 		background: "linear-gradient(90deg, #9c27b0, #ba68c8)",
+					// 		boxShadow: "0 0 18px rgba(160, 70, 255, 0.6)",
+					// 	},
+					// }}
+					// blue
+					sx={{
+						px: 4,
+						py: 1.2,
+						fontWeight: 600,
+						fontSize: "0.875rem",
+						borderRadius: 2,
+						background: "linear-gradient(90deg, #00e5ff, #1e88e5)",
+						color: "#fff",
+						boxShadow: "0 0 10px rgba(0,229,255,0.5)",
+						"&:hover": {
+							background: "linear-gradient(90deg, #00bcd4, #1565c0)",
+							boxShadow: "0 0 20px rgba(0,229,255,0.8)",
+						},
+					}}
+				>
+					START SHOPPING
+				</Button>
+			</Box>
+		</Box>
+	);
 }
