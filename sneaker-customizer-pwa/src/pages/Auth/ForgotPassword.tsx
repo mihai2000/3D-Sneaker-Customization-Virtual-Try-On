@@ -104,7 +104,6 @@ export default function ForgotPassword() {
               fullWidth
               variant="contained"
               sx={theme.buttonStyle}
-              // sx={{ mt: 3, color: theme.linkColor }}
               onClick={() => navigate('/login')}
             >
               Back to Login

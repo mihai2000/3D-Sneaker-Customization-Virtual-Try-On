@@ -50,10 +50,10 @@ const Backdrop: React.FC = () => {
       scale={100}
       rotation={[Math.PI / 2, 0, 0]}
       position={[0, 0, -0.5]}
-      color="#000000" // or your dark bg
-      colorBlend={0.1} // lower blend to avoid overtinting
-      opacity={0.2} // less visual interference
-      temporal // enables fading in/out
+      color="#000000" 
+      colorBlend={0.1} 
+      opacity={0.2} 
+      temporal 
     >
       <RandomizedLight
         amount={4}

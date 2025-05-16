@@ -10,7 +10,6 @@ import Customizer from './pages/Customizer/Customizer';
 import TryOnAR from './pages/TryOnAR';
 
 import ForgotPassword from './pages/Auth/ForgotPassword';
-// import Login from './pages/Auth/LoginForm';
 import Register from './pages/Auth/Register';
 
 import Orders from './pages/Dashboard/Orders';
