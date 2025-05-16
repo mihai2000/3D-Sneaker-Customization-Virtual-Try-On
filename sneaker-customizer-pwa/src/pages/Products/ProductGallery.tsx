@@ -1,7 +1,5 @@
 import { useEffect, useState } from 'react';
-import {
-  motion,
-} from 'framer-motion';
+import { motion } from 'framer-motion';
 import { Box, Pagination } from '@mui/material';
 import './ProductGallery.scss';
 import ShoeModelViewer from '../../components/canvas/ShoeModelViewer/ShoeModelViewer';
@@ -17,9 +15,19 @@ export default function ProductPage() {
   const [selectedCategory, setSelectedCategory] = useState('All');
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedShoe, setSelectedShoe] = useState<any | null>(null);
-
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 5;
+  const [itemsPerPage, setItemsPerPage] = useState(5);
+
+  // Responsive itemsPerPage
+  useEffect(() => {
+    const updateItemsPerPage = () => {
+      setItemsPerPage(window.innerWidth <= 1920 ? 4 : 5);
+    };
+
+    updateItemsPerPage(); // initial check
+    window.addEventListener('resize', updateItemsPerPage);
+    return () => window.removeEventListener('resize', updateItemsPerPage);
+  }, []);
 
   useEffect(() => {
     const load = async () => {
@@ -37,7 +45,7 @@ export default function ProductPage() {
         (selectedCategory === 'All' || p.category === selectedCategory)
     );
     setFiltered(result);
-    setCurrentPage(1); // reset to first page when filters change
+    setCurrentPage(1);
   }, [products, searchQuery, selectedCategory]);
 
   const pageCount = Math.ceil(filtered.length / itemsPerPage);
