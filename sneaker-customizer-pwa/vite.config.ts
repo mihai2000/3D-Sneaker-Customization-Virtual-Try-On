@@ -42,4 +42,21 @@ export default defineConfig({
       },
     }),
   ],
+  build: {
+    rollupOptions: {
+      output: {
+        manualChunks(id) {
+          // Split node_modules packages by top-level folder
+          if (id.includes('node_modules')) {
+            return id
+              .toString()
+              .split('node_modules/')[1]
+              .split('/')[0]
+              .toString();
+          }
+        },
+      },
+    },
+    chunkSizeWarningLimit: 1500, // Optional: raise limit from 500 KB to 1.5 MB
+  },
 });
