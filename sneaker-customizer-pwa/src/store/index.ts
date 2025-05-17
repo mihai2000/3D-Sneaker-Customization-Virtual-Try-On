@@ -37,7 +37,7 @@ export const resetState = () => {
   state.color = '#c6d4ec';
   state.isLogoTexture = true;
   state.isFullTexture = false;
-  state.logoDecal = '/threejs.png';
+  state.logoDecal = '/favicon_customizer.svg';
   state.fullDecal = '/threejs.png';
   state.currentDesignId = null;
 };
@@ -58,7 +58,7 @@ const state = proxy<StateType>({
   color: '#c6d4ec',
   isLogoTexture: true,
   isFullTexture: false,
-  logoDecal: '/threejs.png',
+  logoDecal: '/favicon_customizer.svg',
   fullDecal: '/threejs.png',
   currentDesignId: null,
 });
