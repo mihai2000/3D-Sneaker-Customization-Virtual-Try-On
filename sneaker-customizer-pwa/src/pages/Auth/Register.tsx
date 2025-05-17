@@ -10,6 +10,8 @@ import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../hooks/useAuth';
 import { useThemeContext } from '../../hooks/useTheme';
+import { Visibility, VisibilityOff } from '@mui/icons-material';
+import { IconButton, InputAdornment } from '@mui/material';
 
 export default function Register() {
   const [name, setName] = useState('');
@@ -18,6 +20,7 @@ export default function Register() {
   const { register } = useAuth();
   const navigate = useNavigate();
   const { theme } = useThemeContext();
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -71,12 +74,30 @@ export default function Register() {
           <TextField
             fullWidth
             label="Password"
-            type="password"
+            type={showPassword ? 'text' : 'password'}
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
             sx={theme.textFieldStyles}
+            InputProps={{
+              endAdornment: (
+                <InputAdornment position="end">
+                  <IconButton
+                    onClick={() => setShowPassword(!showPassword)}
+                    edge="end"
+                    sx={{ color: '#fff' }} // 👈 white icon
+                  >
+                    {showPassword ? (
+                      <VisibilityOff sx={{ color: '#fff' }} />
+                    ) : (
+                      <Visibility sx={{ color: '#fff' }} />
+                    )}
+                  </IconButton>
+                </InputAdornment>
+              ),
+            }}
           />
+
           <Button
             type="submit"
             fullWidth
