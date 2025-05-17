@@ -42,19 +42,4 @@ export default defineConfig({
       },
     }),
   ],
-  build: {
-    rollupOptions: {
-      output: {
-        manualChunks(id) {
-          if (id.includes('node_modules')) {
-            if (id.includes('lucide-react') || id.includes('react')) {
-              return 'react-vendor';
-            }
-            return 'vendor';
-          }
-        },
-      },
-    },
-    chunkSizeWarningLimit: 1500, // Optional: raise limit from 500 KB to 1.5 MB
-  },
 });
