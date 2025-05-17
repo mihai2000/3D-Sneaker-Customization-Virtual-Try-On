@@ -1,7 +1,7 @@
-import { useEffect, useState } from 'react';
+import { Suspense, useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { Box, Pagination } from '@mui/material';
-import './ProductGallery.scss';
+import './ProductPage.scss';
 import ShoeModelViewer from '../../components/canvas/ShoeModelViewer/ShoeModelViewer';
 import { fetchProducts } from '../../services/products';
 import { ProductFilter } from '../../components/Products/ProductFilters';
@@ -107,12 +107,14 @@ export default function ProductPage() {
       )}
 
       {selectedShoe && (
-        <ShoeModelViewer
-          isOpen={true}
-          onClose={() => setSelectedShoe(null)}
-          modelUrl={selectedShoe?.modelUrl ?? ''}
-          shoeName={selectedShoe?.name}
-        />
+        <Suspense fallback={null}>
+          <ShoeModelViewer
+            isOpen={true}
+            onClose={() => setSelectedShoe(null)}
+            modelUrl={selectedShoe?.modelUrl ?? ''}
+            shoeName={selectedShoe?.name}
+          />
+        </Suspense>
       )}
     </div>
   );

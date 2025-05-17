@@ -46,13 +46,11 @@ export default defineConfig({
     rollupOptions: {
       output: {
         manualChunks(id) {
-          // Split node_modules packages by top-level folder
           if (id.includes('node_modules')) {
-            return id
-              .toString()
-              .split('node_modules/')[1]
-              .split('/')[0]
-              .toString();
+            if (id.includes('lucide-react') || id.includes('react')) {
+              return 'react-vendor';
+            }
+            return 'vendor';
           }
         },
       },

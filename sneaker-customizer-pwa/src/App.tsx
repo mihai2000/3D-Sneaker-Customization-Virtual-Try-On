@@ -26,7 +26,7 @@ import './App.css';
 import CanvasEditor from './components/canvas/Canvas/CanvasEditor/CanvasEditor';
 import Dashboard from './pages/Dashboard/Dashboard';
 import Home from './pages/Home/Home';
-import ProductGallery from './pages/Products/ProductGallery';
+import ProductPage from './pages/Products/ProductPage';
 import { stripePromise } from './services/stripe';
 import CanvasPreview from './components/canvas/Canvas/CanvasPreview/CanvasPreview';
 import CustomizerPage from './pages/Customizer/CustomizerPage';
@@ -163,7 +163,7 @@ const App: React.FC = () => {
           element={
             <ProtectedRoute>
               <Layout>
-                <ProductGallery />
+                <ProductPage />
               </Layout>
             </ProtectedRoute>
           }
