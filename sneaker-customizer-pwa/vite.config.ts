@@ -9,37 +9,30 @@ export default defineConfig({
     VitePWA({
       registerType: 'autoUpdate',
       workbox: {
-        // ⬇️ Set the max file size to 5 MB
         maximumFileSizeToCacheInBytes: 5 * 1024 * 1024,
       },
-      includeAssets: ['vite.svg', 'robots.txt'],
+      includeAssets: ['favicon.svg', 'favicon.ico', 'robots.txt', 'apple-touch-icon.png'],
       manifest: {
         name: '3D Sneaker Customizer',
-        short_name: 'Sneaker3D',
-        description: 'Customize your 3D sneakers with full creativity.',
-        start_url: '/',
-        display: 'standalone',
-        background_color: '#ffffff',
+        short_name: 'Sneakers AR',
+        description: 'E-commerce 3D shoes customizer with AR try-on',
         theme_color: '#ffffff',
+        background_color: '#ffffff',
+        display: 'standalone',
+        start_url: '/',
         icons: [
           {
-            src: 'react.png',
+            src: 'icons/pwa-192x192.png',
             sizes: '192x192',
-            type: 'image/png',
+            type: 'image/png'
           },
           {
-            src: 'react.png',
+            src: 'icons/pwa-512x512.png',
             sizes: '512x512',
-            type: 'image/png',
-          },
-          {
-            src: 'react.png',
-            sizes: '512x512',
-            type: 'image/png',
-            purpose: 'any maskable',
-          },
-        ],
-      },
+            type: 'image/png'
+          }
+        ]
+      }
     }),
   ],
 });
