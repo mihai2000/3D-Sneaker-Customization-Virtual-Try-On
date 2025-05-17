@@ -3,9 +3,11 @@ import { useEffect, useState } from 'react';
 import SectionTitle from '../../components/Shared/SectionTitle';
 import { useAuth } from '../../hooks/useAuth';
 import { fetchUserProfile, updateUserProfile } from '../../services/users';
+import { useThemeContext } from '../../hooks/useTheme';
 
 export default function Profile() {
   const { user } = useAuth();
+  const { theme } = useThemeContext();
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
 
@@ -13,7 +15,6 @@ export default function Profile() {
     if (!user) return;
 
     const loadProfile = async () => {
-      
       try {
         const data = await fetchUserProfile(user.uid);
         setName(data.name || '');
@@ -37,27 +38,57 @@ export default function Profile() {
   };
 
   return (
-    <Paper sx={{ p: 4, maxWidth: 500, mx: 'auto' }}>
-      <SectionTitle title="Your Profile" />
-      <TextField
-        fullWidth
-        label="Name"
-        margin="normal"
-        value={name}
-        onChange={(e) => setName(e.target.value)}
-      />
-      <TextField
-        fullWidth
-        label="Email"
-        margin="normal"
-        value={email}
-        disabled
-      />
-      <Box sx={{ mt: 2 }}>
-        <Button variant="contained" onClick={handleSave}>
-          Save Changes
-        </Button>
-      </Box>
-    </Paper>
+    <Box
+      sx={{
+        minHeight: '100vh',
+        background: theme.bg,
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        px: 2,
+        py: 6,
+      }}
+    >
+      <Paper
+        elevation={0}
+        sx={{
+          ...theme.paper,
+          p: 4,
+          maxWidth: 500,
+          width: '100%',
+          borderRadius: 4,
+        }}
+      >
+        <SectionTitle title="Your Profile" />
+
+        <TextField
+          fullWidth
+          label="Name"
+          margin="normal"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+          sx={theme.textFieldStyles}
+        />
+
+        <TextField
+          fullWidth
+          label="Email"
+          margin="normal"
+          value={email}
+          sx={theme.textFieldStyles}
+        />
+
+        <Box sx={{ mt: 3 }}>
+          <Button
+            variant="contained"
+            fullWidth
+            onClick={handleSave}
+            sx={theme.buttonStyle}
+          >
+            Save Changes
+          </Button>
+        </Box>
+      </Paper>
+    </Box>
   );
 }

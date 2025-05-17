@@ -123,7 +123,9 @@ const App: React.FC = () => {
           element={
             <ProtectedRoute>
               <Layout>
-                <Profile />
+                <ThemeProvider>
+                  <Profile />
+                </ThemeProvider>
               </Layout>
             </ProtectedRoute>
           }
