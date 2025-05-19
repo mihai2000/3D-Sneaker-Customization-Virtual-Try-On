@@ -103,7 +103,11 @@ const Customizer: React.FC = () => {
   };
 
   const readFile = (type: string) => {
-    if (!file) return;
+    if (!file) {
+      toast.error('Please upload a file before applying a decal.');
+      console.error('Please upload a file before applying a decal.');
+      return;
+    }
     reader(file).then((result) => {
       handleDecals(type, result);
       setActiveEditorTab('');
@@ -150,93 +154,95 @@ const Customizer: React.FC = () => {
     <>
       <AnimatePresence mode="wait">
         {!snap.intro && [
-          <motion.div
-            key={`customizer-${activeEditorTab || 'idle'}`}
-            className="customizer-sidebar"
-            {...slideAnimation('left')}
-          >
-            <ColorPicker />
-            <div className="editor-container">
-              <div
-                className={`editor-tab-panel glassmorphism ${
-                  activeEditorTab ? 'expanded' : ''
-                }`}
-              >
-                <div
-                  style={{
-                    display: 'flex',
-                    flexDirection: 'column',
-                    gap: '0.5rem',
-                  }}
-                >
-                  {EditorTabs.map((tab, idx) => (
-                    <Tab
-                      key={tab.name || `editor-tab-${idx}`}
-                      tab={tab}
-                      handleClick={() =>
-                        setActiveEditorTab((prev) =>
-                          prev === tab.name ? '' : tab.name
-                        )
-                      }
-                    />
-                  ))}
-                </div>
-                <div>{generateTabContent()}</div>
-              </div>
-            </div>
-          </motion.div>,
-
-          <motion.div
-            key="customizer-buttons"
-            className="customizer-back-btn"
-            {...fadeAnimation}
-          >
-            <div
-              style={{
-                display: 'flex',
-                flexDirection: 'column',
-                gap: '1rem',
-              }}
+          <>
+            <motion.div
+              key={`customizer-${activeEditorTab || 'idle'}`}
+              className="customizer-sidebar"
+              {...slideAnimation('left')}
             >
-              <CustomButton
-                title="Go Back"
-                customStyle="custom-button go-back"
-                handleClick={handleCustomizerPage}
-              />
+              <ColorPicker />
+              <div className="editor-container">
+                <div
+                  className={`editor-tab-panel glassmorphism ${
+                    activeEditorTab ? 'expanded' : ''
+                  }`}
+                >
+                  <div
+                    style={{
+                      display: 'flex',
+                      flexDirection: 'column',
+                      gap: '0.5rem',
+                    }}
+                  >
+                    {EditorTabs.map((tab, idx) => (
+                      <Tab
+                        key={tab.name || `editor-tab-${idx}`}
+                        tab={tab}
+                        handleClick={() =>
+                          setActiveEditorTab((prev) =>
+                            prev === tab.name ? '' : tab.name
+                          )
+                        }
+                      />
+                    ))}
+                  </div>
+                  <div>{generateTabContent()}</div>
+                </div>
+              </div>
+            </motion.div>
 
-              <CustomButton
-                title={loading ? 'Saving...' : 'Save Design'}
-                customStyle="custom-button save"
-                handleClick={handleSave}
-              />
+            <motion.div
+              key="customizer-buttons"
+              className="customizer-back-btn"
+              {...fadeAnimation}
+            >
+              <div
+                style={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  gap: '1rem',
+                }}
+              >
+                <CustomButton
+                  title="Go Back"
+                  customStyle="custom-button go-back"
+                  handleClick={handleCustomizerPage}
+                />
 
-              <CustomButton
-                title="Reset Design"
-                customStyle="custom-button reset"
-                handleClick={handleResetDesign}
-              />
-            </div>
-          </motion.div>,
+                <CustomButton
+                  title={loading ? 'Saving...' : 'Save Design'}
+                  customStyle="custom-button save"
+                  handleClick={handleSave}
+                />
 
-          <motion.div
-            key="customizer-tabs"
-            className="customizer-filter-tabs"
-            {...slideAnimation('up')}
-          >
-            {FilterTabs.map((tab, idx) => (
-              <Tab
-                key={tab.name || `filter-tab-${idx}`}
-                tab={tab}
-                isFilteredTab
-                isActiveTab={activeFilterTab[tab.name]}
-                handleClick={() => handleActiveFilterTab(tab.name)}
-              />
-            ))}
-          </motion.div>,
+                <CustomButton
+                  title="Reset Design"
+                  customStyle="custom-button reset"
+                  handleClick={handleResetDesign}
+                />
+              </div>
+            </motion.div>
 
-          <motion.div key="plug-dev-rev">
-            <PlugDevRev />
-          </motion.div>,
+            <motion.div
+              key="customizer-tabs"
+              className="customizer-filter-tabs"
+              {...slideAnimation('up')}
+            >
+              {FilterTabs.map((tab, idx) => (
+                <Tab
+                  key={tab.name || `filter-tab-${idx}`}
+                  tab={tab}
+                  isFilteredTab
+                  isActiveTab={activeFilterTab[tab.name]}
+                  handleClick={() => handleActiveFilterTab(tab.name)}
+                />
+              ))}
+            </motion.div>
+
+            <motion.div key="plug-dev-rev">
+              <PlugDevRev />
+            </motion.div>
+          </>,
         ]}
       </AnimatePresence>
 
