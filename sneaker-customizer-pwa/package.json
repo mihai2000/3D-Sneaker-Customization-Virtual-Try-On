@@ -19,7 +19,7 @@
 		"@mediapipe/pose": "^0.5.1675469404",
 		"@mui/icons-material": "^7.1.0",
 		"@mui/material": "^7.1.0",
-		"@react-three/drei": "9.80.2",
+		"@react-three/drei": "^9.122.0",
 		"@react-three/fiber": "8.13.6",
 		"@react-three/gltfjsx": "^4.3.4",
 		"@stripe/react-stripe-js": "^3.7.0",
