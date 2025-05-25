@@ -151,7 +151,7 @@ const Customizer: React.FC = () => {
     }
   };
   return (
-    <>
+    <div style={{ overflow: 'hidden !important' }}>
       <AnimatePresence mode="wait">
         {!snap.intro && [
           <>
@@ -247,7 +247,7 @@ const Customizer: React.FC = () => {
       </AnimatePresence>
 
       <CanvasEditor ref={canvasRef} />
-    </>
+    </div>
   );
 };
 

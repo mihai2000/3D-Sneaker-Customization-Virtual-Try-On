@@ -20,6 +20,7 @@ const CanvasEditor = forwardRef((_, ref) => {
       camera={{ position: [0, 0, 0] }}
       gl={{ preserveDrawingBuffer: true }}
       className="canvas-wrapper editor-glow-bg"
+      style={{ overflow: 'hidden' }}
     >
       <ambientLight intensity={0.5} />
       <spotLight

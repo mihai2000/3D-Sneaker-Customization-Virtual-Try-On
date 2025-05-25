@@ -14,7 +14,8 @@ html,
 body,
 #root {
   height: 100%;
-  overflow-x: hidden;
+  /* overflow-x: hidden; */
+  overflow: hidden;
   margin: 0;
   padding: 0;
 }
