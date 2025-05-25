@@ -1,12 +1,11 @@
 const CACHE_NAME = 'sneaker-app-cache-v1';
 const PRECACHE_ASSETS = [
-  '/', // root HTML
+  '/',
   '/index.html',
   '/favicon.ico',
   '/manifest.webmanifest',
   '/logo192.png',
   '/logo512.png',
-  // Add more files here as needed
 ];
 
 // Pre-cache static assets on install
