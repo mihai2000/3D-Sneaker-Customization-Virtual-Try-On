@@ -145,7 +145,7 @@ export default function SavedDesigns() {
           sx={{
             background: 'radial-gradient(circle at top, #0b111c, #050a13)',
             minHeight: '100vh',
-            py: 6,
+            py: 10,
           }}
         >
           <EmptySavedDesigns onCreateNew={handleCreateNew} />
@@ -154,9 +154,8 @@ export default function SavedDesigns() {
         <Box
           sx={{
             background: 'radial-gradient(circle at top, #110b1c, #090513)',
-
             minHeight: '100vh',
-            py: 6,
+            py: 10,
           }}
         >
           <Box

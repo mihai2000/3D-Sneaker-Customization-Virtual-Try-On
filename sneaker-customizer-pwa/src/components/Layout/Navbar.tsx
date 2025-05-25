@@ -165,7 +165,7 @@ export default function ResponsiveAppBar() {
 
             {/* Avatar / Settings */}
             <Box sx={{ flexGrow: 0, ml: 'auto' }}>
-              <Tooltip title="Account">
+              <Tooltip title="Account" arrow>
                 <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                   <Avatar
                     alt="User Avatar"

@@ -18,6 +18,7 @@ export default function Shoe() {
       else if (width > 1920) setScale(0.8);
       else if (width > 1440) setScale(0.6);
       else if (width > 1024) setScale(0.4);
+      else if (width > 375) setScale(0.4);
       else setScale(0.2);
     };
 

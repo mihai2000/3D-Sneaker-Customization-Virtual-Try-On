@@ -4,6 +4,19 @@
   height: 100vh !important;
   transition-property: all;
   transition-timing-function: ease-in;
+  position: relative;
+  z-index: 1;
+
+  canvas {
+    width: 100% !important;
+    height: 100% !important;
+  }
+
+  @media (max-width: 768px) {
+    height: 65vh;
+    min-height: 400px;
+    margin-top: 1rem;
+  }
 }
 
 /* 🔮 Background plasma effect */

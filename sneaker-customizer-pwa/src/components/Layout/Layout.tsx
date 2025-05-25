@@ -21,9 +21,10 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
         style={{
           position: 'relative',
           minHeight: '100dvh',
-          overflow: 'hidden',
+          overflowX: 'hidden',
+          overflowY: 'auto',
           color: '#fff',
-          paddingTop: `${appBarHeight}px`,
+          paddingTop: `${appBarHeight}px !important`,
         }}
       >
         {children}
