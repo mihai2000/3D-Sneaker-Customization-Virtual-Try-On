@@ -8,12 +8,19 @@ declare global {
   }
 }
 
+// Reliable mobile detection
+const isMobile = () => {
+  return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+    navigator.userAgent
+  );
+};
+
 export default function ARViewer() {
   const [params] = useSearchParams();
   const productId = params.get('product');
 
   useEffect(() => {
-    if (/Mobi|Android/i.test(navigator.userAgent)) {
+    if (isMobile()) {
       const script = document.createElement('script');
       script.src = '/deepar/deepar.js';
       script.onload = async () => {
@@ -31,7 +38,7 @@ export default function ARViewer() {
     }
   }, [productId]);
 
-  if (!/Mobi|Android/i.test(navigator.userAgent)) {
+  if (!isMobile()) {
     const mobileURL = `${window.location.origin}/collection/shoes?product=${productId}&mode=ar`;
     return (
       <div>
