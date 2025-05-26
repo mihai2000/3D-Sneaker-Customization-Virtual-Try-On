@@ -7,7 +7,7 @@ import ProtectedRoute from './auth/ProtectedRoute';
 import Layout from './components/Layout/Layout';
 
 import Customizer from './pages/Customizer/Customizer';
-import TryOnAR from './pages/TryOnAR';
+import TryOnAR from './pages/AR/TryOnAR';
 
 import ForgotPassword from './pages/Auth/ForgotPassword';
 import Register from './pages/Auth/Register';
@@ -32,6 +32,7 @@ import CanvasPreview from './components/canvas/Canvas/CanvasPreview/CanvasPrevie
 import CustomizerPage from './pages/Customizer/CustomizerPage';
 import Login from './pages/Auth/Login';
 import { ThemeProvider } from './providers/ThemeProvider';
+import ARViewer from './pages/AR/ARViewer';
 
 const App: React.FC = () => {
   const canvasRef = useRef<any>();
@@ -185,6 +186,16 @@ const App: React.FC = () => {
             <ProtectedRoute>
               <Layout>
                 <TryOnAR />
+              </Layout>
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/collection/shoes"
+          element={
+            <ProtectedRoute>
+              <Layout>
+                <ARViewer />
               </Layout>
             </ProtectedRoute>
           }

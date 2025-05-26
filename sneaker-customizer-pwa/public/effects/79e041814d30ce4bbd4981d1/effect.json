@@ -1,0 +1,1370 @@
+{
+    "animationEnabled": true,
+    "children": [
+        {
+            "animationEnabled": true,
+            "children": [
+                {
+                    "animationEnabled": true,
+                    "children": [
+                        {
+                            "animationEnabled": true,
+                            "children": [
+                                {
+                                    "animationEnabled": true,
+                                    "children": [
+                                        {
+                                            "animationEnabled": true,
+                                            "children": [
+                                                {
+                                                    "animationEnabled": true,
+                                                    "components": [
+                                                        {
+                                                            "blendShapeWeightsExpanded": false,
+                                                            "bonesExpanded": false,
+                                                            "enabled": true,
+                                                            "material": "~/Material.011.mat",
+                                                            "mesh": "~/Plane-1.armesh",
+                                                            "meshDriver": "none",
+                                                            "open": true,
+                                                            "type": "meshRenderer"
+                                                        }
+                                                    ],
+                                                    "depth": 1,
+                                                    "dynamicUv": "disabled",
+                                                    "editorAnimationsOpen": false,
+                                                    "editorOpen": false,
+                                                    "editorPropertyOpen": true,
+                                                    "editorSelectedAnimation": "",
+                                                    "enabled": true,
+                                                    "localPosition": [
+                                                        0.0,
+                                                        0.0,
+                                                        0.0
+                                                    ],
+                                                    "localRotation": [
+                                                        0.0,
+                                                        0.0,
+                                                        0.0,
+                                                        1.0
+                                                    ],
+                                                    "localScale": [
+                                                        1.0,
+                                                        1.0,
+                                                        1.0
+                                                    ],
+                                                    "name": "main shoe_2",
+                                                    "viewId": 2
+                                                }
+                                            ],
+                                            "components": [
+                                                {
+                                                    "blendShapeWeightsExpanded": false,
+                                                    "bonesExpanded": false,
+                                                    "enabled": true,
+                                                    "material": "~/Fluffy White Towel.mat",
+                                                    "mesh": "~/Plane-0.armesh",
+                                                    "meshDriver": "none",
+                                                    "open": true,
+                                                    "type": "meshRenderer"
+                                                }
+                                            ],
+                                            "depth": 1,
+                                            "dynamicUv": "disabled",
+                                            "editorAnimationsOpen": false,
+                                            "editorOpen": true,
+                                            "editorPropertyOpen": true,
+                                            "editorSelectedAnimation": "",
+                                            "enabled": true,
+                                            "localPosition": [
+                                                0.0,
+                                                -0.1760673224925995,
+                                                0.0
+                                            ],
+                                            "localRotation": [
+                                                0.7071068286895752,
+                                                0.0,
+                                                0.0,
+                                                0.7071067094802856
+                                            ],
+                                            "localScale": [
+                                                1.0,
+                                                1.0990824699401855,
+                                                1.0000001192092896
+                                            ],
+                                            "name": "main shoe",
+                                            "viewId": 2
+                                        },
+                                        {
+                                            "animationEnabled": true,
+                                            "children": [
+                                                {
+                                                    "animationEnabled": true,
+                                                    "components": [
+                                                        {
+                                                            "blendShapeWeightsExpanded": false,
+                                                            "bonesExpanded": false,
+                                                            "enabled": true,
+                                                            "material": "~/Material.013.mat",
+                                                            "mesh": "~/Plane.001-1.armesh",
+                                                            "meshDriver": "none",
+                                                            "open": true,
+                                                            "type": "meshRenderer"
+                                                        }
+                                                    ],
+                                                    "depth": 1,
+                                                    "dynamicUv": "disabled",
+                                                    "editorAnimationsOpen": false,
+                                                    "editorOpen": false,
+                                                    "editorPropertyOpen": true,
+                                                    "editorSelectedAnimation": "",
+                                                    "enabled": true,
+                                                    "localPosition": [
+                                                        0.0,
+                                                        0.0,
+                                                        0.0
+                                                    ],
+                                                    "localRotation": [
+                                                        0.0,
+                                                        0.0,
+                                                        0.0,
+                                                        1.0
+                                                    ],
+                                                    "localScale": [
+                                                        1.0,
+                                                        1.0,
+                                                        1.0
+                                                    ],
+                                                    "name": "lower_2",
+                                                    "viewId": 2
+                                                }
+                                            ],
+                                            "components": [
+                                                {
+                                                    "blendShapeWeightsExpanded": false,
+                                                    "bonesExpanded": false,
+                                                    "enabled": true,
+                                                    "material": "~/Material.012.mat",
+                                                    "mesh": "~/Plane.001-0.armesh",
+                                                    "meshDriver": "none",
+                                                    "open": true,
+                                                    "type": "meshRenderer"
+                                                }
+                                            ],
+                                            "depth": 1,
+                                            "dynamicUv": "disabled",
+                                            "editorAnimationsOpen": false,
+                                            "editorOpen": false,
+                                            "editorPropertyOpen": true,
+                                            "editorSelectedAnimation": "",
+                                            "enabled": true,
+                                            "localPosition": [
+                                                0.0,
+                                                -0.024625129997730255,
+                                                0.0
+                                            ],
+                                            "localRotation": [
+                                                0.7071068286895752,
+                                                0.0,
+                                                0.0,
+                                                0.7071067094802856
+                                            ],
+                                            "localScale": [
+                                                1.0,
+                                                1.0990824699401855,
+                                                1.4751031398773193
+                                            ],
+                                            "name": "lower",
+                                            "viewId": 2
+                                        },
+                                        {
+                                            "animationEnabled": true,
+                                            "components": [
+                                                {
+                                                    "blendShapeWeightsExpanded": false,
+                                                    "bonesExpanded": false,
+                                                    "enabled": true,
+                                                    "material": "~/Material.002.mat",
+                                                    "mesh": "~/Plane.003.armesh",
+                                                    "meshDriver": "none",
+                                                    "open": true,
+                                                    "type": "meshRenderer"
+                                                }
+                                            ],
+                                            "depth": 1,
+                                            "dynamicUv": "disabled",
+                                            "editorAnimationsOpen": false,
+                                            "editorOpen": false,
+                                            "editorPropertyOpen": true,
+                                            "editorSelectedAnimation": "",
+                                            "enabled": true,
+                                            "localPosition": [
+                                                0.0,
+                                                -0.1760673224925995,
+                                                0.0
+                                            ],
+                                            "localRotation": [
+                                                0.7071068286895752,
+                                                0.0,
+                                                0.0,
+                                                0.7071067094802856
+                                            ],
+                                            "localScale": [
+                                                1.0,
+                                                1.0990824699401855,
+                                                1.0000001192092896
+                                            ],
+                                            "name": "design 3",
+                                            "viewId": 2
+                                        },
+                                        {
+                                            "animationEnabled": true,
+                                            "components": [
+                                                {
+                                                    "blendShapeWeightsExpanded": false,
+                                                    "bonesExpanded": false,
+                                                    "enabled": true,
+                                                    "material": "~/Material.001.mat",
+                                                    "mesh": "~/Plane.002.armesh",
+                                                    "meshDriver": "none",
+                                                    "open": true,
+                                                    "type": "meshRenderer"
+                                                }
+                                            ],
+                                            "depth": 1,
+                                            "dynamicUv": "disabled",
+                                            "editorAnimationsOpen": false,
+                                            "editorOpen": false,
+                                            "editorPropertyOpen": true,
+                                            "editorSelectedAnimation": "",
+                                            "enabled": true,
+                                            "localPosition": [
+                                                0.0,
+                                                -0.1760673224925995,
+                                                0.0
+                                            ],
+                                            "localRotation": [
+                                                0.7071068286895752,
+                                                0.0,
+                                                0.0,
+                                                0.7071067094802856
+                                            ],
+                                            "localScale": [
+                                                1.0,
+                                                1.0990824699401855,
+                                                1.0000001192092896
+                                            ],
+                                            "name": "nikey logo",
+                                            "viewId": 2
+                                        },
+                                        {
+                                            "animationEnabled": true,
+                                            "components": [
+                                                {
+                                                    "blendShapeWeightsExpanded": false,
+                                                    "bonesExpanded": false,
+                                                    "enabled": true,
+                                                    "material": "~/Material.002.mat",
+                                                    "mesh": "~/Plane.004.armesh",
+                                                    "meshDriver": "none",
+                                                    "open": true,
+                                                    "type": "meshRenderer"
+                                                }
+                                            ],
+                                            "depth": 1,
+                                            "dynamicUv": "disabled",
+                                            "editorAnimationsOpen": false,
+                                            "editorOpen": false,
+                                            "editorPropertyOpen": true,
+                                            "editorSelectedAnimation": "",
+                                            "enabled": true,
+                                            "localPosition": [
+                                                0.0,
+                                                -0.1760673224925995,
+                                                0.0
+                                            ],
+                                            "localRotation": [
+                                                0.7071068286895752,
+                                                0.0,
+                                                0.0,
+                                                0.7071067094802856
+                                            ],
+                                            "localScale": [
+                                                1.0,
+                                                1.0990824699401855,
+                                                1.0000001192092896
+                                            ],
+                                            "name": "design1",
+                                            "viewId": 2
+                                        },
+                                        {
+                                            "animationEnabled": true,
+                                            "components": [
+                                                {
+                                                    "blendShapeWeightsExpanded": false,
+                                                    "bonesExpanded": false,
+                                                    "enabled": true,
+                                                    "material": "~/Material.002.mat",
+                                                    "mesh": "~/Plane.005.armesh",
+                                                    "meshDriver": "none",
+                                                    "open": true,
+                                                    "type": "meshRenderer"
+                                                }
+                                            ],
+                                            "depth": 1,
+                                            "dynamicUv": "disabled",
+                                            "editorAnimationsOpen": false,
+                                            "editorOpen": false,
+                                            "editorPropertyOpen": true,
+                                            "editorSelectedAnimation": "",
+                                            "enabled": true,
+                                            "localPosition": [
+                                                0.0,
+                                                -0.17606720328330994,
+                                                0.0
+                                            ],
+                                            "localRotation": [
+                                                0.3420872688293457,
+                                                0.07921739667654037,
+                                                0.20190368592739105,
+                                                0.9142952561378479
+                                            ],
+                                            "localScale": [
+                                                0.619357168674469,
+                                                0.9270826578140259,
+                                                0.15541622042655945
+                                            ],
+                                            "name": "design 2",
+                                            "viewId": 2
+                                        },
+                                        {
+                                            "animationEnabled": true,
+                                            "components": [
+                                                {
+                                                    "blendShapeWeightsExpanded": false,
+                                                    "bonesExpanded": false,
+                                                    "enabled": true,
+                                                    "material": "~/Material.006.mat",
+                                                    "mesh": "~/Plane.006.armesh",
+                                                    "meshDriver": "none",
+                                                    "open": true,
+                                                    "type": "meshRenderer"
+                                                }
+                                            ],
+                                            "depth": 1,
+                                            "dynamicUv": "disabled",
+                                            "editorAnimationsOpen": false,
+                                            "editorOpen": false,
+                                            "editorPropertyOpen": true,
+                                            "editorSelectedAnimation": "",
+                                            "enabled": true,
+                                            "localPosition": [
+                                                0.0,
+                                                -0.1760673224925995,
+                                                0.0
+                                            ],
+                                            "localRotation": [
+                                                0.7071068286895752,
+                                                0.0,
+                                                0.0,
+                                                0.7071067094802856
+                                            ],
+                                            "localScale": [
+                                                1.0,
+                                                1.0990824699401855,
+                                                1.0000001192092896
+                                            ],
+                                            "name": "desighn 4",
+                                            "viewId": 2
+                                        },
+                                        {
+                                            "animationEnabled": true,
+                                            "components": [
+                                                {
+                                                    "blendShapeWeightsExpanded": false,
+                                                    "bonesExpanded": false,
+                                                    "enabled": true,
+                                                    "material": "~/Material.003.mat",
+                                                    "mesh": "~/Plane.007.armesh",
+                                                    "meshDriver": "none",
+                                                    "open": true,
+                                                    "type": "meshRenderer"
+                                                }
+                                            ],
+                                            "depth": 1,
+                                            "dynamicUv": "disabled",
+                                            "editorAnimationsOpen": false,
+                                            "editorOpen": false,
+                                            "editorPropertyOpen": true,
+                                            "editorSelectedAnimation": "",
+                                            "enabled": true,
+                                            "localPosition": [
+                                                -0.46038028597831726,
+                                                1.0449295043945313,
+                                                -0.0008559580892324448
+                                            ],
+                                            "localRotation": [
+                                                0.1425856649875641,
+                                                -0.6864801645278931,
+                                                0.1450057327747345,
+                                                0.6981315612792969
+                                            ],
+                                            "localScale": [
+                                                0.4764682650566101,
+                                                0.5015515685081482,
+                                                0.01821969449520111
+                                            ],
+                                            "name": "laces",
+                                            "viewId": 2
+                                        },
+                                        {
+                                            "animationEnabled": true,
+                                            "components": [
+                                                {
+                                                    "blendShapeWeightsExpanded": false,
+                                                    "bonesExpanded": false,
+                                                    "enabled": true,
+                                                    "material": "~/Material.mat",
+                                                    "mesh": "~/Text.armesh",
+                                                    "meshDriver": "none",
+                                                    "open": true,
+                                                    "type": "meshRenderer"
+                                                }
+                                            ],
+                                            "depth": 1,
+                                            "dynamicUv": "disabled",
+                                            "editorAnimationsOpen": false,
+                                            "editorOpen": false,
+                                            "editorPropertyOpen": true,
+                                            "editorSelectedAnimation": "",
+                                            "enabled": true,
+                                            "localPosition": [
+                                                1.9865467548370361,
+                                                1.2179845571517944,
+                                                -0.03397935628890991
+                                            ],
+                                            "localRotation": [
+                                                -0.5,
+                                                -0.5,
+                                                0.5,
+                                                -0.5
+                                            ],
+                                            "localScale": [
+                                                0.19258353114128113,
+                                                0.19258353114128113,
+                                                0.19258353114128113
+                                            ],
+                                            "name": "Text",
+                                            "viewId": 2
+                                        },
+                                        {
+                                            "animationEnabled": true,
+                                            "components": [
+                                                {
+                                                    "blendShapeWeightsExpanded": false,
+                                                    "bonesExpanded": false,
+                                                    "enabled": true,
+                                                    "material": "~/_.mat",
+                                                    "mesh": "~/Plane.008.armesh",
+                                                    "meshDriver": "none",
+                                                    "open": true,
+                                                    "type": "meshRenderer"
+                                                }
+                                            ],
+                                            "depth": 1,
+                                            "dynamicUv": "disabled",
+                                            "editorAnimationsOpen": false,
+                                            "editorOpen": false,
+                                            "editorPropertyOpen": true,
+                                            "editorSelectedAnimation": "",
+                                            "enabled": true,
+                                            "localPosition": [
+                                                0.0,
+                                                -0.07580097019672394,
+                                                0.0
+                                            ],
+                                            "localRotation": [
+                                                0.7071068286895752,
+                                                0.0,
+                                                0.0,
+                                                0.7071067094802856
+                                            ],
+                                            "localScale": [
+                                                0.9428046345710754,
+                                                0.8569838404655457,
+                                                0.9224655628204346
+                                            ],
+                                            "name": "desighn 00",
+                                            "viewId": 2
+                                        }
+                                    ],
+                                    "depth": 1,
+                                    "dynamicUv": "disabled",
+                                    "editorAnimationsOpen": false,
+                                    "editorOpen": true,
+                                    "editorPropertyOpen": true,
+                                    "editorSelectedAnimation": "",
+                                    "enabled": true,
+                                    "localPosition": [
+                                        0.0,
+                                        0.0,
+                                        0.0
+                                    ],
+                                    "localRotation": [
+                                        0.0,
+                                        0.0,
+                                        0.0,
+                                        1.0
+                                    ],
+                                    "localScale": [
+                                        1.0,
+                                        1.0,
+                                        1.0
+                                    ],
+                                    "name": "model_right",
+                                    "sceneBase": "~/nike_military.glb",
+                                    "viewId": 2
+                                }
+                            ],
+                            "depth": 1,
+                            "dynamicUv": "disabled",
+                            "editorAnimationsOpen": false,
+                            "editorOpen": false,
+                            "editorPropertyOpen": true,
+                            "editorSelectedAnimation": "",
+                            "enabled": true,
+                            "localEulerAngles": [
+                                0.0,
+                                0.0,
+                                0.0
+                            ],
+                            "localPosition": [
+                                0.0,
+                                0.0,
+                                0.0
+                            ],
+                            "localScale": [
+                                1.0,
+                                1.0,
+                                1.0
+                            ],
+                            "name": "shopar_shoe_right_origin_compensator",
+                            "viewId": 2
+                        }
+                    ],
+                    "depth": 1,
+                    "dynamicUv": "disabled",
+                    "editorAnimationsOpen": false,
+                    "editorOpen": true,
+                    "editorPropertyOpen": true,
+                    "editorSelectedAnimation": "",
+                    "enabled": true,
+                    "localEulerAngles": [
+                        0.0,
+                        1.5707963705062866,
+                        0.0
+                    ],
+                    "localPosition": [
+                        0.0,
+                        -2.5,
+                        -3.5
+                    ],
+                    "localScale": [
+                        6.5,
+                        6.0,
+                        6.0
+                    ],
+                    "name": "shopar_shoe_right",
+                    "viewId": 2
+                },
+                {
+                    "animationEnabled": true,
+                    "components": [
+                        {
+                            "blendShapeWeightsExpanded": false,
+                            "bonesExpanded": false,
+                            "enabled": true,
+                            "material": "~/occluder",
+                            "mesh": "~/__dprs_int_f18caee1_d65d_4319_957b_2f6556abda06__/foot_occluder_mesh.armesh",
+                            "meshDriver": "none",
+                            "open": true,
+                            "type": "meshRenderer"
+                        }
+                    ],
+                    "depth": 0,
+                    "dynamicUv": "disabled",
+                    "editorAnimationsOpen": false,
+                    "editorOpen": false,
+                    "editorPropertyOpen": true,
+                    "editorSelectedAnimation": "",
+                    "enabled": true,
+                    "localEulerAngles": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ],
+                    "localPosition": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ],
+                    "localScale": [
+                        1.0,
+                        1.0,
+                        1.0
+                    ],
+                    "name": "foot_occluder_right",
+                    "viewId": 2
+                }
+            ],
+            "components": [
+                {
+                    "enabled": true,
+                    "left": false,
+                    "open": true,
+                    "type": "footPosition"
+                }
+            ],
+            "depth": 1,
+            "dynamicUv": "disabled",
+            "editorAnimationsOpen": false,
+            "editorOpen": true,
+            "editorPropertyOpen": true,
+            "editorSelectedAnimation": "",
+            "enabled": true,
+            "localEulerAngles": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "localPosition": [
+                -10.0,
+                0.0,
+                0.0
+            ],
+            "localScale": [
+                1.0,
+                1.0,
+                1.0
+            ],
+            "name": "foot_position_right",
+            "viewId": 2
+        },
+        {
+            "animationEnabled": true,
+            "children": [
+                {
+                    "animationEnabled": true,
+                    "children": [
+                        {
+                            "animationEnabled": true,
+                            "children": [
+                                {
+                                    "animationEnabled": true,
+                                    "children": [
+                                        {
+                                            "animationEnabled": true,
+                                            "children": [
+                                                {
+                                                    "animationEnabled": true,
+                                                    "components": [
+                                                        {
+                                                            "blendShapeWeightsExpanded": false,
+                                                            "bonesExpanded": false,
+                                                            "enabled": true,
+                                                            "material": "~/Material.011.mat",
+                                                            "mesh": "~/Plane-1.armesh",
+                                                            "meshDriver": "none",
+                                                            "open": true,
+                                                            "type": "meshRenderer"
+                                                        }
+                                                    ],
+                                                    "depth": 1,
+                                                    "dynamicUv": "disabled",
+                                                    "editorAnimationsOpen": false,
+                                                    "editorOpen": false,
+                                                    "editorPropertyOpen": true,
+                                                    "editorSelectedAnimation": "",
+                                                    "enabled": true,
+                                                    "localPosition": [
+                                                        0.0,
+                                                        0.0,
+                                                        0.0
+                                                    ],
+                                                    "localRotation": [
+                                                        0.0,
+                                                        0.0,
+                                                        0.0,
+                                                        1.0
+                                                    ],
+                                                    "localScale": [
+                                                        1.0,
+                                                        1.0,
+                                                        1.0
+                                                    ],
+                                                    "name": "main shoe_4",
+                                                    "viewId": 2
+                                                }
+                                            ],
+                                            "components": [
+                                                {
+                                                    "blendShapeWeightsExpanded": false,
+                                                    "bonesExpanded": false,
+                                                    "enabled": true,
+                                                    "material": "~/Fluffy White Towel.mat",
+                                                    "mesh": "~/Plane-0.armesh",
+                                                    "meshDriver": "none",
+                                                    "open": true,
+                                                    "type": "meshRenderer"
+                                                }
+                                            ],
+                                            "depth": 1,
+                                            "dynamicUv": "disabled",
+                                            "editorAnimationsOpen": false,
+                                            "editorOpen": false,
+                                            "editorPropertyOpen": true,
+                                            "editorSelectedAnimation": "",
+                                            "enabled": true,
+                                            "localPosition": [
+                                                0.0,
+                                                -0.1760673224925995,
+                                                0.0
+                                            ],
+                                            "localRotation": [
+                                                0.7071068286895752,
+                                                0.0,
+                                                0.0,
+                                                0.7071067094802856
+                                            ],
+                                            "localScale": [
+                                                1.0,
+                                                1.0990824699401855,
+                                                1.0000001192092896
+                                            ],
+                                            "name": "main shoe_3",
+                                            "viewId": 2
+                                        },
+                                        {
+                                            "animationEnabled": true,
+                                            "children": [
+                                                {
+                                                    "animationEnabled": true,
+                                                    "components": [
+                                                        {
+                                                            "blendShapeWeightsExpanded": false,
+                                                            "bonesExpanded": false,
+                                                            "enabled": true,
+                                                            "material": "~/Material.013.mat",
+                                                            "mesh": "~/Plane.001-1.armesh",
+                                                            "meshDriver": "none",
+                                                            "open": true,
+                                                            "type": "meshRenderer"
+                                                        }
+                                                    ],
+                                                    "depth": 1,
+                                                    "dynamicUv": "disabled",
+                                                    "editorAnimationsOpen": false,
+                                                    "editorOpen": false,
+                                                    "editorPropertyOpen": true,
+                                                    "editorSelectedAnimation": "",
+                                                    "enabled": true,
+                                                    "localPosition": [
+                                                        0.0,
+                                                        0.0,
+                                                        0.0
+                                                    ],
+                                                    "localRotation": [
+                                                        0.0,
+                                                        0.0,
+                                                        0.0,
+                                                        1.0
+                                                    ],
+                                                    "localScale": [
+                                                        1.0,
+                                                        1.0,
+                                                        1.0
+                                                    ],
+                                                    "name": "lower_4",
+                                                    "viewId": 2
+                                                }
+                                            ],
+                                            "components": [
+                                                {
+                                                    "blendShapeWeightsExpanded": false,
+                                                    "bonesExpanded": false,
+                                                    "enabled": true,
+                                                    "material": "~/Material.012.mat",
+                                                    "mesh": "~/Plane.001-0.armesh",
+                                                    "meshDriver": "none",
+                                                    "open": true,
+                                                    "type": "meshRenderer"
+                                                }
+                                            ],
+                                            "depth": 1,
+                                            "dynamicUv": "disabled",
+                                            "editorAnimationsOpen": false,
+                                            "editorOpen": false,
+                                            "editorPropertyOpen": true,
+                                            "editorSelectedAnimation": "",
+                                            "enabled": true,
+                                            "localPosition": [
+                                                0.0,
+                                                -0.024625129997730255,
+                                                0.0
+                                            ],
+                                            "localRotation": [
+                                                0.7071068286895752,
+                                                0.0,
+                                                0.0,
+                                                0.7071067094802856
+                                            ],
+                                            "localScale": [
+                                                1.0,
+                                                1.0990824699401855,
+                                                1.4751031398773193
+                                            ],
+                                            "name": "lower_3",
+                                            "viewId": 2
+                                        },
+                                        {
+                                            "animationEnabled": true,
+                                            "components": [
+                                                {
+                                                    "blendShapeWeightsExpanded": false,
+                                                    "bonesExpanded": false,
+                                                    "enabled": true,
+                                                    "material": "~/Material.002.mat",
+                                                    "mesh": "~/Plane.003.armesh",
+                                                    "meshDriver": "none",
+                                                    "open": true,
+                                                    "type": "meshRenderer"
+                                                }
+                                            ],
+                                            "depth": 1,
+                                            "dynamicUv": "disabled",
+                                            "editorAnimationsOpen": false,
+                                            "editorOpen": false,
+                                            "editorPropertyOpen": true,
+                                            "editorSelectedAnimation": "",
+                                            "enabled": true,
+                                            "localPosition": [
+                                                0.0,
+                                                -0.1760673224925995,
+                                                0.0
+                                            ],
+                                            "localRotation": [
+                                                0.7071068286895752,
+                                                0.0,
+                                                0.0,
+                                                0.7071067094802856
+                                            ],
+                                            "localScale": [
+                                                1.0,
+                                                1.0990824699401855,
+                                                1.0000001192092896
+                                            ],
+                                            "name": "design 3_2",
+                                            "viewId": 2
+                                        },
+                                        {
+                                            "animationEnabled": true,
+                                            "components": [
+                                                {
+                                                    "blendShapeWeightsExpanded": false,
+                                                    "bonesExpanded": false,
+                                                    "enabled": true,
+                                                    "material": "~/Material.001.mat",
+                                                    "mesh": "~/Plane.002.armesh",
+                                                    "meshDriver": "none",
+                                                    "open": true,
+                                                    "type": "meshRenderer"
+                                                }
+                                            ],
+                                            "depth": 1,
+                                            "dynamicUv": "disabled",
+                                            "editorAnimationsOpen": false,
+                                            "editorOpen": false,
+                                            "editorPropertyOpen": true,
+                                            "editorSelectedAnimation": "",
+                                            "enabled": true,
+                                            "localPosition": [
+                                                0.0,
+                                                -0.1760673224925995,
+                                                0.0
+                                            ],
+                                            "localRotation": [
+                                                0.7071068286895752,
+                                                0.0,
+                                                0.0,
+                                                0.7071067094802856
+                                            ],
+                                            "localScale": [
+                                                1.0,
+                                                1.0990824699401855,
+                                                1.0000001192092896
+                                            ],
+                                            "name": "nikey logo_2",
+                                            "viewId": 2
+                                        },
+                                        {
+                                            "animationEnabled": true,
+                                            "components": [
+                                                {
+                                                    "blendShapeWeightsExpanded": false,
+                                                    "bonesExpanded": false,
+                                                    "enabled": true,
+                                                    "material": "~/Material.002.mat",
+                                                    "mesh": "~/Plane.004.armesh",
+                                                    "meshDriver": "none",
+                                                    "open": true,
+                                                    "type": "meshRenderer"
+                                                }
+                                            ],
+                                            "depth": 1,
+                                            "dynamicUv": "disabled",
+                                            "editorAnimationsOpen": false,
+                                            "editorOpen": false,
+                                            "editorPropertyOpen": true,
+                                            "editorSelectedAnimation": "",
+                                            "enabled": true,
+                                            "localPosition": [
+                                                0.0,
+                                                -0.1760673224925995,
+                                                0.0
+                                            ],
+                                            "localRotation": [
+                                                0.7071068286895752,
+                                                0.0,
+                                                0.0,
+                                                0.7071067094802856
+                                            ],
+                                            "localScale": [
+                                                1.0,
+                                                1.0990824699401855,
+                                                1.0000001192092896
+                                            ],
+                                            "name": "design1_2",
+                                            "viewId": 2
+                                        },
+                                        {
+                                            "animationEnabled": true,
+                                            "components": [
+                                                {
+                                                    "blendShapeWeightsExpanded": false,
+                                                    "bonesExpanded": false,
+                                                    "enabled": true,
+                                                    "material": "~/Material.002.mat",
+                                                    "mesh": "~/Plane.005.armesh",
+                                                    "meshDriver": "none",
+                                                    "open": true,
+                                                    "type": "meshRenderer"
+                                                }
+                                            ],
+                                            "depth": 1,
+                                            "dynamicUv": "disabled",
+                                            "editorAnimationsOpen": false,
+                                            "editorOpen": false,
+                                            "editorPropertyOpen": true,
+                                            "editorSelectedAnimation": "",
+                                            "enabled": true,
+                                            "localPosition": [
+                                                0.0,
+                                                -0.17606720328330994,
+                                                0.0
+                                            ],
+                                            "localRotation": [
+                                                0.3420872688293457,
+                                                0.07921739667654037,
+                                                0.20190368592739105,
+                                                0.9142952561378479
+                                            ],
+                                            "localScale": [
+                                                0.619357168674469,
+                                                0.9270826578140259,
+                                                0.15541622042655945
+                                            ],
+                                            "name": "design 2_2",
+                                            "viewId": 2
+                                        },
+                                        {
+                                            "animationEnabled": true,
+                                            "components": [
+                                                {
+                                                    "blendShapeWeightsExpanded": false,
+                                                    "bonesExpanded": false,
+                                                    "enabled": true,
+                                                    "material": "~/Material.006.mat",
+                                                    "mesh": "~/Plane.006.armesh",
+                                                    "meshDriver": "none",
+                                                    "open": true,
+                                                    "type": "meshRenderer"
+                                                }
+                                            ],
+                                            "depth": 1,
+                                            "dynamicUv": "disabled",
+                                            "editorAnimationsOpen": false,
+                                            "editorOpen": false,
+                                            "editorPropertyOpen": true,
+                                            "editorSelectedAnimation": "",
+                                            "enabled": true,
+                                            "localPosition": [
+                                                0.0,
+                                                -0.1760673224925995,
+                                                0.0
+                                            ],
+                                            "localRotation": [
+                                                0.7071068286895752,
+                                                0.0,
+                                                0.0,
+                                                0.7071067094802856
+                                            ],
+                                            "localScale": [
+                                                1.0,
+                                                1.0990824699401855,
+                                                1.0000001192092896
+                                            ],
+                                            "name": "desighn 4_2",
+                                            "viewId": 2
+                                        },
+                                        {
+                                            "animationEnabled": true,
+                                            "components": [
+                                                {
+                                                    "blendShapeWeightsExpanded": false,
+                                                    "bonesExpanded": false,
+                                                    "enabled": true,
+                                                    "material": "~/Material.003.mat",
+                                                    "mesh": "~/Plane.007.armesh",
+                                                    "meshDriver": "none",
+                                                    "open": true,
+                                                    "type": "meshRenderer"
+                                                }
+                                            ],
+                                            "depth": 1,
+                                            "dynamicUv": "disabled",
+                                            "editorAnimationsOpen": false,
+                                            "editorOpen": false,
+                                            "editorPropertyOpen": true,
+                                            "editorSelectedAnimation": "",
+                                            "enabled": true,
+                                            "localPosition": [
+                                                -0.46038028597831726,
+                                                1.0449295043945313,
+                                                -0.0008559580892324448
+                                            ],
+                                            "localRotation": [
+                                                0.1425856649875641,
+                                                -0.6864801645278931,
+                                                0.1450057327747345,
+                                                0.6981315612792969
+                                            ],
+                                            "localScale": [
+                                                0.4764682650566101,
+                                                0.5015515685081482,
+                                                0.01821969449520111
+                                            ],
+                                            "name": "laces_2",
+                                            "viewId": 2
+                                        },
+                                        {
+                                            "animationEnabled": true,
+                                            "components": [
+                                                {
+                                                    "blendShapeWeightsExpanded": false,
+                                                    "bonesExpanded": false,
+                                                    "enabled": true,
+                                                    "material": "~/Material.mat",
+                                                    "mesh": "~/Text.armesh",
+                                                    "meshDriver": "none",
+                                                    "open": true,
+                                                    "type": "meshRenderer"
+                                                }
+                                            ],
+                                            "depth": 1,
+                                            "dynamicUv": "disabled",
+                                            "editorAnimationsOpen": false,
+                                            "editorOpen": false,
+                                            "editorPropertyOpen": true,
+                                            "editorSelectedAnimation": "",
+                                            "enabled": true,
+                                            "localPosition": [
+                                                1.9865467548370361,
+                                                1.2179845571517944,
+                                                -0.03397935628890991
+                                            ],
+                                            "localRotation": [
+                                                -0.5,
+                                                -0.5,
+                                                0.5,
+                                                -0.5
+                                            ],
+                                            "localScale": [
+                                                0.19258353114128113,
+                                                0.19258353114128113,
+                                                0.19258353114128113
+                                            ],
+                                            "name": "Text_2",
+                                            "viewId": 2
+                                        },
+                                        {
+                                            "animationEnabled": true,
+                                            "components": [
+                                                {
+                                                    "blendShapeWeightsExpanded": false,
+                                                    "bonesExpanded": false,
+                                                    "enabled": true,
+                                                    "material": "~/_.mat",
+                                                    "mesh": "~/Plane.008.armesh",
+                                                    "meshDriver": "none",
+                                                    "open": true,
+                                                    "type": "meshRenderer"
+                                                }
+                                            ],
+                                            "depth": 1,
+                                            "dynamicUv": "disabled",
+                                            "editorAnimationsOpen": false,
+                                            "editorOpen": false,
+                                            "editorPropertyOpen": true,
+                                            "editorSelectedAnimation": "",
+                                            "enabled": true,
+                                            "localPosition": [
+                                                0.0,
+                                                -0.07580097019672394,
+                                                0.0
+                                            ],
+                                            "localRotation": [
+                                                0.7071068286895752,
+                                                0.0,
+                                                0.0,
+                                                0.7071067094802856
+                                            ],
+                                            "localScale": [
+                                                0.9428046345710754,
+                                                0.8569838404655457,
+                                                0.9224655628204346
+                                            ],
+                                            "name": "desighn 00_2",
+                                            "viewId": 2
+                                        }
+                                    ],
+                                    "depth": 1,
+                                    "dynamicUv": "disabled",
+                                    "editorAnimationsOpen": false,
+                                    "editorOpen": false,
+                                    "editorPropertyOpen": true,
+                                    "editorSelectedAnimation": "",
+                                    "enabled": true,
+                                    "localPosition": [
+                                        0.0,
+                                        0.0,
+                                        0.0
+                                    ],
+                                    "localRotation": [
+                                        0.0,
+                                        0.0,
+                                        0.0,
+                                        1.0
+                                    ],
+                                    "localScale": [
+                                        1.0,
+                                        1.0,
+                                        1.0
+                                    ],
+                                    "name": "model_left",
+                                    "sceneBase": "~/nike_military.glb",
+                                    "viewId": 2
+                                }
+                            ],
+                            "depth": 1,
+                            "dynamicUv": "disabled",
+                            "editorAnimationsOpen": false,
+                            "editorOpen": false,
+                            "editorPropertyOpen": true,
+                            "editorSelectedAnimation": "",
+                            "enabled": true,
+                            "localEulerAngles": [
+                                0.0,
+                                0.0,
+                                0.0
+                            ],
+                            "localPosition": [
+                                0.0,
+                                0.0,
+                                0.0
+                            ],
+                            "localScale": [
+                                1.0,
+                                1.0,
+                                1.0
+                            ],
+                            "name": "shopar_shoe_left_origin_compensator",
+                            "viewId": 2
+                        }
+                    ],
+                    "depth": 1,
+                    "dynamicUv": "disabled",
+                    "editorAnimationsOpen": false,
+                    "editorOpen": false,
+                    "editorPropertyOpen": true,
+                    "editorSelectedAnimation": "",
+                    "enabled": true,
+                    "localEulerAngles": [
+                        0.0,
+                        1.5707963705062866,
+                        0.0
+                    ],
+                    "localPosition": [
+                        0.0,
+                        -2.5,
+                        -3.5
+                    ],
+                    "localScale": [
+                        6.5,
+                        6.0,
+                        6.0
+                    ],
+                    "name": "shopar_shoe_left",
+                    "viewId": 2
+                },
+                {
+                    "animationEnabled": true,
+                    "components": [
+                        {
+                            "blendShapeWeightsExpanded": false,
+                            "bonesExpanded": false,
+                            "enabled": true,
+                            "material": "~/occluder",
+                            "mesh": "~/__dprs_int_f18caee1_d65d_4319_957b_2f6556abda06__/foot_occluder_mesh.armesh",
+                            "meshDriver": "none",
+                            "open": true,
+                            "type": "meshRenderer"
+                        }
+                    ],
+                    "depth": 0,
+                    "dynamicUv": "disabled",
+                    "editorAnimationsOpen": false,
+                    "editorOpen": false,
+                    "editorPropertyOpen": true,
+                    "editorSelectedAnimation": "",
+                    "enabled": true,
+                    "localEulerAngles": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ],
+                    "localPosition": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ],
+                    "localScale": [
+                        -1.0,
+                        1.0,
+                        1.0
+                    ],
+                    "name": "foot_occluder_left",
+                    "viewId": 2
+                }
+            ],
+            "components": [
+                {
+                    "enabled": true,
+                    "left": true,
+                    "open": true,
+                    "type": "footPosition"
+                }
+            ],
+            "depth": 1,
+            "dynamicUv": "disabled",
+            "editorAnimationsOpen": false,
+            "editorOpen": true,
+            "editorPropertyOpen": true,
+            "editorSelectedAnimation": "",
+            "enabled": true,
+            "localEulerAngles": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "localPosition": [
+                10.0,
+                0.0,
+                0.0
+            ],
+            "localScale": [
+                1.0,
+                1.0,
+                1.0
+            ],
+            "name": "foot_position_left",
+            "viewId": 2
+        },
+        {
+            "animationEnabled": true,
+            "components": [
+                {
+                    "colorB": 1.0,
+                    "colorG": 1.0,
+                    "colorR": 1.0,
+                    "distance": 0.0,
+                    "enabled": true,
+                    "intensity": 0.30000001192092896,
+                    "lightSource": "directional",
+                    "open": true,
+                    "type": "light"
+                }
+            ],
+            "depth": 0,
+            "dynamicUv": "disabled",
+            "editorAnimationsOpen": false,
+            "editorOpen": false,
+            "editorPropertyOpen": true,
+            "editorSelectedAnimation": "",
+            "enabled": true,
+            "localEulerAngles": [
+                -0.3490658402442932,
+                0.1745329201221466,
+                -0.05235987901687622
+            ],
+            "localPosition": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "localScale": [
+                1.0,
+                1.0,
+                1.0
+            ],
+            "name": "light",
+            "viewId": 2
+        }
+    ],
+    "depth": 0,
+    "dynamicUv": "disabled",
+    "editorAnimationsOpen": false,
+    "editorOpen": true,
+    "editorPropertyOpen": true,
+    "editorSelectedAnimation": "",
+    "enabled": true,
+    "hiddenViewIds": [],
+    "localEulerAngles": [
+        0.0,
+        0.0,
+        0.0
+    ],
+    "localPosition": [
+        0.0,
+        0.0,
+        0.0
+    ],
+    "localScale": [
+        1.0,
+        1.0,
+        1.0
+    ],
+    "name": "Root",
+    "sceneBase": "~/Root.scn",
+    "space": "camera",
+    "viewId": 2
+}
