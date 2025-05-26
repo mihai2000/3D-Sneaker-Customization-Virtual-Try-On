@@ -111,17 +111,22 @@
 //     />
 //   );
 // }
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { initialize } from 'deepar';
 
 export default function ARViewer() {
   const [params] = useSearchParams();
   const productId = params.get('product');
+  const initializedRef = useRef(false);
 
   useEffect(() => {
+    if (initializedRef.current) return;
+
     const initAR = async () => {
       try {
+        initializedRef.current = true;
+
         await initialize({
           licenseKey: import.meta.env.VITE_DEEPAR_SDK_KEY,
           canvas: document.getElementById('deepar-canvas') as HTMLCanvasElement,
@@ -136,8 +141,9 @@ export default function ARViewer() {
 
         // Effect is already loaded via `effect` option
       } catch (error) {
-        alert('Please allow camera access to use AR try-on.');
         console.error('AR initialization error:', error);
+        alert('Please allow camera access to use AR try-on.');
+        initializedRef.current = false; // reset in case of error
       }
     };
 
