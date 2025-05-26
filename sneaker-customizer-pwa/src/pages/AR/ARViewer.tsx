@@ -57,14 +57,63 @@
 //     />
 //   );
 // }
+// without qr code
+// import { useEffect } from 'react';
+// import { useSearchParams } from 'react-router-dom';
+
+// declare global {
+//   interface Window {
+//     deepar: any;
+//   }
+// }
+
+// export default function ARViewer() {
+//   const [params] = useSearchParams();
+//   const productId = params.get('product');
+
+//   useEffect(() => {
+//     const initAR = async () => {
+//       try {
+//         // Request camera access explicitly
+//         await navigator.mediaDevices.getUserMedia({ video: true });
+
+//         // Load DeepAR script dynamically
+//         const script = document.createElement('script');
+//         script.src = '/deepar/deepar.js';
+//         script.onload = async () => {
+//           const DeepAR = window.deepar;
+//           const deepAR = new DeepAR({
+//             licenseKey: import.meta.env.VITE_DEEPAR_SDK_KEY,
+//             canvas: document.getElementById('deepar-canvas'),
+//             libPath: '/deepar/',
+//           });
+
+//           await deepAR.downloadFaceTrackingModel();
+//           await deepAR.initialize();
+//           deepAR.switchEffect(0, 'slot', `/effects/${productId}/`);
+//         };
+//         document.body.appendChild(script);
+//       } catch (err) {
+//         alert('Please allow camera access to try on shoes in AR.');
+//         console.error('Camera access denied:', err);
+//       }
+//     };
+
+//     initAR();
+//   }, [productId]);
+
+//   return (
+//     <canvas
+//       id="deepar-canvas"
+//       width="640"
+//       height="480"
+//       style={{ width: '100%' }}
+//     />
+//   );
+// }
 import { useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
-
-declare global {
-  interface Window {
-    deepar: any;
-  }
-}
+import { initialize } from 'deepar';
 
 export default function ARViewer() {
   const [params] = useSearchParams();
@@ -73,28 +122,25 @@ export default function ARViewer() {
   useEffect(() => {
     const initAR = async () => {
       try {
-        // Request camera access explicitly
+        // Ask for camera access to trigger permission
         await navigator.mediaDevices.getUserMedia({ video: true });
 
-        // Load DeepAR script dynamically
-        const script = document.createElement('script');
-        script.src = '/deepar/deepar.js';
-        script.onload = async () => {
-          const DeepAR = window.deepar;
-          const deepAR = new DeepAR({
-            licenseKey: import.meta.env.VITE_DEEPAR_SDK_KEY,
-            canvas: document.getElementById('deepar-canvas'),
-            libPath: '/deepar/',
-          });
+        await initialize({
+          licenseKey: import.meta.env.VITE_DEEPAR_SDK_KEY,
+          canvas: document.getElementById('deepar-canvas') as HTMLCanvasElement,
+          effect: `/effects/${productId}/`,
+          additionalOptions: {
+            cameraConfig: {
+              // disableDefaultCamera: false, // let SDK start the camera
+              facingMode: 'environment',
+            },
+          },
+        });
 
-          await deepAR.downloadFaceTrackingModel();
-          await deepAR.initialize();
-          deepAR.switchEffect(0, 'slot', `/effects/${productId}/`);
-        };
-        document.body.appendChild(script);
-      } catch (err) {
-        alert('Please allow camera access to try on shoes in AR.');
-        console.error('Camera access denied:', err);
+        // Effect is already loaded via `effect` option
+      } catch (error) {
+        alert('Please allow camera access to use AR try-on.');
+        console.error('AR initialization error:', error);
       }
     };
 
