@@ -122,16 +122,13 @@ export default function ARViewer() {
   useEffect(() => {
     const initAR = async () => {
       try {
-        // Ask for camera access to trigger permission
-        await navigator.mediaDevices.getUserMedia({ video: true });
-
         await initialize({
           licenseKey: import.meta.env.VITE_DEEPAR_SDK_KEY,
           canvas: document.getElementById('deepar-canvas') as HTMLCanvasElement,
           effect: `/effects/${productId}/`,
           additionalOptions: {
             cameraConfig: {
-              // disableDefaultCamera: false, // let SDK start the camera
+              disableDefaultCamera: false, // let SDK start the camera
               facingMode: 'environment',
             },
           },
