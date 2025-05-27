@@ -151,7 +151,7 @@ const Customizer: React.FC = () => {
     }
   };
   return (
-    <div style={{ overflow: 'hidden !important' }}>
+    <div>
       <AnimatePresence mode="wait">
         {!snap.intro && [
           <>
