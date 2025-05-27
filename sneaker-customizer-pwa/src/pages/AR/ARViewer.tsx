@@ -126,11 +126,13 @@ export default function ARViewer() {
 
     const initAR = async () => {
       try {
+        console.log('Canvas:', document.getElementById('deepar-canvas'));
+        console.log('Effect path:', `/effects/${productId}/`);
 
         await initialize({
           licenseKey: import.meta.env.VITE_DEEPAR_SDK_KEY,
           canvas: document.getElementById('deepar-canvas') as HTMLCanvasElement,
-          effect: `/effects/${productId}/`,
+          effect: `/effects/${productId}/nike_military.deepar`,
           additionalOptions: {
             cameraConfig: {
               disableDefaultCamera: false,
