@@ -133,7 +133,7 @@ export default function ARViewer() {
           additionalOptions: {
             cameraConfig: {
               // disableDefaultCamera: false,
-              // facingMode: 'environment',
+              facingMode: 'environment',
               cameraPermissionAsked: () =>
                 console.log('Camera permission requested'),
               cameraPermissionGranted: () =>
@@ -171,7 +171,7 @@ export default function ARViewer() {
       id="deepar-canvas"
       width="375"
       height="480"
-      style={{ width: '100%', marginLeft: '0' }}
+      style={{ width: '100%', margin: '0' }}
     />
   );
 }
