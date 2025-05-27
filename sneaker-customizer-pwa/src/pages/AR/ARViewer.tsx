@@ -142,9 +142,10 @@ export default function ARViewer() {
             footTrackingConfig: {
               poseEstimationWasmPath:
                 '/deepar/wasm/libxzimgPoseEstimation.wasm',
-              detectorPath: '/deepar/models/foot/foot-detector.bin',
-              trackerPath: '/deepar/models/foot/foot-tracker.bin',
-              objPath: '/deepar/models/foot/foot-model.obj',
+              detectorPath: '/deepar/models/foot/foot-detection-96x96x6.bin',
+              trackerPath:
+                '/deepar/models/foot/foot-keyps-superfast-23JUN2024.bin',
+              objPath: '/deepar/models/foot/foot-right-200.obj',
               tfjsBackendWasmPath: '/deepar/wasm/tfjs-backend-wasm.wasm',
               tfjsBackendWasmSimdPath:
                 '/deepar/wasm/tfjs-backend-wasm-simd.wasm',
@@ -170,7 +171,7 @@ export default function ARViewer() {
       id="deepar-canvas"
       width="375"
       height="480"
-      style={{ width: '100%', marginLeft:"0" }}
+      style={{ width: '100%', marginLeft: '0' }}
     />
   );
 }
