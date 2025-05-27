@@ -126,9 +126,19 @@ export default function ARViewer() {
 
     const initAR = async () => {
       try {
+        const canvas = document.getElementById(
+          'deepar-canvas'
+        ) as HTMLCanvasElement;
+
+        // Make canvas fullscreen
+        canvas.width = window.innerWidth * window.devicePixelRatio;
+        canvas.height = window.innerHeight * window.devicePixelRatio;
+        canvas.style.width = '100vw';
+        canvas.style.height = '100vh';
+
         await initialize({
           licenseKey: import.meta.env.VITE_DEEPAR_SDK_KEY,
-          canvas: document.getElementById('deepar-canvas') as HTMLCanvasElement,
+          canvas,
           effect: `/effects/${productId}/nike_military.deepar`,
           additionalOptions: {
             cameraConfig: {
@@ -136,15 +146,17 @@ export default function ARViewer() {
               facingMode: 'environment',
             },
             footTrackingConfig: {
-              poseEstimationWasmPath: '/deepar/wasm/libxzimgPoseEstimation.wasm',
+              poseEstimationWasmPath:
+                '/deepar/wasm/libxzimgPoseEstimation.wasm',
               detectorPath: '/deepar/models/foot/foot-detector.bin',
               trackerPath: '/deepar/models/foot/foot-tracker.bin',
               objPath: '/deepar/models/foot/foot-model.obj',
               tfjsBackendWasmPath: '/deepar/wasm/tfjs-backend-wasm.wasm',
-              tfjsBackendWasmSimdPath: '/deepar/wasm/tfjs-backend-wasm-simd.wasm',
-              tfjsBackendWasmThreadedSimdPath: '/deepar/wasm/tfjs-backend-wasm-threaded-simd.wasm'
-            }
-            
+              tfjsBackendWasmSimdPath:
+                '/deepar/wasm/tfjs-backend-wasm-simd.wasm',
+              tfjsBackendWasmThreadedSimdPath:
+                '/deepar/wasm/tfjs-backend-wasm-threaded-simd.wasm',
+            },
           },
         });
       } catch (error) {
@@ -162,9 +174,7 @@ export default function ARViewer() {
   return (
     <canvas
       id="deepar-canvas"
-      width="640"
-      height="480"
-      style={{ width: '100%' }}
+      style={{ display: 'block', width: '100vw', height: '100vh' }}
     />
   );
 }
