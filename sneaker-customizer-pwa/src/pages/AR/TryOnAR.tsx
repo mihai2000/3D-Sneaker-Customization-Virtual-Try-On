@@ -15,8 +15,28 @@ export default function TryOnAR() {
     model: '/models/nike_military.glb',
   });
 
-  const handleTryOn = () => {
-    navigate(`/collection/shoes?product=${selectedShoe.id}&mode=ar`);
+  const handleTryOn = async () => {
+    try {
+      // Camera permission
+      await navigator.mediaDevices.getUserMedia({ video: true });
+
+      // Motion permission (iOS)
+      if (
+        typeof DeviceMotionEvent !== 'undefined' &&
+        (DeviceMotionEvent as any).requestPermission
+      ) {
+        const permission = await (DeviceMotionEvent as any).requestPermission();
+        if (permission !== 'granted') {
+          alert('Motion permission not granted. AR may not work properly.');
+        }
+      }
+
+      // Navigate to AR
+      navigate(`/collection/shoes?product=${selectedShoe.id}&mode=ar`);
+    } catch (error) {
+      alert('Please allow camera access to use AR.');
+      console.error(error);
+    }
   };
 
   return (

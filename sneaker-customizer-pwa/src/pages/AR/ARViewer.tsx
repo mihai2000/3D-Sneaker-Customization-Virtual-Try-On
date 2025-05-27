@@ -123,24 +123,8 @@ export default function ARViewer() {
   useEffect(() => {
     if (initializedRef.current) return;
 
-    const requestPermissions = async () => {
+    const initAR = async () => {
       try {
-        // 1. Request camera access
-        await navigator.mediaDevices.getUserMedia({ video: true });
-
-        // 2. Request motion permission (relevant for iOS / AR sensors)
-        if (
-          typeof DeviceMotionEvent !== 'undefined' &&
-          (DeviceMotionEvent as any).requestPermission
-        ) {
-          const permission = await (
-            DeviceMotionEvent as any
-          ).requestPermission();
-          if (permission !== 'granted') {
-            throw new Error('Motion permission not granted');
-          }
-        }
-
         initializedRef.current = true;
 
         await initialize({
@@ -156,12 +140,14 @@ export default function ARViewer() {
         });
       } catch (error) {
         console.error('AR initialization error:', error);
-        alert('Please allow both camera and motion access to use AR try-on.');
+        alert(
+          `AR failed: ${error instanceof Error ? error.message : String(error)}`
+        );
         initializedRef.current = false;
       }
     };
 
-    requestPermissions();
+    initAR();
   }, [productId]);
 
   return (
