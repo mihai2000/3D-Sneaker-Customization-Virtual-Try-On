@@ -1,0 +1,33 @@
+.shoe-carousel {
+  display: flex;
+  overflow-x: auto;
+  gap: 20px;
+  padding: 10px 0;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.shoe-carousel::-webkit-scrollbar {
+  display: none;
+}
+
+.shoe-button {
+  border: none;
+  background: none;
+  border-radius: 100%;
+  padding: 0;
+  outline: none;
+  cursor: pointer;
+}
+
+.shoe-button.active {
+  box-shadow: 0 0 0 5px #00cfff;
+}
+
+.shoe-image {
+  width: 100px;
+  height: 100px;
+  border-radius: 100%;
+  object-fit: cover;
+  color: #fff;
+}
