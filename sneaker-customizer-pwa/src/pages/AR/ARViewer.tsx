@@ -174,7 +174,7 @@ export default function ARViewer() {
   return (
     <canvas
       id="deepar-canvas"
-      style={{ display: 'block', width: '100vw', height: '100vh' }}
+      style={{ display: 'block', width: '375px', height: '100vh' }}
     />
   );
 }
