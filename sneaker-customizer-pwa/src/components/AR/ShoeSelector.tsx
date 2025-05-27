@@ -10,7 +10,6 @@ interface Props {
 export default function ShoeSelector({ onSelect }: Props) {
   const shoes: Shoe[] = [
     { id: '79e041814d30ce4bbd4981d1', model: '/models/nike_military.glb' },
-    // { id: '65e041814d30ce4bbd4981d1', model: '/models/nike_air_zoom_pegasus_36.glb' },
   ];
 
   return (

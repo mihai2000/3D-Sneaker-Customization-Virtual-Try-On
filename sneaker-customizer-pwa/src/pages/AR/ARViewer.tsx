@@ -122,10 +122,10 @@ export default function ARViewer() {
 
   useEffect(() => {
     if (initializedRef.current) return;
+    initializedRef.current = true;
 
     const initAR = async () => {
       try {
-        initializedRef.current = true;
 
         await initialize({
           licenseKey: import.meta.env.VITE_DEEPAR_SDK_KEY,
