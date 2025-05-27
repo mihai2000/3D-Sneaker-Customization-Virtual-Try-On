@@ -129,7 +129,7 @@ export default function ARViewer() {
         await initialize({
           licenseKey: import.meta.env.VITE_DEEPAR_SDK_KEY,
           canvas: document.getElementById('deepar-canvas') as HTMLCanvasElement,
-          effect: `/effects/${productId}/nike_military.deepar`,
+          effect: `/effects/${productId}/nike_air_zoom_pegasus_36.deepar`,
           additionalOptions: {
             cameraConfig: {
               disableDefaultCamera: false,
