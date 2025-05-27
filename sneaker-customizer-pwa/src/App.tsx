@@ -194,9 +194,7 @@ const App: React.FC = () => {
           path="/collection/shoes"
           element={
             <ProtectedRoute>
-              <Layout>
                 <ARViewer />
-              </Layout>
             </ProtectedRoute>
           }
         />
