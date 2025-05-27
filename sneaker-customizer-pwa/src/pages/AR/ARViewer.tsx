@@ -126,24 +126,18 @@ export default function ARViewer() {
 
     const initAR = async () => {
       try {
-        const canvas = document.getElementById(
-          'deepar-canvas'
-        ) as HTMLCanvasElement;
-
-        // Make canvas fullscreen
-        canvas.width = window.innerWidth * window.devicePixelRatio;
-        canvas.height = window.innerHeight * window.devicePixelRatio;
-        canvas.style.width = '100vw';
-        canvas.style.height = '100vh';
-
         await initialize({
           licenseKey: import.meta.env.VITE_DEEPAR_SDK_KEY,
-          canvas,
+          canvas: document.getElementById('deepar-canvas') as HTMLCanvasElement,
           effect: `/effects/${productId}/nike_military.deepar`,
           additionalOptions: {
             cameraConfig: {
               disableDefaultCamera: false,
               facingMode: 'environment',
+              cameraPermissionAsked: () =>
+                console.log('Camera permission requested'),
+              cameraPermissionGranted: () =>
+                console.log('Camera permission granted'),
             },
             footTrackingConfig: {
               poseEstimationWasmPath:
@@ -174,7 +168,14 @@ export default function ARViewer() {
   return (
     <canvas
       id="deepar-canvas"
-      style={{ display: 'block', width: '375px', height: '100vh' }}
+      style={{
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        width: '100vw',
+        height: '100vh',
+        zIndex: 9999,
+      }}
     />
   );
 }
