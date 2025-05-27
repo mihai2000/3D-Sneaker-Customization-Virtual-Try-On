@@ -123,8 +123,24 @@ export default function ARViewer() {
   useEffect(() => {
     if (initializedRef.current) return;
 
-    const initAR = async () => {
+    const requestPermissions = async () => {
       try {
+        // 1. Request camera access
+        await navigator.mediaDevices.getUserMedia({ video: true });
+
+        // 2. Request motion permission (relevant for iOS / AR sensors)
+        if (
+          typeof DeviceMotionEvent !== 'undefined' &&
+          (DeviceMotionEvent as any).requestPermission
+        ) {
+          const permission = await (
+            DeviceMotionEvent as any
+          ).requestPermission();
+          if (permission !== 'granted') {
+            throw new Error('Motion permission not granted');
+          }
+        }
+
         initializedRef.current = true;
 
         await initialize({
@@ -133,21 +149,19 @@ export default function ARViewer() {
           effect: `/effects/${productId}/`,
           additionalOptions: {
             cameraConfig: {
-              disableDefaultCamera: false, // let SDK start the camera
+              disableDefaultCamera: false,
               facingMode: 'environment',
             },
           },
         });
-
-        // Effect is already loaded via `effect` option
       } catch (error) {
         console.error('AR initialization error:', error);
-        alert('Please allow camera access to use AR try-on.');
-        initializedRef.current = false; // reset in case of error
+        alert('Please allow both camera and motion access to use AR try-on.');
+        initializedRef.current = false;
       }
     };
 
-    initAR();
+    requestPermissions();
   }, [productId]);
 
   return (
