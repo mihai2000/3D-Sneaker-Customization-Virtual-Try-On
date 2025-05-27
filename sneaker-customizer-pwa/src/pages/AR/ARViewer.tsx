@@ -126,9 +126,6 @@ export default function ARViewer() {
 
     const initAR = async () => {
       try {
-        console.log('Canvas:', document.getElementById('deepar-canvas'));
-        console.log('Effect path:', `/effects/${productId}/`);
-
         await initialize({
           licenseKey: import.meta.env.VITE_DEEPAR_SDK_KEY,
           canvas: document.getElementById('deepar-canvas') as HTMLCanvasElement,
@@ -138,6 +135,16 @@ export default function ARViewer() {
               disableDefaultCamera: false,
               facingMode: 'environment',
             },
+            footTrackingConfig: {
+              poseEstimationWasmPath: '/deepar/wasm/libxzimgPoseEstimation.wasm',
+              detectorPath: '/deepar/models/foot/foot-detector.bin',
+              trackerPath: '/deepar/models/foot/foot-tracker.bin',
+              objPath: '/deepar/models/foot/foot-model.obj',
+              tfjsBackendWasmPath: '/deepar/wasm/tfjs-backend-wasm.wasm',
+              tfjsBackendWasmSimdPath: '/deepar/wasm/tfjs-backend-wasm-simd.wasm',
+              tfjsBackendWasmThreadedSimdPath: '/deepar/wasm/tfjs-backend-wasm-threaded-simd.wasm'
+            }
+            
           },
         });
       } catch (error) {
