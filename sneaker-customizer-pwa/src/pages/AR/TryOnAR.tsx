@@ -11,8 +11,8 @@ interface Shoe {
 export default function TryOnAR() {
   const navigate = useNavigate();
   const [selectedShoe, setSelectedShoe] = useState<Shoe>({
-    id: '79e041814d30ce4bbd4981d1',
-    model: '/models/nike_military.glb',
+    id: '65e041814d30ce4bbd4981d1',
+    model: '/models/nike_air_zoom_pegasus_36.glb',
   });
 
   const handleTryOn = async () => {
