@@ -5,7 +5,7 @@ import * as THREE from 'three';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 
 interface Props {
-  modelPath: string;
+  modelPath: string | undefined;
 }
 
 function ShoeModel({ modelPath }: Props) {
@@ -13,6 +13,7 @@ function ShoeModel({ modelPath }: Props) {
   const modelRef = useRef<THREE.Group>(null);
 
   useEffect(() => {
+    if (!modelPath) return;
     const loader = new GLTFLoader();
     loader.load(modelPath, (gltf) => {
       const model = gltf.scene;

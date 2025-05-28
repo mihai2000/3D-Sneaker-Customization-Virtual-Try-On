@@ -1,11 +1,5 @@
+import { Shoe } from '../../interfaces/shoeInterface';
 import './ShoeSelector.scss';
-
-interface Shoe {
-  id: string;
-  model: string;
-  image: string;
-  name: string;
-}
 
 interface Props {
   onSelect: (shoe: Shoe) => void;

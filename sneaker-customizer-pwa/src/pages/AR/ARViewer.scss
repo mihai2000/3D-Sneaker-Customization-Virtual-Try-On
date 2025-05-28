@@ -1,0 +1,37 @@
+// mobile
+.tryon-container {
+  justify-content: center;
+}
+.qr-desktop-view {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-top: 40px;
+  padding: 20px;
+  color: #fff;
+
+  .mini-title {
+    font-size: 14px;
+    color: #ccc;
+    margin-bottom: 8px;
+  }
+
+  h2 {
+    margin-bottom: 20px;
+    font-size: 20px;
+    color: #fff;
+  }
+
+  .desktop-shoe-carousel {
+    margin-top: 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    .selected-shoe-name {
+      margin-top: 10px;
+      font-weight: 600;
+    }
+  }
+}
