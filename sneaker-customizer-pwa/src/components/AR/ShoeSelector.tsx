@@ -1,87 +1,45 @@
-import { useState } from 'react';
+import React from 'react';
 import './ShoeSelector.scss';
 
 interface Shoe {
   id: string;
   model: string;
   image: string;
-  alt: string;
+  name: string;
 }
 
 interface Props {
   onSelect: (shoe: Shoe) => void;
+  selectedShoeId?: string;
 }
 
 const shoes: Shoe[] = [
-  // {
-  //   id: 'shoe1',
-  //   model: '/models/Air_Jordan_1_Retro_High_OG_University_Blue.glb',
-  //   image: '/images/Air_Jordan_1_Retro_High_OG_University_Blue.png',
-  //   alt: 'Air Jordan 1 Retro High OG University Blue',
-  // },
-  // {
-  //   id: 'shoe2',
-  //   model: '/models/Blue_Crocs.glb',
-  //   image: '/images/Blue_Crocs.png',
-  //   alt: 'Blue Crocs',
-  // },
-  // {
-  //   id: 'shoe3',
-  //   model:
-  //     '/models/Nike_Air_Force_1_Low_UNDEFEATED_Multi-Patent_Wild_Berry.glb',
-  //   image:
-  //     '/images/Nike_Air_Force_1_Low_UNDEFEATED_Multi-Patent_Wild_Berry.png',
-  //   alt: 'Nike Air Force 1 Low UNDEFEATED Multi-Patent Wild Berry',
-  // },
-  // {
-  //   id: 'shoe4',
-  //   model: '/models/Green_Adidas.glb',
-  //   image: '/images/Green_Adidas.png',
-  //   alt: 'Green Adidas',
-  // },
-  // {
-  //   id: 'shoe5',
-  //   model: '/models/Nike_Air_Force_1_Low_UNDEFEATED_Gold.glb',
-  //   image: '/images/Nike_Air_Force_1_Low_UNDEFEATED_Gold.png',
-  //   alt: 'Nike Air Force 1 Low UNDEFEATED Gold',
-  // },
-  // {
-  //   id: 'shoe6',
-  //   model: '/models/White_Sneakers_Pink_Back.glb',
-  //   image: '/images/White_Sneakers_Pink_Back.png',
-  //   alt: 'White Sneakers Pink Back',
-  // },
   {
     id: 'shoe1',
     model: '/models/nike_air_zoom_pegasus_36.glb',
-    image: '/images/nike_air_zoom_pegasus_36.png',
-    alt: 'nike_air_zoom_pegasus_36',
+    image:
+      'https://firebasestorage.googleapis.com/v0/b/threed-sneakers-customisation.firebasestorage.app/o/Nike_Air_Zoom_Pegasus_36.jpg?alt=media&token=97495791-2eb4-4a6f-939d-217605dd0695',
+    name: 'Nike Air Zoom Pegasus 36',
   },
   {
     id: 'shoe2',
     model: '/models/nike_military.glb',
-    image: '/images/nike_military.png',
-    alt: 'nike_military',
+    image:
+      'https://firebasestorage.googleapis.com/v0/b/threed-sneakers-customisation.firebasestorage.app/o/Nike_SB_Zoom_Dunk.avif?alt=media&token=24d96c98-1db9-42eb-bcbd-f95aef5a96cb',
+    name: 'Nike SB Zoom Dunk',
   },
 ];
 
-export default function ShoeSelector({ onSelect }: Props) {
-  const [selectedId, setSelectedId] = useState<string>(shoes[0].id);
-
-  const handleSelect = (shoe: Shoe) => {
-    setSelectedId(shoe.id);
-    onSelect(shoe);
-  };
-
+export default function ShoeSelector({ onSelect, selectedShoeId }: Props) {
   return (
     <div className="shoe-carousel">
       {shoes.map((shoe) => (
         <button
           key={shoe.id}
-          className={`shoe-button ${selectedId === shoe.id ? 'active' : ''}`}
-          onClick={() => handleSelect(shoe)}
+          className={`shoe-button ${selectedShoeId === shoe.id ? 'active' : ''}`}
+          onClick={() => onSelect(shoe)}
         >
-          <img src={shoe.image} alt={shoe.alt} className="shoe-image" />
+          <img className="shoe-image" src={shoe.image} alt={shoe.name} />
         </button>
       ))}
     </div>
