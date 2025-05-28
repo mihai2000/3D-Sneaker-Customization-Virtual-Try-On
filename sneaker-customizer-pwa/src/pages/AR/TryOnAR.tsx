@@ -67,8 +67,14 @@ export default function TryOnAR() {
           <Button
             variant="contained"
             className="tryon-button"
-            endIcon={<DirectionsRunIcon />}
-            onClick={handleTryOn}
+            startIcon={
+              <img
+                src="/shoe.svg"
+                alt="shoe icon"
+                style={{ width: '20px', height: '20px', marginLeft: '8px' }}
+                onClick={handleTryOn}
+              />
+            }
           >
             Try On
           </Button>
