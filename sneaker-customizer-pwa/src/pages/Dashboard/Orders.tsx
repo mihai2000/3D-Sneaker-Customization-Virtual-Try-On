@@ -75,7 +75,7 @@
 //       // 					price: 49.99,
 //       // 					quantity: 3,
 //       // 					image:
-//       // 						"https://firebasestorage.googleapis.com/v0/b/threed-sneakers-customisation.firebasestorage.app/o/Puma_RS-X.avif?alt=media&token=195a87b3-cfa7-49e9-b7ba-b83cb09210db",
+//       // 						"/images/Nike_Air_Zoom_Pegasus_36.jpg",
 //       // 				},
 //       // 			],
 //       // 		},

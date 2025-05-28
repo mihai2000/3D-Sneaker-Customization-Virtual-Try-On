@@ -10,15 +10,13 @@ const shoes: Shoe[] = [
   {
     id: 'shoe1',
     model: '/models/nike_air_zoom_pegasus_36.glb',
-    image:
-      'https://firebasestorage.googleapis.com/v0/b/threed-sneakers-customisation.firebasestorage.app/o/Nike_Air_Zoom_Pegasus_36.jpg?alt=media&token=97495791-2eb4-4a6f-939d-217605dd0695',
+    image: '/images/Nike_Air_Zoom_Pegasus_36.jpg',
     name: 'Nike Air Zoom Pegasus 36',
   },
   {
     id: 'shoe2',
     model: '/models/nike_military.glb',
-    image:
-      'https://firebasestorage.googleapis.com/v0/b/threed-sneakers-customisation.firebasestorage.app/o/Nike_SB_Zoom_Dunk.avif?alt=media&token=24d96c98-1db9-42eb-bcbd-f95aef5a96cb',
+    image: '/images/Nike_SB_Zoom_Dunk.jpg',
     name: 'Nike SB Zoom Dunk',
   },
 ];
