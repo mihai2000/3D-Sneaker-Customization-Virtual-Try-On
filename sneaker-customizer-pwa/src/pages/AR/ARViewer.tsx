@@ -132,7 +132,7 @@ export default function ARViewer() {
           effect: `/effects/${productId}/nike_air_zoom_pegasus_36.deepar`,
           additionalOptions: {
             cameraConfig: {
-              // disableDefaultCamera: false,
+              disableDefaultCamera: false,
               facingMode: 'environment',
               cameraPermissionAsked: () =>
                 console.log('Camera permission requested'),

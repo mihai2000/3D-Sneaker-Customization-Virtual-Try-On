@@ -1,10 +1,11 @@
 import { useNavigate } from 'react-router-dom';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import ShoeSelector from '../../components/AR/ShoeSelector';
 import ShoeViewer from '../../components/AR/ShoeViewer';
-import './TryOnAR.scss';
-import { Button } from '@mui/material';
 import shoeIcon from '../../assets/shoe.svg';
+import { Button } from '@mui/material';
+import { QRCodeSVG } from 'qrcode.react';
+import './TryOnAR.scss';
 
 interface Shoe {
   id: string;
@@ -30,9 +31,18 @@ const shoes: Shoe[] = [
   },
 ];
 
+function isMobileDevice() {
+  return /Mobi|Android|iPhone/i.test(navigator.userAgent);
+}
+
 export default function TryOnAR() {
   const navigate = useNavigate();
   const [selectedShoe, setSelectedShoe] = useState<Shoe>(shoes[1]);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    setIsMobile(isMobileDevice());
+  }, []);
 
   const handleTryOn = async () => {
     try {
@@ -54,38 +64,68 @@ export default function TryOnAR() {
       console.error(error);
     }
   };
+  // const handleTryOn = () => {
+  //   // const url = `${window.location.origin}/collection/shoes?product=${selectedShoe.id}&mode=ar`;
+  //   if (isMobile) {
+  //     navigate(`/collection/shoes?product=${selectedShoe.id}&mode=ar`);
+  //   } else {
+  //     window.scrollTo({ top: 0, behavior: 'smooth' });
+  //   }
+  // };
+
+  const qrUrl = `${window.location.origin}/collection/shoes?product=${selectedShoe.id}&mode=ar`;
 
   return (
     <div className="tryon-container">
       <h1>Try On Sneakers</h1>
-      <div className="viewer-wrapper">
-        <ShoeViewer modelPath={selectedShoe.model} />
-      </div>
-      <div className="tryon-carousel-container">
-        <div className="tryon-info-box">
-          <span>{selectedShoe.name}</span>
-          <Button
-            variant="contained"
-            className="tryon-button"
-            startIcon={
-              <img
-                src={shoeIcon}
-                alt="shoe icon"
-                style={{ width: '20px', height: '20px', marginLeft: '8px' }}
+      {isMobile ? (
+        <>
+          <div className="viewer-wrapper">
+            <ShoeViewer modelPath={selectedShoe.model} />
+          </div>
+          <div className="tryon-carousel-container">
+            <div className="tryon-info-box">
+              <span>{selectedShoe.name}</span>
+              <Button
+                variant="contained"
+                className="tryon-button"
+                startIcon={
+                  <img
+                    src={shoeIcon}
+                    alt="shoe icon"
+                    style={{ width: '20px', height: '20px', marginLeft: '8px' }}
+                  />
+                }
                 onClick={handleTryOn}
+              >
+                Try On
+              </Button>
+            </div>
+            <div className="carousel-wrapper">
+              <ShoeSelector
+                onSelect={setSelectedShoe}
+                selectedShoeId={selectedShoe.id}
               />
-            }
-          >
-            Try On
-          </Button>
+            </div>
+          </div>
+        </>
+      ) : (
+        <div className="qr-desktop-view">
+          <p className="mini-title">ShoeAR</p>
+          <h2>This one's best on mobile</h2>
+          <QRCodeSVG value={qrUrl} size={200} />
+          <p style={{ marginTop: '12px', fontSize: '14px', color: '#aaa' }}>
+            Scan to experience in AR
+          </p>
+          <div className="desktop-shoe-carousel">
+            <p className="selected-shoe-name">{selectedShoe.name}</p>
+            <ShoeSelector
+              onSelect={setSelectedShoe}
+              selectedShoeId={selectedShoe.id}
+            />
+          </div>
         </div>
-        <div className="carousel-wrapper">
-          <ShoeSelector
-            onSelect={setSelectedShoe}
-            selectedShoeId={selectedShoe.id}
-          />
-        </div>
-      </div>
+      )}
     </div>
   );
 }
