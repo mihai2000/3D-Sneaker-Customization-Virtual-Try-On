@@ -15,7 +15,19 @@ function ShoeModel({ modelPath }: Props) {
   useEffect(() => {
     const loader = new GLTFLoader();
     loader.load(modelPath, (gltf) => {
-      setScene(gltf.scene);
+      const model = gltf.scene;
+      model.traverse((child) => {
+        if ((child as THREE.Mesh).isMesh) {
+          child.castShadow = true;
+          child.receiveShadow = true;
+        }
+      });
+
+      const box = new THREE.Box3().setFromObject(model);
+      const center = box.getCenter(new THREE.Vector3());
+      model.position.sub(center); // Center the model
+
+      setScene(model);
     });
   }, [modelPath]);
 
@@ -26,10 +38,10 @@ function ShoeModel({ modelPath }: Props) {
 
 export default function ShoeViewer({ modelPath }: Props) {
   return (
-    <div style={{ width: '100%', height: '100%' }}>
+    <div style={{ width: '100%', height: '60vh' }}>
       <Canvas camera={{ position: [0, 0, 3], fov: 50 }}>
         <ambientLight intensity={0.5} />
-        <directionalLight position={[10, 10, 5]} intensity={1.5} />
+        <directionalLight position={[5, 5, 5]} intensity={1.5} castShadow />
         <ShoeModel modelPath={modelPath} />
         <OrbitControls enableZoom={true} />
       </Canvas>

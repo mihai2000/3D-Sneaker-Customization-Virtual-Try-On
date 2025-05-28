@@ -3,20 +3,23 @@
   flex-direction: column;
   align-items: center;
   height: 100vh;
-  background-color: #121212;
+  background: linear-gradient(135deg, #1f2a44, #2c3e50);
   color: #fff;
   box-sizing: border-box;
   padding-top: 64px;
 
   h1 {
-    padding-bottom: 100px;
+    margin-bottom: 100px;
   }
 }
 
 .viewer-wrapper {
-  padding-top: 100px;
-  width: 90%;
-  height: 100%;
+    width: 90%;
+    height: 100vh;
+    border: 2px solid rgba(0, 255, 255, 0.3);
+    border-radius: 16px;
+    background: linear-gradient(145deg, #1e2a38, #283a4d);
+    box-shadow: 0 0 20px rgba(0, 255, 255, 0.2);
 }
 
 .tryon-info-box {

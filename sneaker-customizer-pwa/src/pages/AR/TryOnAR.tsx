@@ -4,7 +4,7 @@ import ShoeSelector from '../../components/AR/ShoeSelector';
 import ShoeViewer from '../../components/AR/ShoeViewer';
 import './TryOnAR.scss';
 import { Button } from '@mui/material';
-import DirectionsRunIcon from '@mui/icons-material/DirectionsRun';
+import shoeIcon from '../../assets/shoe.svg';
 
 interface Shoe {
   id: string;
@@ -69,7 +69,7 @@ export default function TryOnAR() {
             className="tryon-button"
             startIcon={
               <img
-                src="/shoe.svg"
+                src={shoeIcon}
                 alt="shoe icon"
                 style={{ width: '20px', height: '20px', marginLeft: '8px' }}
                 onClick={handleTryOn}
