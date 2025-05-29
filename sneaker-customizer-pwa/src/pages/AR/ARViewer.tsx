@@ -100,9 +100,28 @@ export default function ARViewer() {
         style={{ width: '100vw', height: '100vh', margin: '0' }}
       />
       <div className="mobile-sub-container">
-        <p className="selected-shoe-name" style={{ color: '#fff' }}>
+        {/* <p className="selected-shoe-name" style={{ color: '#fff' }}>
           {selectedShoe.name}
-        </p>
+        </p> */}
+        <div className="tryon-info-box">
+          <span className="selected-shoe-name" style={{ color: '#fff' }}>
+            {selectedShoe.name}
+          </span>
+          <Button
+            variant="contained"
+            className="tryon-button"
+            startIcon={
+              <img
+                src={threeDIcon}
+                alt="shoe icon"
+                style={{ width: '20px', height: '20px', marginLeft: '8px' }}
+              />
+            }
+            onClick={() => navigate('/try-ar')}
+          >
+            3D
+          </Button>
+        </div>
         <ShoeSelector
           onSelect={handleSelect}
           selectedShoeId={selectedShoe.id}
