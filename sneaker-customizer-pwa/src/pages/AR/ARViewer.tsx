@@ -97,9 +97,9 @@ export default function ARViewer() {
     <div className="mobile-container">
       <canvas
         id="deepar-canvas"
-        width="384"
-        height="700"
-        style={{ width: '100%', margin: '0' }}
+        width="100vw"
+        height="100vh"
+        style={{ margin: '0' }}
       />
       <div className="mobile-sub-container">
         <p className="selected-shoe-name" style={{ color: '#fff' }}>
