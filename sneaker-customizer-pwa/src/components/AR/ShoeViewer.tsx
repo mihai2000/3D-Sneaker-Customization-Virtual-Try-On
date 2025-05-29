@@ -3,7 +3,7 @@ import { OrbitControls } from '@react-three/drei';
 import { useRef, useEffect, useState } from 'react';
 import * as THREE from 'three';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
-
+import './ShoeViewer.scss';
 interface Props {
   modelPath: string | undefined;
 }
@@ -39,7 +39,7 @@ function ShoeModel({ modelPath }: Props) {
 
 export default function ShoeViewer({ modelPath }: Props) {
   return (
-    <div style={{ width: '100%', height: '60vh' }}>
+    <div className="responsive-viewer" style={{ width: '100%' }}>
       <Canvas camera={{ position: [0, 0, 3], fov: 50 }}>
         <ambientLight intensity={0.5} />
         <directionalLight position={[5, 5, 5]} intensity={1.5} castShadow />

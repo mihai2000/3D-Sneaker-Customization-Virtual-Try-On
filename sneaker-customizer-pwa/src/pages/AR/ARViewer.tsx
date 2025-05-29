@@ -74,11 +74,13 @@ const shoes: Shoe[] = [
     id: 'shoe1',
     name: 'Nike Air Zoom Pegasus 36',
     effect: 'nike_air_zoom_pegasus_36.deepar',
+    image: '/images/Nike_Air_Zoom_Pegasus_36.jpg',
   },
   {
     id: 'shoe2',
     name: 'Nike SB Zoom Dunk',
     effect: 'nike_military.deepar',
+    image: '/images/Nike_SB_Zoom_Dunk.jpg',
   },
 ];
 
@@ -152,12 +154,16 @@ export default function ARViewer() {
   const qrUrl = `${window.location.origin}/collection/shoes?product=${selectedShoe.id}&mode=ar`;
 
   return isMobile ? (
-    <canvas
-      id="deepar-canvas"
-      width="380"
-      height="720"
-      style={{ width: '100%', margin: '0' }}
-    />
+    <>
+      <canvas
+        id="deepar-canvas"
+        width="380"
+        height="720"
+        style={{ width: '100%', margin: '0' }}
+      />
+      <p className="ar-mobile-label">{selectedShoe.name}</p>
+      <ShoeSelector onSelect={handleSelect} selectedShoeId={selectedShoe.id} />
+    </>
   ) : (
     <Layout>
       <div className="tryon-container">
@@ -178,7 +184,7 @@ export default function ARViewer() {
             3D
           </Button>
           <h2>This one's best on mobile</h2>
-          <QRCodeSVG value={qrUrl} size={500} />
+          <QRCodeSVG value={qrUrl} size={400} />
           <p style={{ marginTop: '12px', fontSize: '14px', color: '#aaa' }}>
             Scan to experience in AR
           </p>
