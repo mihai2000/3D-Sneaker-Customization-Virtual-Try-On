@@ -102,7 +102,9 @@ export default function ARViewer() {
         style={{ width: '100%', margin: '0' }}
       />
       <div className="mobile-sub-container">
-        <p className="selected-shoe-name">{selectedShoe.name}</p>
+        <p className="selected-shoe-name" style={{ color: '#fff' }}>
+          {selectedShoe.name}
+        </p>
         <ShoeSelector
           onSelect={handleSelect}
           selectedShoeId={selectedShoe.id}

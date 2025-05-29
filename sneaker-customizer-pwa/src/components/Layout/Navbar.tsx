@@ -213,9 +213,12 @@ export default function ResponsiveAppBar() {
           }}
           PaperProps={{
             sx: {
-              backgroundColor: '#111',
+              background: 'linear-gradient(180deg, #1b1e3f 0%, #10131e 100%)', // dark purple to deep blue
+              color: '#ffffff',
               width: 250,
               pt: 2,
+              boxShadow: '0 0 20px rgba(0, 245, 255, 0.2)', // glowing ice blue border
+              borderRight: '1px solid rgba(255, 255, 255, 0.1)',
             },
           }}
         >
@@ -228,8 +231,14 @@ export default function ResponsiveAppBar() {
               <MenuItem
                 key={page.label}
                 onClick={() => handleNavClick(page.path)}
+                sx={{
+                  '&:hover': {
+                    background: 'rgba(0,245,255,0.1)',
+                    color: '#00f5ff',
+                  },
+                }}
               >
-                <Typography sx={{ color: 'white' }}>{page.label}</Typography>
+                <Typography sx={{ color: 'inherit' }}>{page.label}</Typography>
               </MenuItem>
             ))}
           </Box>
