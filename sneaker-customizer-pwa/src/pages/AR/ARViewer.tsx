@@ -97,11 +97,13 @@ export default function ARViewer() {
     <div className="mobile-container">
       <canvas
         id="deepar-canvas"
+        width={384}
+        height={720}
         style={{ width: '100%', height: '100%', margin: '0' }}
       />
       <div className="mobile-sub-container">
-        <p className="selected-shoe-name" style={{ color: '#fff' }}>
-          {selectedShoe.name}
+        <div>
+          <p style={{ color: '#fff' }}>{selectedShoe?.name}</p>
           <Button
             variant="contained"
             className="tryon-button"
@@ -109,14 +111,14 @@ export default function ARViewer() {
               <img
                 src={threeDIcon}
                 alt="shoe icon"
-                style={{ width: '20px', height: '20px', marginLeft: '8px' }}
+                style={{ width: '20px', height: '20px' }}
               />
             }
             onClick={() => navigate('/try-ar')}
           >
             3D
           </Button>
-        </p>
+        </div>
         <ShoeSelector
           onSelect={handleSelect}
           selectedShoeId={selectedShoe.id}
