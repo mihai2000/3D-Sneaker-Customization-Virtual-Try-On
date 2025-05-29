@@ -101,7 +101,7 @@ export default function ARViewer() {
         height="720"
         style={{ width: '100%', margin: '0' }}
       />
-      <div className='mobile-sub-container'>
+      <div className="mobile-sub-container">
         <p className="ar-mobile-label">{selectedShoe.name}</p>
         <ShoeSelector
           onSelect={handleSelect}
