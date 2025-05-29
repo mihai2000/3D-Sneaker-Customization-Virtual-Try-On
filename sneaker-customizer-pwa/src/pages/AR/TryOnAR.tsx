@@ -1,5 +1,5 @@
-import { useNavigate, useSearchParams } from 'react-router-dom';
-import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useState } from 'react';
 import ShoeSelector from '../../components/AR/ShoeSelector';
 import ShoeViewer from '../../components/AR/ShoeViewer';
 import shoeIcon from '../../assets/shoe.svg';
@@ -25,12 +25,6 @@ const shoes: Shoe[] = [
 export default function TryOnAR() {
   const navigate = useNavigate();
   const [selectedShoe, setSelectedShoe] = useState<Shoe>(shoes[1]);
-  const [params, setParams] = useSearchParams();
-  const productId = params.get('product') || shoes[1].id;
-
-  useEffect(() => {
-    setSelectedShoe(shoes.find((shoe) => shoe.id === productId) || shoes[1]);
-  }, [productId]);
 
   const handleTryOn = async () => {
     try {
@@ -45,7 +39,6 @@ export default function TryOnAR() {
           alert('Motion permission not granted. AR may not work properly.');
         }
       }
-
       navigate(`/collection/shoes?product=${selectedShoe.id}&mode=ar`);
     } catch (error) {
       alert('Please allow camera access to use AR.');
@@ -80,10 +73,7 @@ export default function TryOnAR() {
         </div>
         <div className="carousel-wrapper">
           <ShoeSelector
-            onSelect={(shoe) => {
-              setSelectedShoe(shoe);
-              setParams({ product: shoe.id });
-            }}
+            onSelect={setSelectedShoe}
             selectedShoeId={selectedShoe.id}
           />
         </div>

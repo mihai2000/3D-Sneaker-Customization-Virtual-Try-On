@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
-import { initialize } from 'deepar';
+import { DeepAR, initialize } from 'deepar';
 import { QRCodeSVG } from 'qrcode.react';
 import ShoeSelector from '../../components/AR/ShoeSelector';
 import './ARViewer.scss';
@@ -36,6 +36,7 @@ export default function ARViewer() {
   const productId = params.get('product') || shoes[0].id;
   const initializedRef = useRef(false);
   const [isMobile, setIsMobile] = useState(false);
+  const [deepARInstance, setDeepARInstance] = useState<DeepAR | null>(null);
 
   const selectedShoe = shoes.find((shoe) => shoe.id === productId) || shoes[0];
 
@@ -47,7 +48,7 @@ export default function ARViewer() {
 
     const initAR = async () => {
       try {
-        await initialize({
+        const deepAR = await initialize({
           licenseKey: import.meta.env.VITE_DEEPAR_SDK_KEY,
           canvas: document.getElementById('deepar-canvas') as HTMLCanvasElement,
           effect: `/effects/${selectedShoe?.id}/${selectedShoe?.effect}`,
@@ -75,6 +76,7 @@ export default function ARViewer() {
             },
           },
         });
+        setDeepARInstance(deepAR);
       } catch (error) {
         console.error('AR initialization error:', error);
         alert(
@@ -89,6 +91,17 @@ export default function ARViewer() {
 
   const handleSelect = (shoe: (typeof shoes)[number]) => {
     setParams({ product: shoe.id, mode: 'ar' });
+  };
+
+  const handleBackToTryOn = async () => {
+    try {
+      if (deepARInstance) {
+        deepARInstance.shutdown();
+      }
+    } catch (error) {
+      console.warn('Error during DeepAR shutdown:', error);
+    }
+    navigate('/try-ar');
   };
 
   const qrUrl = `${window.location.origin}/collection/shoes?product=${selectedShoe.id}&mode=ar`;
@@ -116,7 +129,7 @@ export default function ARViewer() {
                 style={{ width: '20px', height: '20px' }}
               />
             }
-            onClick={() => navigate(`/try-ar?product=${selectedShoe.id}`)}
+            onClick={handleBackToTryOn}
           >
             3D
           </Button>
@@ -142,7 +155,7 @@ export default function ARViewer() {
                 style={{ width: '20px', height: '20px', marginLeft: '8px' }}
               />
             }
-            onClick={() => navigate(`/try-ar?product=${selectedShoe.id}`)}
+            onClick={handleBackToTryOn}
           >
             3D
           </Button>
