@@ -97,12 +97,12 @@ export default function ARViewer() {
     <div className="mobile-container">
       <canvas
         id="deepar-canvas"
-        width="380"
+        width="385"
         height="720"
         style={{ width: '100%', margin: '0' }}
       />
       <div className="mobile-sub-container">
-        <p className="ar-mobile-label">{selectedShoe.name}</p>
+        <p className="selected-shoe-name">{selectedShoe.name}</p>
         <ShoeSelector
           onSelect={handleSelect}
           selectedShoeId={selectedShoe.id}
