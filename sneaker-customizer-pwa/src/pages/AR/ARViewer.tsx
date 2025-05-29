@@ -97,8 +97,8 @@ export default function ARViewer() {
     <div className="mobile-container">
       <canvas
         id="deepar-canvas"
-        width="385"
-        height="720"
+        width="384"
+        height="700"
         style={{ width: '100%', margin: '0' }}
       />
       <div className="mobile-sub-container">
