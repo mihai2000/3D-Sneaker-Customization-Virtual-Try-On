@@ -102,7 +102,9 @@ export default function ARViewer() {
         style={{ width: '100%', height: '100%', margin: '0' }}
       />
       <div className="mobile-sub-container">
-        <div style={{ display: 'flex', flexDirection: 'row' }}>
+        <div
+          style={{ display: 'flex', flexDirection: 'row', marginLeft: '5px' }}
+        >
           <p style={{ color: '#fff' }}>{selectedShoe?.name}</p>
           <Button
             variant="contained"
@@ -114,7 +116,7 @@ export default function ARViewer() {
                 style={{ width: '20px', height: '20px' }}
               />
             }
-            onClick={() => navigate('/try-ar')}
+            onClick={() => navigate(`/try-ar?product=${selectedShoe.id}`)}
           >
             3D
           </Button>
@@ -140,7 +142,7 @@ export default function ARViewer() {
                 style={{ width: '20px', height: '20px', marginLeft: '8px' }}
               />
             }
-            onClick={() => navigate('/try-ar')}
+            onClick={() => navigate(`/try-ar?product=${selectedShoe.id}`)}
           >
             3D
           </Button>
