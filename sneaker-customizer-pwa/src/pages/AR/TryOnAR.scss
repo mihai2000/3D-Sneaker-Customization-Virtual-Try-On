@@ -75,8 +75,9 @@
   justify-content: end;
   height: 100vh;
   padding-bottom: 2rem;
+  padding-top: 1rem;
 }
-@media screen and (max-width: 425px) {
+@media screen and (max-width: 426px) {
   h1 {
     margin-bottom: 20px !important;
   }
