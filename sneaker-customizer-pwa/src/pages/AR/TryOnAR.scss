@@ -6,6 +6,7 @@
   background: linear-gradient(to top, rgb(42, 130, 218), rgb(84, 52, 202));
   // background: linear-gradient(135deg, #1f2a44, #2c3e50);
   color: #fff;
+  overflow-x: hidden;
   box-sizing: border-box;
   padding-top: 64px;
 
@@ -73,4 +74,18 @@
   justify-content: end;
   height: 100vh;
   padding-bottom: 2rem;
+}
+@media screen and (max-width: 425px) {
+  h1 {
+    margin-bottom: 20px !important;
+  }
+
+  .tryon-carousel-container {
+    width: 90vw;
+    padding: 1rem;
+
+    .tryon-info-box {
+      width: 90%;
+    }
+  }
 }
