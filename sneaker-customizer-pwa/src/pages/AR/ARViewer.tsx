@@ -115,9 +115,7 @@ export default function ARViewer() {
         style={{ width: '100%', height: '100%', margin: '0' }}
       />
       <div className="mobile-sub-container">
-        <div
-          style={{ display: 'flex', flexDirection: 'row', marginLeft: '5px' }}
-        >
+        <div style={{ display: 'flex', flexDirection: 'row', gap: '5px' }}>
           <p style={{ color: '#fff' }}>{selectedShoe?.name}</p>
           <Button
             variant="contained"
