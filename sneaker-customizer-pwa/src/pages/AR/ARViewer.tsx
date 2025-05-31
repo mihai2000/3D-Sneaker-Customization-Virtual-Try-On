@@ -127,7 +127,7 @@ export default function ARViewer() {
     } catch (error) {
       console.warn('Error during DeepAR shutdown:', error);
     }
-    navigate('/try-ar');
+    navigate(`/try-ar?product=${selectedShoe.id}`);
   };
 
   const qrUrl = `${window.location.origin}/collection/shoes?product=${selectedShoe.id}&mode=ar`;

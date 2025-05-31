@@ -107,14 +107,13 @@ export default function ProductPage() {
 			)}
 
 			{selectedShoe && (
-				// <Suspense fallback={null}>
 				<ShoeModelViewer
 					isOpen={true}
 					onClose={() => setSelectedShoe(null)}
 					modelUrl={selectedShoe?.modelUrl ?? ""}
 					shoeName={selectedShoe?.name}
+					shoeId={selectedShoe?.id}
 				/>
-				// </Suspense>
 			)}
 		</div>
 	);
