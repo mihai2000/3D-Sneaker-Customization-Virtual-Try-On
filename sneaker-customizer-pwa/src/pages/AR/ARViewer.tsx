@@ -80,8 +80,8 @@ export default function ARViewer() {
         deepAR.callbacks.onFeetTracked = (leftFoot, rightFoot) => {
           const feetText = document.getElementById('feet-text');
           // Hide the text when the feet are first detected.
-          if (leftFoot.detected || rightFoot.detected) {
-            feetText!.style.display = 'none';
+          if ((leftFoot.detected || rightFoot.detected) && feetText) {
+            feetText.style.display = 'none';
             deepAR.callbacks.onFeetTracked = undefined; // Unregister from the callback.
           }
         };
@@ -153,6 +153,7 @@ export default function ARViewer() {
       <div className="tryon-container">
         <div className="qr-desktop-view">
           <p className="mini-title">ShoeAR</p>
+          <p id="feet-text"></p>
           <Button
             variant="contained"
             className="tryon-button"
