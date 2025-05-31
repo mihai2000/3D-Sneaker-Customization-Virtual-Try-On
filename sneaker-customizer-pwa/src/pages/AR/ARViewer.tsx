@@ -74,8 +74,17 @@ export default function ARViewer() {
               tfjsBackendWasmThreadedSimdPath:
                 '/deepar/wasm/tfjs-backend-wasm-threaded-simd.wasm',
             },
+            hint: 'footInit',
           },
         });
+        deepAR.callbacks.onFeetTracked = (leftFoot, rightFoot) => {
+          const feetText = document.getElementById('feet-text');
+          // Hide the text when the feet are first detected.
+          if (leftFoot.detected || rightFoot.detected) {
+            feetText!.style.display = 'none';
+            deepAR.callbacks.onFeetTracked = undefined; // Unregister from the callback.
+          }
+        };
         setDeepARInstance(deepAR);
       } catch (error) {
         console.error('AR initialization error:', error);
@@ -117,6 +126,7 @@ export default function ARViewer() {
       <div className="mobile-sub-container">
         <div style={{ display: 'flex', flexDirection: 'row', gap: '5px' }}>
           <p style={{ color: '#fff' }}>{selectedShoe?.name}</p>
+          <p id="feet-text"></p>
           <Button
             variant="contained"
             className="tryon-button"
