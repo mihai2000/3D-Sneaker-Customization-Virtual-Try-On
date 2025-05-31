@@ -25,7 +25,6 @@ const shoes: Shoe[] = [
 ];
 
 function isMobileDevice() {
-  // return /Mobi|Android|iPhone/i.test(navigator.userAgent);
   return /Mobi|Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
     navigator.userAgent
   );
@@ -34,15 +33,25 @@ export default function ARViewer() {
   const [params, setParams] = useSearchParams();
   const navigate = useNavigate();
   const productId = params.get('product') || shoes[0].id;
+  const [selectedShoe, setSelectedShoe] = useState<Shoe>(
+    () => shoes.find((s) => s.id === productId) || shoes[0]
+  );
   const initializedRef = useRef(false);
   const [isMobile, setIsMobile] = useState(false);
   const [deepARInstance, setDeepARInstance] = useState<DeepAR | null>(null);
 
-  const selectedShoe = shoes.find((shoe) => shoe.id === productId) || shoes[0];
-
   useEffect(() => {
     setIsMobile(isMobileDevice());
+  }, []);
 
+  useEffect(() => {
+    const newShoe = shoes.find((s) => s.id === productId);
+    if (newShoe) {
+      setSelectedShoe(newShoe);
+    }
+  }, [productId]);
+
+  useEffect(() => {
     if (!isMobile || initializedRef.current || !selectedShoe) return;
     initializedRef.current = true;
 
@@ -77,6 +86,7 @@ export default function ARViewer() {
             hint: 'footInit',
           },
         });
+        console.log('deepAR.effect');
         deepAR.callbacks.onFeetTracked = (leftFoot, rightFoot) => {
           const feetText = document.getElementById('feet-text');
           // Hide the text when the feet are first detected.
@@ -95,10 +105,17 @@ export default function ARViewer() {
       }
     };
 
-    initAR();
+    setTimeout(initAR, 0);
   }, [selectedShoe, isMobile]);
 
-  const handleSelect = (shoe: (typeof shoes)[number]) => {
+  useEffect(() => {
+    if (deepARInstance && isMobile) {
+      const effectPath = `/effects/${selectedShoe.id}/${selectedShoe.effect}`;
+      deepARInstance.switchEffect(effectPath);
+    }
+  }, [selectedShoe.id]);
+
+  const handleSelect = (shoe: Shoe) => {
     setParams({ product: shoe.id, mode: 'ar' });
   };
 

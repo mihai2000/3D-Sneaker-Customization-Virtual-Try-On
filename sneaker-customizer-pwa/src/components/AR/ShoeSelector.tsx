@@ -9,15 +9,17 @@ interface Props {
 const shoes: Shoe[] = [
   {
     id: 'shoe1',
-    model: '/models/nike_air_zoom_pegasus_36.glb',
-    image: '/images/Nike_Air_Zoom_Pegasus_36.jpg',
     name: 'Nike Air Zoom Pegasus 36',
+    effect: 'nike_air_zoom_pegasus_36.deepar',
+    image: '/images/Nike_Air_Zoom_Pegasus_36.jpg',
+    model: '/models/nike_air_zoom_pegasus_36.glb',
   },
   {
     id: 'shoe2',
-    model: '/models/nike_military.glb',
-    image: '/images/Nike_SB_Zoom_Dunk.jpg',
     name: 'Nike SB Zoom Dunk',
+    effect: 'nike_military.deepar',
+    image: '/images/Nike_SB_Zoom_Dunk.jpg',
+    model: '/models/nike_military.glb',
   },
 ];
 

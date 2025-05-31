@@ -1,5 +1,5 @@
-import { useNavigate } from 'react-router-dom';
-import { useState } from 'react';
+import { useNavigate, useSearchParams } from 'react-router-dom';
+import { useEffect, useState } from 'react';
 import ShoeSelector from '../../components/AR/ShoeSelector';
 import ShoeViewer from '../../components/AR/ShoeViewer';
 import shoeIcon from '../../assets/shoe.svg';
@@ -12,20 +12,34 @@ const shoes: Shoe[] = [
     id: 'shoe1',
     model: '/models/nike_air_zoom_pegasus_36.glb',
     image: '/images/Nike_Air_Zoom_Pegasus_36.jpg',
+    effect: 'nike_air_zoom_pegasus_36.deepar',
     name: 'Nike Air Zoom Pegasus 36',
   },
   {
     id: 'shoe2',
     model: '/models/nike_military.glb',
     image: '/images/Nike_SB_Zoom_Dunk.jpg',
+    effect: 'nike_military.deepar',
     name: 'Nike SB Zoom Dunk',
   },
 ];
 
 export default function TryOnAR() {
   const navigate = useNavigate();
-  const [selectedShoe, setSelectedShoe] = useState<Shoe>(shoes[1]);
+  const [params, setParams] = useSearchParams();
+  const productId = params.get('product') || shoes[0].id;
+  const [selectedShoe, setSelectedShoe] = useState<Shoe>(
+    shoes.find((s) => s.id === productId) || shoes[0]
+  );
 
+  useEffect(() => {
+    const shoe = shoes.find((s) => s.id === productId);
+    if (shoe) setSelectedShoe(shoe);
+  }, [productId]);
+
+  const handleSelect = (shoe: Shoe) => {
+    setParams({ product: shoe.id });
+  };
   const handleTryOn = async () => {
     try {
       await navigator.mediaDevices.getUserMedia({ video: true });
@@ -73,7 +87,7 @@ export default function TryOnAR() {
         </div>
         <div className="carousel-wrapper">
           <ShoeSelector
-            onSelect={setSelectedShoe}
+            onSelect={handleSelect}
             selectedShoeId={selectedShoe.id}
           />
         </div>
