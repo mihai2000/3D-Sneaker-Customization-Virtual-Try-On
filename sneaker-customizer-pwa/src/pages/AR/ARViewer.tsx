@@ -8,21 +8,7 @@ import Layout from '../../components/Layout/Layout';
 import { Button } from '@mui/material';
 import threeDIcon from '../../assets/3D.svg';
 import { Shoe } from '../../interfaces/shoeInterface';
-
-const shoes: Shoe[] = [
-  {
-    id: 'shoe1',
-    name: 'Nike Air Zoom Pegasus 36',
-    effect: 'nike_air_zoom_pegasus_36.deepar',
-    image: '/images/Nike_Air_Zoom_Pegasus_36.jpg',
-  },
-  {
-    id: 'shoe2',
-    name: 'Nike SB Zoom Dunk',
-    effect: 'nike_military.deepar',
-    image: '/images/Nike_SB_Zoom_Dunk.jpg',
-  },
-];
+import { shoes } from '../../data/shoeData';
 
 function isMobileDevice() {
   return /Mobi|Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(

@@ -6,23 +6,7 @@ import shoeIcon from '../../assets/shoe.svg';
 import { Button } from '@mui/material';
 import './TryOnAR.scss';
 import { Shoe } from '../../interfaces/shoeInterface';
-
-const shoes: Shoe[] = [
-  {
-    id: 'shoe1',
-    model: '/models/nike_air_zoom_pegasus_36.glb',
-    image: '/images/Nike_Air_Zoom_Pegasus_36.jpg',
-    effect: 'nike_air_zoom_pegasus_36.deepar',
-    name: 'Nike Air Zoom Pegasus 36',
-  },
-  {
-    id: 'shoe2',
-    model: '/models/nike_military.glb',
-    image: '/images/Nike_SB_Zoom_Dunk.jpg',
-    effect: 'nike_military.deepar',
-    name: 'Nike SB Zoom Dunk',
-  },
-];
+import { shoes } from '../../data/shoeData';
 
 export default function TryOnAR() {
   const navigate = useNavigate();
