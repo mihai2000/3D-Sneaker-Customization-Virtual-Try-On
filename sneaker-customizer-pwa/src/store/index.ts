@@ -22,9 +22,20 @@ type StateType = {
   fullDecal: string;
   currentDesignId: string | null;
 };
+import defaultState from './default';
+
 export const resetState = () => {
   state.current = null;
-  state.items = {
+  state.items = { ...defaultState.items };
+  state.color = '#c6d4ec';
+  state.isLogoTexture = defaultState.isLogoTexture;
+  state.isFullTexture = defaultState.isFullTexture;
+  state.logoDecal = defaultState.logoDecal;
+  state.fullDecal = defaultState.fullDecal;
+  state.currentDesignId = null;
+
+  // Also reset the defaultState
+  defaultState.items = {
     laces: '#fff',
     mesh: '#fff',
     caps: '#fff',
@@ -34,12 +45,10 @@ export const resetState = () => {
     band: '#fff',
     patch: '#fff',
   };
-  state.color = '#c6d4ec';
-  state.isLogoTexture = true;
-  state.isFullTexture = false;
-  state.logoDecal = '/favicon_customizer.svg';
-  state.fullDecal = '/threejs.png';
-  state.currentDesignId = null;
+  defaultState.logoDecal = '/favicon_customizer.svg';
+  defaultState.fullDecal = '/threejs.png';
+  defaultState.isLogoTexture = true;
+  defaultState.isFullTexture = false;
 };
 
 const state = proxy<StateType>({

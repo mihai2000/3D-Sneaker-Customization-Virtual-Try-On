@@ -6,7 +6,9 @@ import CameraRig from '../../CameraRig';
 import Shoe from '../../Shoe';
 import '../Canvas.scss';
 import defaultState from '../../../../store/default';
+import { useSnapshot } from 'valtio';
 const CanvasPreview = () => {
+  const snap = useSnapshot(defaultState);
   return (
     <Canvas
       shadows
@@ -35,7 +37,7 @@ const CanvasPreview = () => {
         <Backdrop />
         <Center>
           <Suspense fallback={null}>
-            <Shoe staticState={defaultState} />
+            <Shoe staticState={snap} />
           </Suspense>
         </Center>
       </CameraRig>

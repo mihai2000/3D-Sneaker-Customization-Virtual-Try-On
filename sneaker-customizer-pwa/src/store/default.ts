@@ -1,6 +1,7 @@
 import { ItemsType } from './index';
+import { proxy } from 'valtio';
 
-const defaultState = {
+const defaultState = proxy({
   items: {
     laces: '#fff',
     mesh: '#fff',
@@ -13,9 +14,8 @@ const defaultState = {
   } as ItemsType,
   isLogoTexture: true,
   isFullTexture: false,
-  // logoDecal: '/threejs.png',
   fullDecal: '/threejs.png',
   logoDecal: '/favicon_customizer.svg',
-};
+});
 
 export default defaultState;

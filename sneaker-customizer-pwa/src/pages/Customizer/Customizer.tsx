@@ -127,6 +127,7 @@ const Customizer: React.FC = () => {
   const navigate = useNavigate();
 
   const handleCustomizerPage = () => {
+    resetState();
     document.body.style.cursor = 'auto';
     state.intro = true;
     navigate('/customizer');

@@ -102,6 +102,7 @@ export default function ResponsiveAppBar() {
     }
     document.body.style.cursor = 'auto';
     navigate(path);
+    resetState();
     setDrawerOpen(false);
   };
   return (
