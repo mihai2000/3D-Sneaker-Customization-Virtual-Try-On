@@ -1,8 +1,13 @@
-import { Center, ContactShadows, Environment } from '@react-three/drei';
+import {
+  Center,
+  ContactShadows,
+  Environment,
+  OrbitControls,
+} from '@react-three/drei';
 import { Canvas } from '@react-three/fiber';
 import { forwardRef, Suspense, useImperativeHandle, useRef } from 'react';
 import Backdrop from '../../Backdrop';
-import CameraRig from '../../CameraRig';
+// import CameraRig from '../../CameraRig';
 import Shoe from '../../Shoe';
 import '../Canvas.scss';
 
@@ -17,7 +22,7 @@ const CanvasEditor = forwardRef((_, ref) => {
   return (
     <Canvas
       shadows
-      camera={{ position: [0, 0, 0] }}
+      camera={{ position: [0, 0, 2.5], fov: 50 }}
       gl={{ preserveDrawingBuffer: true }}
       className="canvas-wrapper editor-glow-bg"
       style={{ overflow: 'hidden' }}
@@ -38,14 +43,15 @@ const CanvasEditor = forwardRef((_, ref) => {
         far={0.8}
       />
       <Environment files="/models/royal_esplanade_1k.hdr" />
-      <CameraRig>
-        <Backdrop />
-        <Center>
-          <Suspense fallback={null}>
-            <Shoe ref={shoeRef} />
-          </Suspense>
-        </Center>
-      </CameraRig>
+      {/* <CameraRig> */}
+      <Backdrop />
+      <Center>
+        <Suspense fallback={null}>
+          <Shoe ref={shoeRef} />
+        </Suspense>
+      </Center>
+      {/* </CameraRig> */}
+      <OrbitControls enableZoom={true} />
     </Canvas>
   );
 });

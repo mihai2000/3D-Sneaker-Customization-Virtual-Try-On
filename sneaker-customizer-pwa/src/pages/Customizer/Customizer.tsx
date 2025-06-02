@@ -22,6 +22,7 @@ import {
   uploadModelFile,
 } from '../../utils/uploadModelFile';
 import CanvasEditor from '../../components/canvas/Canvas/CanvasEditor/CanvasEditor';
+import TextureLibrary from '../../components/ui/TextureLibrary';
 interface DecalType {
   stateProperty: string;
   filterTab: string;
@@ -49,6 +50,16 @@ const Customizer: React.FC = () => {
             readFile={readFile}
           />
         );
+      case 'texturepicker':
+        return (
+          <TextureLibrary
+            onSelect={(textureUrl, type) => {
+              handleDecals(type, textureUrl);
+              setActiveEditorTab('');
+            }}
+          />
+        );
+
       default:
         return null;
     }

@@ -193,3 +193,28 @@ input[type='file'] {
   /* h-11/12 */
   object-fit: contain;
 }
+/* Texture Library */
+.texture-grid {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.texture-tile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 120px;
+  padding: 0.5rem;
+  border-radius: 8px;
+  background-color: #ffffff10;
+  backdrop-filter: blur(10px);
+}
+
+.texture-thumbnail {
+  width: 100%;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 5px;
+  cursor: pointer;
+}

@@ -1,4 +1,4 @@
-import { fileIcon, logoShoe, stylishShoe } from '../assets/index';
+import { fileIcon, logoShoe, stylishShoe, textureIcon } from '../assets/index';
 
 export interface EditorTab {
   name: string;
@@ -20,6 +20,7 @@ export const EditorTabs: EditorTab[] = [
     name: 'filepicker',
     icon: fileIcon,
   },
+  { name: 'texturepicker', icon: textureIcon },
 ];
 
 export const FilterTabs: FilterTab[] = [
