@@ -50,7 +50,7 @@ export default function ARViewer() {
 
     loadShoes();
     setIsMobile(isMobileDevice());
-  }, []);
+  }, [params]);
 
   // 🔁 Update selected shoe when productId in URL changes
   useEffect(() => {
@@ -121,7 +121,7 @@ export default function ARViewer() {
     if (deepARInstance && isMobile && selectedShoe) {
       deepARInstance.switchEffect(selectedShoe.effect);
     }
-  }, [selectedShoe?.id]);
+  }, [deepARInstance, isMobile, selectedShoe]);
 
   const handleSelect = (shoe: Shoe) => {
     setParams({ product: shoe.id, mode: 'ar' });

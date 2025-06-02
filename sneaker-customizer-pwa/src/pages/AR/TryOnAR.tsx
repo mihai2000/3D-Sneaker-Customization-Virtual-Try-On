@@ -40,7 +40,7 @@ export default function TryOnAR() {
     };
 
     loadShoes();
-  }, []);
+  }, [params]);
 
   // 🔁 Update selectedShoe when URL changes
   useEffect(() => {
