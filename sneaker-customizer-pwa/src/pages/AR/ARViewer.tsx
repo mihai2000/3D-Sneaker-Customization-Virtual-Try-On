@@ -8,7 +8,8 @@ import Layout from '../../components/Layout/Layout';
 import { Button } from '@mui/material';
 import threeDIcon from '../../assets/3D.svg';
 import { Shoe } from '../../interfaces/shoeInterface';
-import { shoes } from '../../data/shoeData';
+// import { shoes } from '../../data/shoeData';
+import { fetchProducts } from '../../services/products';
 
 function isMobileDevice() {
   return /Mobi|Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
@@ -18,24 +19,45 @@ function isMobileDevice() {
 export default function ARViewer() {
   const [params, setParams] = useSearchParams();
   const navigate = useNavigate();
-  const productId = params.get('product') || shoes[0].id;
-  const [selectedShoe, setSelectedShoe] = useState<Shoe>(
-    () => shoes.find((s) => s.id === productId) || shoes[0]
-  );
-  const initializedRef = useRef(false);
+
+  const [allShoes, setAllShoes] = useState<Shoe[]>([]);
+  const [selectedShoe, setSelectedShoe] = useState<Shoe | null>(null);
   const [isMobile, setIsMobile] = useState(false);
   const [deepARInstance, setDeepARInstance] = useState<DeepAR | null>(null);
+  const initializedRef = useRef(false);
+  const [loading, setLoading] = useState(true);
 
+  // ✅ Fetch products and select one by productId
   useEffect(() => {
+    const loadShoes = async () => {
+      try {
+        const products = await fetchProducts();
+        const validShoes = (products as Shoe[]).filter(
+          (shoe) => typeof shoe.effect === 'string' && shoe.effect.trim() !== ''
+        );
+        setAllShoes(validShoes);
+
+        const productId = params.get('product');
+        const initial =
+          validShoes.find((s) => s.id === productId) || validShoes[0];
+        setSelectedShoe(initial);
+      } catch (error) {
+        console.error('Error fetching shoes for ARViewer:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadShoes();
     setIsMobile(isMobileDevice());
   }, []);
 
+  // 🔁 Update selected shoe when productId in URL changes
   useEffect(() => {
-    const newShoe = shoes.find((s) => s.id === productId);
-    if (newShoe) {
-      setSelectedShoe(newShoe);
-    }
-  }, [productId]);
+    const productId = params.get('product');
+    const match = allShoes.find((s) => s.id === productId);
+    if (match) setSelectedShoe(match);
+  }, [params, allShoes]);
 
   useEffect(() => {
     if (!isMobile || initializedRef.current || !selectedShoe) return;
@@ -46,7 +68,7 @@ export default function ARViewer() {
         const deepAR = await initialize({
           licenseKey: import.meta.env.VITE_DEEPAR_SDK_KEY,
           canvas: document.getElementById('deepar-canvas') as HTMLCanvasElement,
-          effect: `/effects/${selectedShoe?.id}/${selectedShoe?.effect}`,
+          effect: selectedShoe.effect,
           additionalOptions: {
             cameraConfig: {
               disableDefaultCamera: false,
@@ -72,7 +94,7 @@ export default function ARViewer() {
             hint: 'footInit',
           },
         });
-        console.log('deepAR.effect');
+
         deepAR.callbacks.onFeetTracked = (leftFoot, rightFoot) => {
           const feetText = document.getElementById('feet-text');
           // Hide the text when the feet are first detected.
@@ -94,12 +116,12 @@ export default function ARViewer() {
     setTimeout(initAR, 0);
   }, [selectedShoe, isMobile]);
 
+  // 🌀 Switch effect if shoe changes
   useEffect(() => {
-    if (deepARInstance && isMobile) {
-      const effectPath = `/effects/${selectedShoe.id}/${selectedShoe.effect}`;
-      deepARInstance.switchEffect(effectPath);
+    if (deepARInstance && isMobile && selectedShoe) {
+      deepARInstance.switchEffect(selectedShoe.effect);
     }
-  }, [selectedShoe.id]);
+  }, [selectedShoe?.id]);
 
   const handleSelect = (shoe: Shoe) => {
     setParams({ product: shoe.id, mode: 'ar' });
@@ -108,13 +130,15 @@ export default function ARViewer() {
   const handleBackToTryOn = async () => {
     try {
       if (deepARInstance) {
-        deepARInstance.shutdown();
+        await deepARInstance.shutdown();
       }
-    } catch (error) {
-      console.warn('Error during DeepAR shutdown:', error);
+    } catch (err) {
+      console.warn('DeepAR shutdown warning:', err);
     }
-    navigate(`/try-ar?product=${selectedShoe.id}`);
+    navigate(`/try-ar?product=${selectedShoe?.id}`);
   };
+
+  if (loading || !selectedShoe) return <p>Loading AR Viewer... 🛰️</p>;
 
   const qrUrl = `${window.location.origin}/collection/shoes?product=${selectedShoe.id}&mode=ar`;
 
@@ -148,6 +172,7 @@ export default function ARViewer() {
         <ShoeSelector
           onSelect={handleSelect}
           selectedShoeId={selectedShoe.id}
+          shoes={allShoes}
         />
       </div>
     </div>
@@ -180,6 +205,7 @@ export default function ARViewer() {
             <ShoeSelector
               onSelect={handleSelect}
               selectedShoeId={selectedShoe.id}
+              shoes={allShoes}
             />
           </div>
         </div>

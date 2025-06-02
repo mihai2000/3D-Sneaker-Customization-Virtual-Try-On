@@ -1,14 +1,20 @@
-import { shoes } from '../../data/shoeData';
 import { Shoe } from '../../interfaces/shoeInterface';
 import './ShoeSelector.scss';
 
 interface Props {
   onSelect: (shoe: Shoe) => void;
   selectedShoeId?: string;
+  shoes: Shoe[];
 }
 
-export default function ShoeSelector({ onSelect, selectedShoeId }: Props) {
-  return (
+export default function ShoeSelector({
+  onSelect,
+  selectedShoeId,
+  shoes,
+}: Props) {
+  return shoes.length === 0 ? (
+    <p>No shoes available for AR 🥾</p>
+  ) : (
     <div className="shoe-carousel">
       {shoes.map((shoe) => (
         <button

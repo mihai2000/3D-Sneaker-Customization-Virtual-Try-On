@@ -6,24 +6,53 @@ import shoeIcon from '../../assets/shoe.svg';
 import { Button } from '@mui/material';
 import './TryOnAR.scss';
 import { Shoe } from '../../interfaces/shoeInterface';
-import { shoes } from '../../data/shoeData';
+import { fetchProducts } from '../../services/products';
+// import { shoes } from '../../data/shoeData';
 
 export default function TryOnAR() {
   const navigate = useNavigate();
   const [params, setParams] = useSearchParams();
-  const productId = params.get('product') || shoes[0].id;
-  const [selectedShoe, setSelectedShoe] = useState<Shoe>(
-    shoes.find((s) => s.id === productId) || shoes[0]
-  );
+  const [allShoes, setAllShoes] = useState<Shoe[]>([]);
+  const [selectedShoe, setSelectedShoe] = useState<Shoe | null>(null);
+  const [loading, setLoading] = useState(true);
 
+  // ✅ Fetch shoes from Firestore and filter by non-empty effect
   useEffect(() => {
-    const shoe = shoes.find((s) => s.id === productId);
-    if (shoe) setSelectedShoe(shoe);
-  }, [productId]);
+    const loadShoes = async () => {
+      try {
+        const products = await fetchProducts();
+        const validShoes = (products as Shoe[]).filter(
+          (shoe) => typeof shoe.effect === 'string' && shoe.effect.trim() !== ''
+        );
+
+        setAllShoes(validShoes);
+
+        const urlProductId = params.get('product');
+        const initial =
+          validShoes.find((s) => s.id === urlProductId) || validShoes[0];
+
+        setSelectedShoe(initial);
+      } catch (err) {
+        console.error('Error fetching shoes:', err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadShoes();
+  }, []);
+
+  // 🔁 Update selectedShoe when URL changes
+  useEffect(() => {
+    const urlProductId = params.get('product');
+    const found = allShoes.find((s) => s.id === urlProductId);
+    if (found) setSelectedShoe(found);
+  }, [params, allShoes]);
 
   const handleSelect = (shoe: Shoe) => {
     setParams({ product: shoe.id });
   };
+
   const handleTryOn = async () => {
     try {
       await navigator.mediaDevices.getUserMedia({ video: true });
@@ -37,19 +66,24 @@ export default function TryOnAR() {
           alert('Motion permission not granted. AR may not work properly.');
         }
       }
-      navigate(`/collection/shoes?product=${selectedShoe.id}&mode=ar`);
+
+      if (selectedShoe) {
+        navigate(`/collection/shoes?product=${selectedShoe.id}&mode=ar`);
+      }
     } catch (error) {
       alert('Please allow camera access to use AR.');
       console.error(error);
     }
   };
 
+  if (loading || !selectedShoe) return <p>Loading AR module... 🛠️</p>;
+
   return (
     <div className="tryon-container">
       <h1>Try On Sneakers</h1>
 
       <div className="viewer-wrapper">
-        <ShoeViewer modelPath={selectedShoe.model} />
+        <ShoeViewer modelPath={selectedShoe.modelUrl} />
       </div>
       <div className="tryon-carousel-container">
         <div className="tryon-info-box">
@@ -73,6 +107,7 @@ export default function TryOnAR() {
           <ShoeSelector
             onSelect={handleSelect}
             selectedShoeId={selectedShoe.id}
+            shoes={allShoes}
           />
         </div>
       </div>
