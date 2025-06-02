@@ -130,6 +130,7 @@ export default function ProductPage() {
           modelUrl={selectedShoe?.modelUrl ?? ''}
           shoeName={selectedShoe?.name}
           shoeId={selectedShoe?.id}
+          effect={selectedShoe?.effect}
         />
       )}
     </div>

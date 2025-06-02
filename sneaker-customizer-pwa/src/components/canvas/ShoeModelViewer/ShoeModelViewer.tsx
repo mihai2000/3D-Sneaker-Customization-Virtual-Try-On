@@ -15,6 +15,7 @@ interface Props {
   modelUrl: string;
   shoeName: string;
   shoeId: string;
+  effect?: string;
 }
 const ShoeModelViewer: React.FC<Props> = ({
   isOpen,
@@ -22,6 +23,7 @@ const ShoeModelViewer: React.FC<Props> = ({
   modelUrl,
   shoeName,
   shoeId,
+  effect,
 }) => {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const [isFullscreen, setIsFullscreen] = useState(false);
@@ -134,12 +136,14 @@ const ShoeModelViewer: React.FC<Props> = ({
               <p>
                 Click and drag to rotate • Scroll to zoom • Right click to pan
               </p>
-              <Link to={`/try-ar/collection/shoes?product=${shoeId}&mode=ar`}>
-                <CustomButton
-                  title="Try AR"
-                  customStyle="custom-button glow-button"
-                />
-              </Link>
+              {effect && effect.trim().length > 0 && (
+                <Link to={`/try-ar/collection/shoes?product=${shoeId}&mode=ar`}>
+                  <CustomButton
+                    title="Try AR"
+                    customStyle="custom-button glow-button"
+                  />
+                </Link>
+              )}
             </div>
           </motion.div>
         </motion.div>

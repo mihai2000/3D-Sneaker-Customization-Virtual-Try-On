@@ -67,14 +67,16 @@ export function ProductCard({
               <ShoppingCart className="cart-icon" />
               Add to Cart
             </motion.button>
-            <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              className="card-button"
-              onClick={handleTryInAR}
-            >
-              Try in AR
-            </motion.button>
+            {shoe.effect && shoe.effect.trim().length > 0 && (
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className="card-button"
+                onClick={handleTryInAR}
+              >
+                Try in AR
+              </motion.button>
+            )}
           </div>
         </div>
       </div>

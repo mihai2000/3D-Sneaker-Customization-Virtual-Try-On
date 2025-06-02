@@ -82,6 +82,10 @@
   gap: 1rem;
   justify-content: space-between;
   align-items: center;
+
+  &:has(.card-button:only-child) {
+    justify-content: center;
+  }
 }
 
 .product-price {
