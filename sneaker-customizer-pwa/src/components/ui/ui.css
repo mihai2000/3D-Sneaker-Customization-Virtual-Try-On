@@ -194,8 +194,15 @@ input[type='file'] {
   object-fit: contain;
 }
 /* Texture Library */
+.texture-library-wrapper {
+  max-width: 310px;
+  width: 100%;
+  padding: 1rem;
+}
 .texture-grid {
+  width: 100%;
   display: flex;
+  justify-content: center;
   gap: 1rem;
   flex-wrap: wrap;
 }
@@ -217,4 +224,29 @@ input[type='file'] {
   object-fit: cover;
   border-radius: 5px;
   cursor: pointer;
+}
+/* logo library */
+.logo-selector {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+.logo-filter-button {
+  background: #1a1a1a;
+  border: none;
+  color: white;
+  padding: 0.4rem 0.8rem;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: 0.2s ease-in-out;
+  height: 2.5rem;
+}
+
+.logo-filter-button:hover {
+  background-color: #333;
+}
+
+.logo-filter-button.active {
+  background-color: #0070f3;
 }

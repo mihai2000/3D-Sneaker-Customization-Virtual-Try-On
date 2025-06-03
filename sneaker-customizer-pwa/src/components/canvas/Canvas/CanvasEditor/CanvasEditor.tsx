@@ -43,14 +43,12 @@ const CanvasEditor = forwardRef((_, ref) => {
         far={0.8}
       />
       <Environment files="/models/royal_esplanade_1k.hdr" />
-      {/* <CameraRig> */}
       <Backdrop />
       <Center>
         <Suspense fallback={null}>
           <Shoe ref={shoeRef} />
         </Suspense>
       </Center>
-      {/* </CameraRig> */}
       <OrbitControls enableZoom={true} />
     </Canvas>
   );

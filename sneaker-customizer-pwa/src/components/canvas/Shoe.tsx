@@ -120,15 +120,6 @@ const Shoe = forwardRef<THREE.Group, ShoeProps>(
           material={materials.mesh}
           material-color={usedState.items?.mesh || '#fff'}
         >
-          {/* {usedState.isFullTexture && (
-				<Decal
-					position={[-0.7, -0.25, 0]}
-					rotation={[0, 0, 0]}
-					scale={1}
-					map={fullTexture}
-					depthTest={false}
-				/>
-			)} */}
           {usedState.isFullTexture ? (
             <primitive
               object={materials.mesh}
@@ -144,13 +135,25 @@ const Shoe = forwardRef<THREE.Group, ShoeProps>(
             />
           )}
           {usedState.isLogoTexture && (
-            <Decal
-              position={[-0.5, -0.1, 0.15]}
-              rotation={[0, 0, 0]}
-              scale={0.4}
-              map={logoTexture}
-              depthTest={false}
-            />
+            <>
+              {/* Outer side decal */}
+              <Decal
+                position={[-0.5, -0.14, 0.15]}
+                rotation={[0, 0, 0]}
+                scale={0.35}
+                map={logoTexture}
+                depthTest={false}
+              />
+
+              {/* Inner side decal (mirrored) */}
+              <Decal
+                position={[-0.5, -0.14, -0.15]} // mirrored X
+                rotation={[0, 0, 0]} // flip to face outward
+                scale={0.35}
+                map={logoTexture}
+                depthTest={false}
+              />
+            </>
           )}
         </mesh>
         <mesh

@@ -10,38 +10,41 @@ interface FilePickerProps {
 
 const FilePicker: React.FC<FilePickerProps> = ({ file, setFile, readFile }) => {
   return (
-    <div className="file-picker-wrapper glassmorphismFile ">
-      <div className="file-picker-body">
-        <input
-          id="file-upload"
-          type="file"
-          accept="image/*"
-          onChange={(e) => {
-            if (e.target.files && e.target.files[0]) {
-              setFile(e.target.files[0]);
-            }
-          }}
-        />
-        <label htmlFor="file-upload" className="file-upload-label">
-          Upload File
-        </label>
-        <p className="file-status-text">
-          {file === null ? 'No File Selected' : file.name}
-        </p>
-        <div className="file-button-group">
-          <CustomButton
-            title="logo"
-            handleClick={() => readFile('logo')}
-            customStyle="text-xs"
+    <>
+      <p>Texture / Logo Picker</p>
+      <div className="file-picker-wrapper glassmorphismFile ">
+        <div className="file-picker-body">
+          <input
+            id="file-upload"
+            type="file"
+            accept="image/*"
+            onChange={(e) => {
+              if (e.target.files && e.target.files[0]) {
+                setFile(e.target.files[0]);
+              }
+            }}
           />
-          <CustomButton
-            title="full"
-            handleClick={() => readFile('full')}
-            customStyle="text-xs"
-          />
+          <label htmlFor="file-upload" className="file-upload-label">
+            Upload File
+          </label>
+          <p className="file-status-text">
+            {file === null ? 'No File Selected' : file.name}
+          </p>
+          <div className="file-button-group">
+            <CustomButton
+              title="logo"
+              handleClick={() => readFile('logo')}
+              customStyle="text-xs"
+            />
+            <CustomButton
+              title="full"
+              handleClick={() => readFile('full')}
+              customStyle="text-xs"
+            />
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 

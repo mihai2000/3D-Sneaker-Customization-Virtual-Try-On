@@ -20,7 +20,14 @@ export const EditorTabs: EditorTab[] = [
     name: 'filepicker',
     icon: fileIcon,
   },
-  { name: 'texturepicker', icon: textureIcon },
+  {
+    name: 'texturepicker',
+    icon: textureIcon,
+  },
+  {
+    name: 'logopicker',
+    icon: logoShoe,
+  },
 ];
 
 export const FilterTabs: FilterTab[] = [

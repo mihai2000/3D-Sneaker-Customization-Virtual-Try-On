@@ -23,6 +23,7 @@ import {
 } from '../../utils/uploadModelFile';
 import CanvasEditor from '../../components/canvas/Canvas/CanvasEditor/CanvasEditor';
 import TextureLibrary from '../../components/ui/TextureLibrary';
+import LogoLibrary from '../../components/ui/LogoLibrary';
 interface DecalType {
   stateProperty: string;
   filterTab: string;
@@ -53,13 +54,21 @@ const Customizer: React.FC = () => {
       case 'texturepicker':
         return (
           <TextureLibrary
-            onSelect={(textureUrl, type) => {
-              handleDecals(type, textureUrl);
+            onSelect={(textureUrl) => {
+              handleDecals('full', textureUrl);
               setActiveEditorTab('');
             }}
           />
         );
-
+      case 'logopicker':
+        return (
+          <LogoLibrary
+            onSelect={(logoUrl) => {
+              handleDecals('logo', logoUrl);
+              setActiveEditorTab('');
+            }}
+          />
+        );
       default:
         return null;
     }
