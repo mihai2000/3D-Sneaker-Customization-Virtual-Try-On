@@ -356,7 +356,7 @@ export default function Orders() {
   return (
     <Box
       sx={{
-        minHeight: '100vh',
+        minHeight: '90.2vh',
         mt: '64px',
         background:
           'linear-gradient(-45deg, #0e0e11, #1a1c26, #14161c, #0a0b10)',

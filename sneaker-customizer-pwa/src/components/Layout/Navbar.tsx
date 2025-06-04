@@ -84,6 +84,7 @@ export default function ResponsiveAppBar() {
 
   const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElUser(event.currentTarget);
+    document.body.style.cursor = 'auto';
   };
   const handleCloseUserMenu = () => setAnchorElUser(null);
 

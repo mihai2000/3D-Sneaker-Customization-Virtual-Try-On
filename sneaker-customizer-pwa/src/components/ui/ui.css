@@ -161,9 +161,8 @@ input[type='file'] {
 /* tab */
 .tab-wrapper {
   width: 3.5rem;
-  /* w-14 */
+ 
   height: 3.5rem;
-  /* h-14 */
   display: flex;
   justify-content: center;
   align-items: center;
@@ -181,24 +180,33 @@ input[type='file'] {
 
 .filtered-icon {
   width: 66.6667%;
-  /* w-2/3 */
   height: 66.6667%;
-  /* h-2/3 */
 }
 
 .default-icon {
   width: 91.6667%;
-  /* w-11/12 */
   height: 91.6667%;
-  /* h-11/12 */
   object-fit: contain;
+}
+/* general library */
+.library-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
 }
 /* Texture Library */
 .texture-library-wrapper {
   max-width: 310px;
   width: 100%;
   padding: 1rem;
+  transition: max-width 0.3s ease;
 }
+
+.texture-library-wrapper.user-mode {
+  max-width: 230px;
+}
+
 .texture-grid {
   width: 100%;
   display: flex;

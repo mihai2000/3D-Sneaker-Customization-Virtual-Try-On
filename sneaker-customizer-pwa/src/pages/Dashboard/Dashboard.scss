@@ -1,0 +1,95 @@
+.dashboard-container {
+  min-height: 100vh;
+  padding: 2rem;
+  padding-top: 4rem;
+  background: linear-gradient(145deg, #1a0933, #0d021c);
+  color: white;
+  overflow: auto !important;
+}
+
+.upload-controls {
+  margin-top: 1rem;
+
+  label {
+    font-weight: bold;
+  }
+
+  input {
+    margin-left: 0.5rem;
+  }
+}
+
+.section-title {
+  margin-top: 2rem;
+}
+
+.grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.tile {
+  text-align: center;
+
+  img {
+    border-radius: 6px;
+    border: 2px solid white;
+    object-fit: cover;
+  }
+
+  .small {
+    width: 100px;
+    height: 100px;
+  }
+
+  .large {
+    width: 180px;
+    height: 180px;
+  }
+
+  .logo-black-bg {
+    background-color: #000;
+  }
+
+  .logo-white-bg {
+    background-color: #fff;
+  }
+
+  button {
+    margin-top: 0.5rem;
+    background-color: #ff4444;
+    color: white;
+    border: none;
+    font-weight: bold;
+    border-radius: 4px;
+    height: 50px;
+    padding: 4px 10px;
+    cursor: pointer;
+  }
+}
+.upload-btn {
+  background-color: #008cff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 6px 12px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.2s ease;
+
+  &:hover {
+    background-color: #0070d1;
+  }
+}
+.user-assets {
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+  align-items: end;
+}
+.section-toggle {
+  margin: 1rem 0;
+  display: flex;
+  align-items: center;
+}

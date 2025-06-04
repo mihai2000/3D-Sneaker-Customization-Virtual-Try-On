@@ -266,8 +266,7 @@ const Customizer: React.FC = () => {
           </>,
         ]}
       </AnimatePresence>
-
-      <CanvasEditor ref={canvasRef} />
+        <CanvasEditor ref={canvasRef} />
     </div>
   );
 };

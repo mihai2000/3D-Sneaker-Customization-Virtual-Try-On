@@ -154,7 +154,7 @@ export default function SavedDesigns() {
         <Box
           sx={{
             background: 'radial-gradient(circle at top, #110b1c, #090513)',
-            minHeight: '100vh',
+            minHeight: '87.8vh',
             py: 10,
           }}
         >

@@ -2,12 +2,9 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 5% 0 5% 5%;
-  margin-top: 64px;
+  padding-left: 5%;
   background: radial-gradient(circle at top left, #0f172a, #1e293b);
   color: white;
-  min-height: 100dvh;
-  overflow: hidden !important;
 
   @media (max-width: 960px) {
     flex-direction: column;

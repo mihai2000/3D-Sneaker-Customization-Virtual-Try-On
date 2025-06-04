@@ -206,7 +206,7 @@ export default function OrderConfirmation() {
   }, [stripe, cart, user, clearCart, navigate]);
 
   return (
-    <Box sx={{ mt: 8, px: 2 }}>
+    <Box sx={{ mt: 12, px: 2 }}>
       <Paper
         component={motion.div}
         initial={{ opacity: 0, y: 30 }}
