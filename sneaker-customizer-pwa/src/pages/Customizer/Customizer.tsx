@@ -7,7 +7,6 @@ import {
   FilePicker,
   Tab,
 } from '../../components/ui';
-import PlugDevRev from '../../components/ui/PlugDevRev';
 import { DecalTypes, EditorTabs, FilterTabs } from '../../config/constants';
 import { reader } from '../../config/helpers';
 import { fadeAnimation, slideAnimation } from '../../config/motion';
@@ -259,11 +258,7 @@ const Customizer: React.FC = () => {
                 />
               ))}
             </motion.div>
-
-            <motion.div key="plug-dev-rev">
-              <PlugDevRev />
-            </motion.div>
-          </>,
+          </>
         ]}
       </AnimatePresence>
         <CanvasEditor ref={canvasRef} />

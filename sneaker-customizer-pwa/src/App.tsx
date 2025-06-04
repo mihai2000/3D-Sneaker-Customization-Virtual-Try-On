@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -23,20 +23,16 @@ import NotFound from './pages/NotFound404/NotFound';
 
 import { Elements } from '@stripe/react-stripe-js';
 import './App.css';
-import CanvasEditor from './components/canvas/Canvas/CanvasEditor/CanvasEditor';
 import Dashboard from './pages/Dashboard/Dashboard';
 import Home from './pages/Home/Home';
 import ProductPage from './pages/Products/ProductPage';
 import { stripePromise } from './services/stripe';
-import CanvasPreview from './components/canvas/Canvas/CanvasPreview/CanvasPreview';
 import CustomizerPage from './pages/Customizer/CustomizerPage';
 import Login from './pages/Auth/Login';
 import { ThemeProvider } from './providers/ThemeProvider';
 import ARViewer from './pages/AR/ARViewer';
 
 const App: React.FC = () => {
-  const canvasRef = useRef<any>();
-
   return (
     <main className="app">
       <ToastContainer
@@ -140,7 +136,6 @@ const App: React.FC = () => {
             <ProtectedRoute>
               <Layout>
                 <CustomizerPage />
-                <CanvasPreview />
               </Layout>
             </ProtectedRoute>
           }
@@ -151,7 +146,6 @@ const App: React.FC = () => {
           element={
             <ProtectedRoute>
               <Layout>
-                <CanvasEditor ref={canvasRef} />
                 <Customizer />
               </Layout>
             </ProtectedRoute>
@@ -194,7 +188,7 @@ const App: React.FC = () => {
           path="/collection/shoes"
           element={
             <ProtectedRoute>
-                <ARViewer />
+              <ARViewer />
             </ProtectedRoute>
           }
         />

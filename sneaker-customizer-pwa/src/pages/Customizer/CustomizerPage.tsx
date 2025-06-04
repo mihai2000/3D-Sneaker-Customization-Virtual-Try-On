@@ -11,6 +11,7 @@ import {
 } from '../../config/motion';
 import state, { resetState } from '../../store';
 import './CustomizerPage.scss';
+import CanvasPreview from '../../components/canvas/Canvas/CanvasPreview/CanvasPreview';
 
 const CustomizerPage: React.FC = () => {
   const snap = useSnapshot(state);
@@ -23,41 +24,49 @@ const CustomizerPage: React.FC = () => {
   };
 
   return (
-    <AnimatePresence>
-      {snap.intro && (
-        <motion.section className="home-section " {...slideAnimation('left')}>
-          <motion.div className="home-content" {...headContainerAnimation}>
-            <motion.div {...headTextAnimation}>
-              <h1 className="home-title gradient-text">
-                Your Shoes
-                <br className="line-break" /> Your Way
-              </h1>
-            </motion.div>
+    <>
+      <AnimatePresence>
+        {snap.intro && (
+          <motion.section className="home-section " {...slideAnimation('left')}>
+            <motion.div className="home-content" {...headContainerAnimation}>
+              <motion.div {...headTextAnimation}>
+                <h1 className="home-title gradient-text">
+                  Your Shoes
+                  <br className="line-break" /> Your Way
+                </h1>
+              </motion.div>
 
-            <motion.div className="home-description" {...headContentAnimation}>
-              <p className="home-paragraph glow-soft">
-                Create your unique and exclusive shoes with our brand-new 3D
-                customization tool. <strong>Unleash your imagination</strong>{' '}
-                and define your own style.
-              </p>
+              <motion.div
+                className="home-description"
+                {...headContentAnimation}
+              >
+                <p className="home-paragraph glow-soft">
+                  Create your unique and exclusive shoes with our brand-new 3D
+                  customization tool. <strong>Unleash your imagination</strong>{' '}
+                  and define your own style.
+                </p>
 
-              <CustomButton
-                title="Customize it"
-                handleClick={handleCustomize}
-                customStyle="custom-button glow-button"
-              />
-              <h1 className="home-paragraph">Welcome to 3D Shoe Customizer</h1>
-              <Link to="/try-ar">
                 <CustomButton
-                  title="Try AR"
+                  title="Customize it"
+                  handleClick={handleCustomize}
                   customStyle="custom-button glow-button"
                 />
-              </Link>
+                <h1 className="home-paragraph">
+                  Welcome to 3D Shoe Customizer
+                </h1>
+                <Link to="/try-ar">
+                  <CustomButton
+                    title="Try AR"
+                    customStyle="custom-button glow-button"
+                  />
+                </Link>
+              </motion.div>
             </motion.div>
-          </motion.div>
-        </motion.section>
-      )}
-    </AnimatePresence>
+          </motion.section>
+        )}
+      </AnimatePresence>
+      <CanvasPreview />
+    </>
   );
 };
 
