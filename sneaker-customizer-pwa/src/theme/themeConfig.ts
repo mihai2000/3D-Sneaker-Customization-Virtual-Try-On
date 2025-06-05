@@ -54,6 +54,31 @@ export const themes: Record<ThemeKey, ThemeStyles> = {
           boxShadow: '0 0 10px #a855f7',
         },
       },
+      '& .MuiInputBase-root': {
+        color: '#fff',
+        backgroundColor: 'rgba(255, 255, 255, 0.05)',
+        borderRadius: '8px',
+      },
+      '& .MuiInputLabel-root': {
+        color: '#ccc',
+      },
+      '& .MuiInputBase-input.Mui-disabled': {
+        WebkitTextFillColor: '#aaa', // <- make disabled text visible
+        color: '#aaa',
+      },
+      '& .Mui-disabled': {
+        backgroundColor: 'rgba(255, 255, 255, 0.08)', // light bg for contrast
+        borderRadius: '8px',
+      },
+      '& .MuiOutlinedInput-notchedOutline': {
+        borderColor: '#7f5af0',
+      },
+      '&:hover .MuiOutlinedInput-notchedOutline': {
+        borderColor: '#b388ff',
+      },
+      '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
+        borderColor: '#e0e0ff',
+      },
     },
     buttonStyle: {
       background: 'linear-gradient(90deg, #6f00ff, #a500ff)',
@@ -106,6 +131,31 @@ export const themes: Record<ThemeKey, ThemeStyles> = {
           borderColor: '#00e5ff',
           boxShadow: '0 0 10px #00e5ff',
         },
+      },
+      '& .MuiInputBase-root': {
+        color: '#fff',
+        backgroundColor: 'rgba(255, 255, 255, 0.05)',
+        borderRadius: '8px',
+      },
+      '& .MuiInputLabel-root': {
+        color: '#ccc',
+      },
+      '& .MuiInputBase-input.Mui-disabled': {
+        WebkitTextFillColor: '#aaa', // <- make disabled text visible
+        color: '#aaa',
+      },
+      '& .Mui-disabled': {
+        backgroundColor: 'rgba(255, 255, 255, 0.08)', // light bg for contrast
+        borderRadius: '8px',
+      },
+      '& .MuiOutlinedInput-notchedOutline': {
+        borderColor: '#7f5af0',
+      },
+      '&:hover .MuiOutlinedInput-notchedOutline': {
+        borderColor: '#b388ff',
+      },
+      '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
+        borderColor: '#e0e0ff',
       },
     },
     buttonStyle: {

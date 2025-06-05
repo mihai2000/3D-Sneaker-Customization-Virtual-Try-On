@@ -81,9 +81,7 @@ export const UserDashboard: React.FC = () => {
           </List>
         </Drawer>
 
-        <Box
-          sx={{ flexGrow: 1, p: 4, background: '#12121A', minHeight: '100vh' }}
-        >
+        <Box sx={{ flexGrow: 1, p: 4, background: '#12121A' }}>
           <Typography variant="h4" sx={{ color: '#80D0FF', mb: 3 }}>
             Welcome to Your Dashboard 🎉
           </Typography>
@@ -95,6 +93,7 @@ export const UserDashboard: React.FC = () => {
               border: '1px solid rgba(255,255,255,0.05)',
               borderRadius: '12px',
               p: 3,
+              mt: 4,
               color: '#fff',
               fontSize: '1.2rem',
             }}

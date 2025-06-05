@@ -82,7 +82,9 @@ export default function Profile() {
           sx={theme.textFieldStyles}
         />
 
-        <Typography sx={{ mt: 3, mb: 1, fontWeight: 500 }}>
+        <Typography
+          sx={{ mt: 3, mb: 1, fontWeight: 500, color: theme.titleColor }}
+        >
           Change Password
         </Typography>
         <TextField
