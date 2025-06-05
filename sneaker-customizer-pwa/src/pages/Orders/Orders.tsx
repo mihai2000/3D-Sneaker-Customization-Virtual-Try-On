@@ -358,8 +358,7 @@ export default function Orders() {
       sx={{
         minHeight: '90.2vh',
         mt: '64px',
-        background:
-          'linear-gradient(-45deg, #0e0e11, #1a1c26, #14161c, #0a0b10)',
+        background: 'linear-gradient(145deg, #1a0933, #0d021c)',
         backgroundSize: '400% 400%',
         animation: 'gradientMove 20s ease infinite',
         px: { xs: 2, sm: 4 },

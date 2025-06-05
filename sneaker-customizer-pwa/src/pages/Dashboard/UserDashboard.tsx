@@ -12,6 +12,7 @@ import DashboardIcon from '@mui/icons-material/Dashboard';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import SettingsIcon from '@mui/icons-material/Settings';
 import LogoutIcon from '@mui/icons-material/Logout';
+import TextureIcon  from '@mui/icons-material/Texture';
 import { useNavigate } from 'react-router-dom';
 import './DashboardPanel.scss';
 import { useAuth } from '../../hooks/useAuth';
@@ -20,7 +21,7 @@ const menuItems = [
   { label: 'Orders', icon: <ShoppingCartIcon />, path: '/orders' },
   {
     label: 'Textures & Logos',
-    icon: <ShoppingCartIcon />,
+    icon: <TextureIcon  />,
     path: '/textures-logos',
   },
   { label: 'Settings', icon: <SettingsIcon />, path: '/profile' },

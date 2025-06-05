@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   Box,
   Drawer,
@@ -11,38 +11,59 @@ import {
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import SettingsIcon from '@mui/icons-material/Settings';
-import BarChartIcon from '@mui/icons-material/BarChart';
+import TextureIcon from '@mui/icons-material/Texture';
 import LogoutIcon from '@mui/icons-material/Logout';
 import { useNavigate } from 'react-router-dom';
-import { AdminControlPanel } from './AdminControlPanel';
-import './DashboardPanel.scss';
-import { useAuth } from '../../hooks/useAuth';
 
-const menuItems = [
-  { label: 'Dashboard', icon: <DashboardIcon />, path: '/dashboard' },
-  { label: 'Orders', icon: <ShoppingCartIcon />, path: '/orders' },
-  {
-    label: 'Textures & Logos',
-    icon: <ShoppingCartIcon />,
-    path: '/textures-logos',
-  },
-  { label: 'Revenue', icon: <BarChartIcon />, path: '/analytics' },
-  { label: 'Settings', icon: <SettingsIcon />, path: '/profile' },
-  { label: 'Logout', icon: <LogoutIcon />, path: '/logout' },
-];
+import { AdminControlPanel } from './AdminControlPanel';
+import Profile from './Profile';
+import { useAuth } from '../../hooks/useAuth';
+import './DashboardPanel.scss';
+import Orders from '../Orders/Orders';
+import TexturesLogos from '../TexturesLogos/TexturesLogos';
+import { ThemeProvider } from '../../providers/ThemeProvider';
+import { ManageUsersPanel } from './ManageUsersPanel';
+import { AddProductForm } from '../Products/AddProductForm';
+
+export type ViewKey =
+  | 'dashboard'
+  | 'orders'
+  | 'textures-logos'
+  | 'profile'
+  | 'manage-users'
+  | 'products';
 
 const drawerWidth = 220;
 
 export const AdminDashboard: React.FC = () => {
   const navigate = useNavigate();
   const { logout } = useAuth();
+  const [view, setView] = useState<ViewKey>('dashboard');
 
-  const handleNavigation = async (item: (typeof menuItems)[0]) => {
-    if (item.label === 'Logout') {
-      await logout(); // call actual logout
-      navigate('/login'); // redirect to login
+  const menuItems: {
+    label: string;
+    icon: React.ReactNode;
+    view: ViewKey | 'logout';
+  }[] = [
+    { label: 'Dashboard', icon: <DashboardIcon />, view: 'dashboard' },
+    { label: 'Orders', icon: <ShoppingCartIcon />, view: 'orders' },
+    {
+      label: 'Textures & Logos',
+      icon: <TextureIcon />,
+      view: 'textures-logos',
+    },
+    { label: 'Settings', icon: <SettingsIcon />, view: 'profile' },
+    { label: 'Logout', icon: <LogoutIcon />, view: 'logout' },
+  ];
+
+  const handleViewChange = async (
+    viewKey: (typeof menuItems)[number]['view']
+  ) => {
+    if (viewKey === 'logout') {
+      await logout();
+      navigate('/login');
     } else {
-      navigate(item.path);
+      setView(viewKey);
     }
   };
 
@@ -67,14 +88,19 @@ export const AdminDashboard: React.FC = () => {
               Admin Panel
             </Typography>
           </Box>
+
           <List>
             {menuItems.map((item) => (
               <ListItem
                 button
                 key={item.label}
-                onClick={() => handleNavigation(item)}
+                onClick={() => handleViewChange(item.view)}
                 sx={{
-                  cursor: 'pointer', // 👈👆 adds pointer
+                  cursor: 'pointer',
+                  backgroundColor:
+                    view === item.view
+                      ? 'rgba(255,255,255,0.08)'
+                      : 'transparent',
                   '&:hover': {
                     backgroundColor: 'rgba(255, 255, 255, 0.06)',
                   },
@@ -97,11 +123,63 @@ export const AdminDashboard: React.FC = () => {
             background: 'rgba(255, 255, 255, 0.04)',
           }}
         >
-          <Typography variant="h4" sx={{ color: '#80D0FF', mb: 3 }}>
-            Analytics Overview
-          </Typography>
+          {view === 'dashboard' && (
+            <>
+              <Typography variant="h4" sx={{ color: '#80D0FF', mb: 3 }}>
+                Admin Control Panel
+              </Typography>
+              <AdminControlPanel onViewChange={setView} />
+            </>
+          )}
 
-          <AdminControlPanel />
+          {view === 'orders' && (
+            <>
+              <Typography variant="h4" sx={{ color: '#80D0FF', mb: 3 }}>
+                Your Orders
+              </Typography>
+              <Orders />
+            </>
+          )}
+          {view === 'textures-logos' && (
+            <>
+              <Typography variant="h4" sx={{ color: '#80D0FF', mb: 3 }}>
+                Your Textures and Logos
+              </Typography>
+              <TexturesLogos />
+            </>
+          )}
+
+          {view === 'profile' && (
+            <>
+              <Typography variant="h4" sx={{ color: '#80D0FF', mb: 3 }}>
+                Your Profile Settings
+              </Typography>
+              <ThemeProvider>
+                <Profile />
+              </ThemeProvider>
+            </>
+          )}
+
+          {view === 'manage-users' && (
+            <>
+              <Typography variant="h4" sx={{ color: '#80D0FF', mb: 3 }}>
+                User Management
+              </Typography>
+              <ThemeProvider>
+                <ManageUsersPanel />
+              </ThemeProvider>
+            </>
+          )}
+          {view === 'products' && (
+            <>
+              <Typography variant="h4" sx={{ color: '#80D0FF', mb: 3 }}>
+                Add New Product
+              </Typography>
+              <ThemeProvider>
+                <AddProductForm />
+              </ThemeProvider>
+            </>
+          )}
         </Box>
       </Box>
     </div>

@@ -1,5 +1,16 @@
-import { db } from './firebase';
-import { doc, getDoc, updateDoc } from 'firebase/firestore';
+import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { auth, db } from './firebase';
+import {
+  collection,
+  deleteDoc,
+  doc,
+  getDoc,
+  getDocs,
+  query,
+  setDoc,
+  updateDoc,
+  where,
+} from 'firebase/firestore';
 
 export interface UserProfile {
   name: string;
@@ -24,4 +35,29 @@ export const updateUserProfile = async (
 ) => {
   const ref = doc(db, 'users', userId);
   await updateDoc(ref, updates);
+};
+export const getAllUsers = async () => {
+  const q = query(collection(db, 'users'), where('role', '==', 'user'));
+  const snapshot = await getDocs(q);
+  return snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+};
+
+export const deleteUserById = async (uid: string) => {
+  await deleteDoc(doc(db, 'users', uid));
+};
+
+export const createAppUser = async (
+  email: string,
+  password: string,
+  name: string
+) => {
+  const { user } = await createUserWithEmailAndPassword(auth, email, password);
+  const newUser = {
+    email,
+    name,
+    role: 'user',
+    avatarUrl: '',
+    createdAt: new Date().toISOString(),
+  };
+  await setDoc(doc(db, 'users', user.uid), newUser);
 };

@@ -12,8 +12,6 @@ import TryOnAR from './pages/AR/TryOnAR';
 import ForgotPassword from './pages/Auth/ForgotPassword';
 import Register from './pages/Auth/Register';
 
-import Orders from './pages/Orders/Orders';
-import Profile from './pages/Dashboard/Profile';
 import SavedDesigns from './pages/SavedDesign/SavedDesigns';
 
 import CartPage from './pages/Cart/Cart';
@@ -30,9 +28,9 @@ import CustomizerPage from './pages/Customizer/CustomizerPage';
 import Login from './pages/Auth/Login';
 import { ThemeProvider } from './providers/ThemeProvider';
 import ARViewer from './pages/AR/ARViewer';
-import TexturesLogos from './pages/TexturesLogos/TexturesLogos';
 import { AdminDashboard } from './pages/Dashboard/AdminDashboard';
 import { Dashboard } from './pages/Dashboard/Dashboard';
+import Orders from './pages/Orders/Orders';
 
 const App: React.FC = () => {
   return (
@@ -109,16 +107,6 @@ const App: React.FC = () => {
           }
         />
         <Route
-          path="/textures-logos"
-          element={
-            <ProtectedRoute>
-              <Layout>
-                <TexturesLogos />
-              </Layout>
-            </ProtectedRoute>
-          }
-        />
-        <Route
           path="/orders"
           element={
             <ProtectedRoute>
@@ -134,18 +122,6 @@ const App: React.FC = () => {
             <ProtectedRoute>
               <Layout>
                 <SavedDesigns />
-              </Layout>
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/profile"
-          element={
-            <ProtectedRoute>
-              <Layout>
-                <ThemeProvider>
-                  <Profile />
-                </ThemeProvider>
               </Layout>
             </ProtectedRoute>
           }

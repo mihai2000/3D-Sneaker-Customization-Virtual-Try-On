@@ -43,7 +43,6 @@ export default function Profile() {
   return (
     <Box
       sx={{
-        minHeight: '100vh',
         background: theme.bg,
         display: 'flex',
         alignItems: 'center',
@@ -78,13 +77,10 @@ export default function Profile() {
           label="Email"
           margin="normal"
           value={email}
-          disabled
           sx={theme.textFieldStyles}
         />
 
-        <Typography
-          sx={{ mt: 3, mb: 1, fontWeight: 500, color: theme.titleColor }}
-        >
+        <Typography sx={{ fontWeight: 500, color: theme.titleColor }}>
           Change Password
         </Typography>
         <TextField

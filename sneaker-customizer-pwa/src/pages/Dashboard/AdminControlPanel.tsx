@@ -4,24 +4,46 @@ import GroupsIcon from '@mui/icons-material/Groups';
 import SettingsIcon from '@mui/icons-material/Settings';
 import PaletteIcon from '@mui/icons-material/Palette';
 import StorageIcon from '@mui/icons-material/Storage';
+import CategorySharpIcon from '@mui/icons-material/CategorySharp';
+import { ViewKey } from './AdminDashboard';
 
-const features = [
-  { label: 'Manage Users', icon: <GroupsIcon fontSize="large" color="info" /> },
+type Props = {
+  onViewChange: (view: ViewKey) => void;
+};
+
+const features: {
+  label: string;
+  icon: React.ReactNode;
+  view: ViewKey | null;
+}[] = [
+  {
+    label: 'Manage Users',
+    icon: <GroupsIcon fontSize="large" color="info" />,
+    view: 'manage-users',
+  },
   {
     label: 'System Config',
     icon: <SettingsIcon fontSize="large" color="secondary" />,
+    view: null,
+  },
+  {
+    label: 'Products',
+    icon: <CategorySharpIcon fontSize="large" color="secondary" />,
+    view: 'products',
   },
   {
     label: 'Theme Control',
     icon: <PaletteIcon fontSize="large" color="secondary" />,
+    view: null,
   },
   {
     label: 'Database Stats',
     icon: <StorageIcon fontSize="large" color="info" />,
+    view: null,
   },
 ];
 
-export const AdminControlPanel: React.FC = () => {
+export const AdminControlPanel: React.FC<Props> = ({ onViewChange }) => {
   return (
     <Box
       sx={{
@@ -30,20 +52,17 @@ export const AdminControlPanel: React.FC = () => {
         borderRadius: 2,
         bgcolor: 'background.paper',
         boxShadow: 4,
-        minHeight: 'calc(50vh - 64px)',
-        background: 'linear-gradient(135deg, #1e1e2f, #2a2a3d)',
+        minHeight: 'calc(10vh - 64px)',
+        background: 'linear-gradient(145deg, #1a0933, #0d021c)',
         border: '1px solid rgba(255,255,255,0.05)',
       }}
     >
-      <Typography variant="h5" sx={{ mb: 3, color: '#80D0FF' }}>
-        Admin Control Panel
-      </Typography>
-
       <Grid container spacing={2}>
         {features.map((feat, index) => (
           <Grid item xs={12} sm={6} md={3} key={index}>
             <Paper
               elevation={3}
+              onClick={() => feat.view && onViewChange(feat.view)}
               sx={{
                 p: 2,
                 textAlign: 'center',
