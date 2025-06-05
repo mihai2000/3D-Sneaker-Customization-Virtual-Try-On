@@ -65,7 +65,12 @@ export const AddProductForm: React.FC = () => {
       return;
     }
 
-    const validImageTypes = ['image/png', 'image/jpeg', 'image/jpg'];
+    const validImageTypes = [
+      'image/png',
+      'image/jpeg',
+      'image/jpg',
+      'image/avif',
+    ];
     const validModelTypes = ['model/gltf-binary'];
     const validEffectTypes = ['application/octet-stream', 'model/x-deepar'];
 
@@ -179,7 +184,7 @@ export const AddProductForm: React.FC = () => {
               {
                 label: '🖼️ Upload Image (PNG/JPG)',
                 id: 'upload-image',
-                accept: 'image/png, image/jpeg',
+                accept: 'image/png, image/jpeg, image/jpg, image/avif',
                 onChange: (e: any) => setImageFile(e.target.files?.[0] || null),
                 border: '#80D0FF',
               },
