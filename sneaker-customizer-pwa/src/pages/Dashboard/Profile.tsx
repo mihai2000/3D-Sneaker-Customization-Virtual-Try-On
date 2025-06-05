@@ -1,10 +1,19 @@
-import { Box, Button, Paper, TextField, Typography } from '@mui/material';
+import {
+  Box,
+  Button,
+  IconButton,
+  InputAdornment,
+  Paper,
+  TextField,
+  Typography,
+} from '@mui/material';
 import { useEffect, useState } from 'react';
 import SectionTitle from '../../components/Shared/SectionTitle';
 import { useAuth } from '../../hooks/useAuth';
 import { fetchUserProfile, updateUserProfile } from '../../services/users';
 import { useThemeContext } from '../../hooks/useTheme';
 import { updatePassword } from 'firebase/auth';
+import { Visibility, VisibilityOff } from '@mui/icons-material';
 
 export default function Profile() {
   const { user } = useAuth();
@@ -12,6 +21,7 @@ export default function Profile() {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [newPassword, setNewPassword] = useState('');
+  const [showNewPassword, setShowNewPassword] = useState(false);
 
   useEffect(() => {
     if (!user) return;
@@ -81,18 +91,29 @@ export default function Profile() {
         />
 
         <Typography sx={{ fontWeight: 500, color: theme.titleColor }}>
-          Change Password
+          New Password
         </Typography>
         <TextField
           fullWidth
           label="New Password"
-          type="password"
+          type={showNewPassword ? 'text' : 'password'}
           margin="normal"
           value={newPassword}
           onChange={(e) => setNewPassword(e.target.value)}
           sx={theme.textFieldStyles}
+          InputProps={{
+            endAdornment: (
+              <InputAdornment position="end">
+                <IconButton
+                  onClick={() => setShowNewPassword((prev) => !prev)}
+                  edge="end"
+                >
+                  {showNewPassword ? <VisibilityOff /> : <Visibility />}
+                </IconButton>
+              </InputAdornment>
+            ),
+          }}
         />
-
         <Box sx={{ mt: 3 }}>
           <Button
             variant="contained"
