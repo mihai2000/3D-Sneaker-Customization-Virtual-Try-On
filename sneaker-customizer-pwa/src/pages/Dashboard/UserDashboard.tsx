@@ -9,19 +9,22 @@ import {
   Typography,
 } from '@mui/material';
 import DashboardIcon from '@mui/icons-material/Dashboard';
-import LocalShippingIcon from '@mui/icons-material/LocalShipping';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import SettingsIcon from '@mui/icons-material/Settings';
 import LogoutIcon from '@mui/icons-material/Logout';
 import { useNavigate } from 'react-router-dom';
-import './AdminDashboard.scss';
+import './DashboardPanel.scss';
 import { useAuth } from '../../hooks/useAuth';
 const menuItems = [
   { label: 'Dashboard', icon: <DashboardIcon />, path: '/dashboard' },
   { label: 'Orders', icon: <ShoppingCartIcon />, path: '/orders' },
-  { label: 'Tracking', icon: <LocalShippingIcon />, path: '/tracking' },
+  {
+    label: 'Textures & Logos',
+    icon: <ShoppingCartIcon />,
+    path: '/textures-logos',
+  },
   { label: 'Settings', icon: <SettingsIcon />, path: '/profile' },
-  { label: 'Logout', icon: <LogoutIcon />, path: '/logout' }, // implement logic as needed
+  { label: 'Logout', icon: <LogoutIcon />, path: '/logout' },
 ];
 
 const drawerWidth = 220;
@@ -39,7 +42,7 @@ export const UserDashboard: React.FC = () => {
     }
   };
   return (
-    <div className="dashboard-container">
+    <div className="dashboard-container user">
       <Box sx={{ display: 'flex' }}>
         <Drawer
           variant="permanent"
@@ -81,7 +84,7 @@ export const UserDashboard: React.FC = () => {
           </List>
         </Drawer>
 
-        <Box sx={{ flexGrow: 1, p: 4, background: '#12121A' }}>
+        <Box sx={{ flexGrow: 1, p: 4, background: '#12121A', mt: 4 }}>
           <Typography variant="h4" sx={{ color: '#80D0FF', mb: 3 }}>
             Welcome to Your Dashboard 🎉
           </Typography>
@@ -93,7 +96,6 @@ export const UserDashboard: React.FC = () => {
               border: '1px solid rgba(255,255,255,0.05)',
               borderRadius: '12px',
               p: 3,
-              mt: 4,
               color: '#fff',
               fontSize: '1.2rem',
             }}

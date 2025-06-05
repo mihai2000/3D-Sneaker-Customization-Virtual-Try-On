@@ -15,7 +15,7 @@ import BarChartIcon from '@mui/icons-material/BarChart';
 import LogoutIcon from '@mui/icons-material/Logout';
 import { useNavigate } from 'react-router-dom';
 import { AdminControlPanel } from './AdminControlPanel';
-import './AdminDashboard.scss';
+import './DashboardPanel.scss';
 import { useAuth } from '../../hooks/useAuth';
 
 const menuItems = [
@@ -47,7 +47,7 @@ export const AdminDashboard: React.FC = () => {
   };
 
   return (
-    <div className="dashboard-container">
+    <div className="dashboard-container admin">
       <Box sx={{ display: 'flex' }}>
         <Drawer
           variant="permanent"

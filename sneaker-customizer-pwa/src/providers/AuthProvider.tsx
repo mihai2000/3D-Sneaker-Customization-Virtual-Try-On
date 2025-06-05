@@ -47,12 +47,15 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       const userCred = await createUserWithEmailAndPassword(
         auth,
         email,
-        password
+        password,
+       
       );
       if (name) {
         await setDoc(doc(db, 'users', userCred.user.uid), {
           name,
           email,
+          role: 'user',          
+          avatarUrl: '',  
           createdAt: new Date().toISOString(),
         });
       }
