@@ -15,6 +15,7 @@ import SettingsIcon from '@mui/icons-material/Settings';
 import LogoutIcon from '@mui/icons-material/Logout';
 import { useNavigate } from 'react-router-dom';
 import './AdminDashboard.scss';
+import { useAuth } from '../../hooks/useAuth';
 const menuItems = [
   { label: 'Dashboard', icon: <DashboardIcon />, path: '/dashboard' },
   { label: 'Orders', icon: <ShoppingCartIcon />, path: '/orders' },
@@ -27,7 +28,16 @@ const drawerWidth = 220;
 
 export const UserDashboard: React.FC = () => {
   const navigate = useNavigate();
+  const { logout } = useAuth();
 
+  const handleNavigation = async (item: (typeof menuItems)[0]) => {
+    if (item.label === 'Logout') {
+      await logout(); // call actual logout
+      navigate('/login'); // redirect to login
+    } else {
+      navigate(item.path);
+    }
+  };
   return (
     <div className="dashboard-container">
       <Box sx={{ display: 'flex' }}>
@@ -54,7 +64,13 @@ export const UserDashboard: React.FC = () => {
               <ListItem
                 button
                 key={item.label}
-                onClick={() => navigate(item.path)}
+                onClick={() => handleNavigation(item)}
+                sx={{
+                  cursor: 'pointer', // 👈👆 adds pointer
+                  '&:hover': {
+                    backgroundColor: 'rgba(255, 255, 255, 0.06)',
+                  },
+                }}
               >
                 <ListItemIcon sx={{ color: '#B0B3FF' }}>
                   {item.icon}

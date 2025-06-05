@@ -16,6 +16,7 @@ import LogoutIcon from '@mui/icons-material/Logout';
 import { useNavigate } from 'react-router-dom';
 import { AdminControlPanel } from './AdminControlPanel';
 import './AdminDashboard.scss';
+import { useAuth } from '../../hooks/useAuth';
 
 const menuItems = [
   { label: 'Dashboard', icon: <DashboardIcon />, path: '/dashboard' },
@@ -34,6 +35,16 @@ const drawerWidth = 220;
 
 export const AdminDashboard: React.FC = () => {
   const navigate = useNavigate();
+  const { logout } = useAuth();
+
+  const handleNavigation = async (item: (typeof menuItems)[0]) => {
+    if (item.label === 'Logout') {
+      await logout(); // call actual logout
+      navigate('/login'); // redirect to login
+    } else {
+      navigate(item.path);
+    }
+  };
 
   return (
     <div className="dashboard-container">
@@ -53,7 +64,7 @@ export const AdminDashboard: React.FC = () => {
         >
           <Box sx={{ px: 2, py: 3 }}>
             <Typography variant="h6" sx={{ color: '#80D0FF' }}>
-              Admin Dashboard
+              Admin Panel
             </Typography>
           </Box>
           <List>
@@ -61,7 +72,13 @@ export const AdminDashboard: React.FC = () => {
               <ListItem
                 button
                 key={item.label}
-                onClick={() => navigate(item.path)}
+                onClick={() => handleNavigation(item)}
+                sx={{
+                  cursor: 'pointer', // 👈👆 adds pointer
+                  '&:hover': {
+                    backgroundColor: 'rgba(255, 255, 255, 0.06)',
+                  },
+                }}
               >
                 <ListItemIcon sx={{ color: '#B0B3FF' }}>
                   {item.icon}
