@@ -173,7 +173,7 @@ const Customizer: React.FC = () => {
   return (
     <div>
       <AnimatePresence mode="wait">
-        {!snap.intro && [
+        {!snap.intro && (
           <>
             <motion.div
               key={`customizer-${activeEditorTab || 'idle'}`}
@@ -259,9 +259,9 @@ const Customizer: React.FC = () => {
               ))}
             </motion.div>
           </>
-        ]}
+        )}
       </AnimatePresence>
-        <CanvasEditor ref={canvasRef} />
+      <CanvasEditor ref={canvasRef} />
     </div>
   );
 };
