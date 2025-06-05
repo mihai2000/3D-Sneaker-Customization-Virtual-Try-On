@@ -33,12 +33,6 @@ const pages = [
   { label: 'Cart', path: '/cart' },
   { label: 'Products', path: '/products' },
 ];
-const settings = [
-  { label: 'Profile', path: '/profile' },
-  // { label: 'Account', path: '/account' },
-  { label: 'Dashboard', path: '/dashboard' },
-  { label: 'Logout', action: 'logout' },
-];
 
 // Styled Components
 const GlassAppBar = styled(AppBar)({
@@ -71,13 +65,18 @@ const HideOnScroll = ({ children }: { children: React.ReactElement }) => {
 };
 
 export default function ResponsiveAppBar() {
-  const { logout } = useAuth();
+  const { userData, logout } = useAuth();
+  const dashboardPath =
+    userData?.role === 'admin' ? '/dashboard' : '/dashboard';
   const navigate = useNavigate();
   const [drawerOpen, setDrawerOpen] = React.useState(false);
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(
     null
   );
-
+  const settings = [
+    { label: 'Dashboard', path: dashboardPath },
+    { label: 'Logout', action: 'logout' },
+  ];
   const toggleDrawer = (open: boolean) => () => {
     setDrawerOpen(open);
   };
@@ -96,6 +95,7 @@ export default function ResponsiveAppBar() {
       navigate(item.path);
     }
   };
+
   const handleNavClick = (path: string) => {
     if (path === '/customizer') {
       state.intro = true;

@@ -1,19 +1,20 @@
-import { Box, Button, Paper, TextField } from '@mui/material';
+import { Box, Button, Paper, TextField, Typography } from '@mui/material';
 import { useEffect, useState } from 'react';
 import SectionTitle from '../../components/Shared/SectionTitle';
 import { useAuth } from '../../hooks/useAuth';
 import { fetchUserProfile, updateUserProfile } from '../../services/users';
 import { useThemeContext } from '../../hooks/useTheme';
+import { updatePassword } from 'firebase/auth';
 
 export default function Profile() {
   const { user } = useAuth();
   const { theme } = useThemeContext();
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
+  const [newPassword, setNewPassword] = useState('');
 
   useEffect(() => {
     if (!user) return;
-
     const loadProfile = async () => {
       try {
         const data = await fetchUserProfile(user.uid);
@@ -23,7 +24,6 @@ export default function Profile() {
         console.error('Failed to load user profile', err);
       }
     };
-
     loadProfile();
   }, [user]);
 
@@ -31,6 +31,9 @@ export default function Profile() {
     if (!user) return;
     try {
       await updateUserProfile(user.uid, { name, email });
+      if (newPassword) {
+        await updatePassword(user, newPassword);
+      }
       alert('Profile updated!');
     } catch (err) {
       console.error('Profile update failed', err);
@@ -75,6 +78,20 @@ export default function Profile() {
           label="Email"
           margin="normal"
           value={email}
+          disabled
+          sx={theme.textFieldStyles}
+        />
+
+        <Typography sx={{ mt: 3, mb: 1, fontWeight: 500 }}>
+          Change Password
+        </Typography>
+        <TextField
+          fullWidth
+          label="New Password"
+          type="password"
+          margin="normal"
+          value={newPassword}
+          onChange={(e) => setNewPassword(e.target.value)}
           sx={theme.textFieldStyles}
         />
 

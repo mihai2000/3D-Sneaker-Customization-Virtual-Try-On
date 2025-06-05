@@ -12,9 +12,9 @@ import TryOnAR from './pages/AR/TryOnAR';
 import ForgotPassword from './pages/Auth/ForgotPassword';
 import Register from './pages/Auth/Register';
 
-import Orders from './pages/Dashboard/Orders';
+import Orders from './pages/Orders/Orders';
 import Profile from './pages/Dashboard/Profile';
-import SavedDesigns from './pages/Dashboard/SavedDesigns';
+import SavedDesigns from './pages/SavedDesign/SavedDesigns';
 
 import CartPage from './pages/Cart/Cart';
 import CheckoutPage from './pages/Checkout/CheckoutPage';
@@ -23,7 +23,6 @@ import NotFound from './pages/NotFound404/NotFound';
 
 import { Elements } from '@stripe/react-stripe-js';
 import './App.css';
-import Dashboard from './pages/Dashboard/Dashboard';
 import Home from './pages/Home/Home';
 import ProductPage from './pages/Products/ProductPage';
 import { stripePromise } from './services/stripe';
@@ -31,6 +30,9 @@ import CustomizerPage from './pages/Customizer/CustomizerPage';
 import Login from './pages/Auth/Login';
 import { ThemeProvider } from './providers/ThemeProvider';
 import ARViewer from './pages/AR/ARViewer';
+import TexturesLogos from './pages/TexturesLogos/TexturesLogos';
+import { AdminDashboard } from './pages/Dashboard/AdminDashboard';
+import { Dashboard } from './pages/Dashboard/Dashboard';
 
 const App: React.FC = () => {
   return (
@@ -47,7 +49,18 @@ const App: React.FC = () => {
           border: '1px solid rgba(255,255,255,0.08)',
         }}
       />
+
       <Routes>
+        <Route
+          path="/admin"
+          element={
+            <ProtectedRoute>
+              <Layout>
+                <AdminDashboard />
+              </Layout>
+            </ProtectedRoute>
+          }
+        />
         {/* Public Routes (no layout) */}
         <Route
           path="/login"
@@ -91,6 +104,16 @@ const App: React.FC = () => {
             <ProtectedRoute>
               <Layout>
                 <Dashboard />
+              </Layout>
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/textures-logos"
+          element={
+            <ProtectedRoute>
+              <Layout>
+                <TexturesLogos />
               </Layout>
             </ProtectedRoute>
           }
