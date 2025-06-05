@@ -28,7 +28,6 @@ import CustomizerPage from './pages/Customizer/CustomizerPage';
 import Login from './pages/Auth/Login';
 import { ThemeProvider } from './providers/ThemeProvider';
 import ARViewer from './pages/AR/ARViewer';
-import { AdminDashboard } from './pages/Dashboard/AdminDashboard';
 import { Dashboard } from './pages/Dashboard/Dashboard';
 import Orders from './pages/Orders/Orders';
 
@@ -49,16 +48,6 @@ const App: React.FC = () => {
       />
 
       <Routes>
-        <Route
-          path="/admin"
-          element={
-            <ProtectedRoute>
-              <Layout>
-                <AdminDashboard />
-              </Layout>
-            </ProtectedRoute>
-          }
-        />
         {/* Public Routes (no layout) */}
         <Route
           path="/login"
@@ -97,7 +86,7 @@ const App: React.FC = () => {
         />
         {/* Protected Routes */}
         <Route
-          path="/dashboard"
+          path="/dashboard/*"
           element={
             <ProtectedRoute>
               <Layout>

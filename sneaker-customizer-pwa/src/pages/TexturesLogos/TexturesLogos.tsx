@@ -115,6 +115,7 @@ export default function TexturesLogos() {
 
   return (
     <div className="dashboard-container">
+      <h1> Your Textures and Logos</h1>
       {/* Upload Section */}
       <div
         style={{

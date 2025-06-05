@@ -1,8 +1,17 @@
 import React, { useEffect, useState } from 'react';
+import { Routes, Route, Navigate } from 'react-router-dom';
 import { getAuth } from 'firebase/auth';
+import { fetchUserProfile, UserProfile } from '../../services/users';
 import { AdminDashboard } from './AdminDashboard';
 import { UserDashboard } from './UserDashboard';
-import { fetchUserProfile, UserProfile } from '../../services/users';
+import { AdminControlPanel } from './AdminControlPanel';
+import Orders from '../Orders/Orders';
+import TexturesLogos from '../TexturesLogos/TexturesLogos';
+import Profile from './Profile';
+import { ManageUsersPanel } from './ManageUsersPanel';
+import { AddProductForm } from '../Products/AddProductForm';
+import { ThemeProvider } from '../../providers/ThemeProvider';
+import BackToDashboardButton from './BackToDashboardButton';
 
 export const Dashboard: React.FC = () => {
   const [userData, setUserData] = useState<UserProfile | null>(null);
@@ -35,5 +44,63 @@ export const Dashboard: React.FC = () => {
       </div>
     );
 
-  return userData.role === 'admin' ? <AdminDashboard /> : <UserDashboard />;
+  return (
+    <Routes>
+      {userData.role === 'admin' ? (
+        <Route path="/" element={<AdminDashboard />}>
+          <Route index element={<AdminControlPanel />} />
+          <Route
+            path="orders"
+            element={
+              <>
+                <BackToDashboardButton />
+                <Orders />
+              </>
+            }
+          />
+
+          <Route
+            path="textures-logos"
+            element={
+              <>
+                <BackToDashboardButton />
+                <TexturesLogos />
+              </>
+            }
+          />
+
+          <Route
+            path="profile"
+            element={
+              <ThemeProvider>
+                <BackToDashboardButton />
+                <Profile />
+              </ThemeProvider>
+            }
+          />
+          <Route
+            path="manage-users"
+            element={
+              <ThemeProvider>
+                <BackToDashboardButton />
+                <ManageUsersPanel />
+              </ThemeProvider>
+            }
+          />
+          <Route
+            path="add-products"
+            element={
+              <ThemeProvider>
+                <BackToDashboardButton />
+                <AddProductForm />
+              </ThemeProvider>
+            }
+          />
+          <Route path="*" element={<Navigate to="/dashboard" replace />} />
+        </Route>
+      ) : (
+        <Route path="*" element={<UserDashboard />} />
+      )}
+    </Routes>
+  );
 };

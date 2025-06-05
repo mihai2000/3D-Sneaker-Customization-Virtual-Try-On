@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import {
   Box,
   Drawer,
@@ -13,57 +13,39 @@ import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import SettingsIcon from '@mui/icons-material/Settings';
 import TextureIcon from '@mui/icons-material/Texture';
 import LogoutIcon from '@mui/icons-material/Logout';
-import { useNavigate } from 'react-router-dom';
-
-import { AdminControlPanel } from './AdminControlPanel';
-import Profile from './Profile';
+import { Outlet, useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../../hooks/useAuth';
 import './DashboardPanel.scss';
-import Orders from '../Orders/Orders';
-import TexturesLogos from '../TexturesLogos/TexturesLogos';
-import { ThemeProvider } from '../../providers/ThemeProvider';
-import { ManageUsersPanel } from './ManageUsersPanel';
-import { AddProductForm } from '../Products/AddProductForm';
 
-export type ViewKey =
-  | 'dashboard'
-  | 'orders'
-  | 'textures-logos'
-  | 'profile'
-  | 'manage-users'
-  | 'products';
-
-const drawerWidth = 220;
+const drawerWidth = 250;
 
 export const AdminDashboard: React.FC = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const { logout } = useAuth();
-  const [view, setView] = useState<ViewKey>('dashboard');
 
-  const menuItems: {
-    label: string;
-    icon: React.ReactNode;
-    view: ViewKey | 'logout';
-  }[] = [
-    { label: 'Dashboard', icon: <DashboardIcon />, view: 'dashboard' },
-    { label: 'Orders', icon: <ShoppingCartIcon />, view: 'orders' },
+  const menuItems = [
+    {
+      label: 'Admin Control Panel',
+      icon: <DashboardIcon />,
+      path: '/dashboard',
+    },
+    { label: 'Orders', icon: <ShoppingCartIcon />, path: '/dashboard/orders' },
     {
       label: 'Textures & Logos',
       icon: <TextureIcon />,
-      view: 'textures-logos',
+      path: '/dashboard/textures-logos',
     },
-    { label: 'Settings', icon: <SettingsIcon />, view: 'profile' },
-    { label: 'Logout', icon: <LogoutIcon />, view: 'logout' },
+    { label: 'Settings', icon: <SettingsIcon />, path: '/dashboard/profile' },
+    { label: 'Logout', icon: <LogoutIcon />, path: '/logout' },
   ];
 
-  const handleViewChange = async (
-    viewKey: (typeof menuItems)[number]['view']
-  ) => {
-    if (viewKey === 'logout') {
+  const handleNavigate = async (path: string) => {
+    if (path === '/logout') {
       await logout();
       navigate('/login');
     } else {
-      setView(viewKey);
+      navigate(path);
     }
   };
 
@@ -94,11 +76,11 @@ export const AdminDashboard: React.FC = () => {
               <ListItem
                 button
                 key={item.label}
-                onClick={() => handleViewChange(item.view)}
+                onClick={() => handleNavigate(item.path)}
                 sx={{
                   cursor: 'pointer',
                   backgroundColor:
-                    view === item.view
+                    location.pathname === item.path
                       ? 'rgba(255,255,255,0.08)'
                       : 'transparent',
                   '&:hover': {
@@ -123,63 +105,7 @@ export const AdminDashboard: React.FC = () => {
             background: 'rgba(255, 255, 255, 0.04)',
           }}
         >
-          {view === 'dashboard' && (
-            <>
-              <Typography variant="h4" sx={{ color: '#80D0FF', mb: 3 }}>
-                Admin Control Panel
-              </Typography>
-              <AdminControlPanel onViewChange={setView} />
-            </>
-          )}
-
-          {view === 'orders' && (
-            <>
-              <Typography variant="h4" sx={{ color: '#80D0FF', mb: 3 }}>
-                Your Orders
-              </Typography>
-              <Orders />
-            </>
-          )}
-          {view === 'textures-logos' && (
-            <>
-              <Typography variant="h4" sx={{ color: '#80D0FF', mb: 3 }}>
-                Your Textures and Logos
-              </Typography>
-              <TexturesLogos />
-            </>
-          )}
-
-          {view === 'profile' && (
-            <>
-              <Typography variant="h4" sx={{ color: '#80D0FF', mb: 3 }}>
-                Your Profile Settings
-              </Typography>
-              <ThemeProvider>
-                <Profile />
-              </ThemeProvider>
-            </>
-          )}
-
-          {view === 'manage-users' && (
-            <>
-              <Typography variant="h4" sx={{ color: '#80D0FF', mb: 3 }}>
-                User Management
-              </Typography>
-              <ThemeProvider>
-                <ManageUsersPanel />
-              </ThemeProvider>
-            </>
-          )}
-          {view === 'products' && (
-            <>
-              <Typography variant="h4" sx={{ color: '#80D0FF', mb: 3 }}>
-                Add New Product
-              </Typography>
-              <ThemeProvider>
-                <AddProductForm />
-              </ThemeProvider>
-            </>
-          )}
+          <Outlet />
         </Box>
       </Box>
     </div>

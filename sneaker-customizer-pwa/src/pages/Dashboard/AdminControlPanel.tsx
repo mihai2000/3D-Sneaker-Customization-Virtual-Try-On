@@ -5,45 +5,39 @@ import SettingsIcon from '@mui/icons-material/Settings';
 import PaletteIcon from '@mui/icons-material/Palette';
 import StorageIcon from '@mui/icons-material/Storage';
 import CategorySharpIcon from '@mui/icons-material/CategorySharp';
-import { ViewKey } from './AdminDashboard';
+import { useNavigate } from 'react-router-dom';
 
-type Props = {
-  onViewChange: (view: ViewKey) => void;
-};
-
-const features: {
-  label: string;
-  icon: React.ReactNode;
-  view: ViewKey | null;
-}[] = [
+const features = [
   {
     label: 'Manage Users',
     icon: <GroupsIcon fontSize="large" color="info" />,
-    view: 'manage-users',
+    path: 'manage-users',
   },
   {
     label: 'System Config',
     icon: <SettingsIcon fontSize="large" color="secondary" />,
-    view: null,
+    path: null,
   },
   {
     label: 'Products',
     icon: <CategorySharpIcon fontSize="large" color="secondary" />,
-    view: 'products',
+    path: 'add-products',
   },
   {
     label: 'Theme Control',
     icon: <PaletteIcon fontSize="large" color="secondary" />,
-    view: null,
+    path: null,
   },
   {
     label: 'Database Stats',
     icon: <StorageIcon fontSize="large" color="info" />,
-    view: null,
+    path: null,
   },
 ];
 
-export const AdminControlPanel: React.FC<Props> = ({ onViewChange }) => {
+export const AdminControlPanel: React.FC = () => {
+  const navigate = useNavigate();
+
   return (
     <Box
       sx={{
@@ -62,7 +56,7 @@ export const AdminControlPanel: React.FC<Props> = ({ onViewChange }) => {
           <Grid item xs={12} sm={6} md={3} key={index}>
             <Paper
               elevation={3}
-              onClick={() => feat.view && onViewChange(feat.view)}
+              onClick={() => feat.path && navigate(feat.path)}
               sx={{
                 p: 2,
                 textAlign: 'center',

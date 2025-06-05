@@ -52,7 +52,7 @@ export const ManageUsersPanel: React.FC = () => {
 
   return (
     <Box sx={{ mt: 4 }}>
-      <Typography variant="h6" sx={{ color: '#80D0FF', mb: 2 }}>
+      <Typography variant="h2" sx={{ color: '#80D0FF', mb: 2 }}>
         👥 Manage Users
       </Typography>
 

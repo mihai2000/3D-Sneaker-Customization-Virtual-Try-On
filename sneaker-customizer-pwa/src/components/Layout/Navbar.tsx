@@ -33,7 +33,10 @@ const pages = [
   { label: 'Cart', path: '/cart' },
   { label: 'Products', path: '/products' },
 ];
-
+const settings = [
+  { label: 'Dashboard', path: '/dashboard' },
+  { label: 'Logout', action: 'logout' },
+];
 // Styled Components
 const GlassAppBar = styled(AppBar)({
   background: 'rgba(15, 23, 42, 0.85)', // navy-black glass
@@ -65,18 +68,13 @@ const HideOnScroll = ({ children }: { children: React.ReactElement }) => {
 };
 
 export default function ResponsiveAppBar() {
-  const { userData, logout } = useAuth();
-  const dashboardPath =
-    userData?.role === 'admin' ? '/dashboard' : '/dashboard';
+  const { logout } = useAuth();
   const navigate = useNavigate();
   const [drawerOpen, setDrawerOpen] = React.useState(false);
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(
     null
   );
-  const settings = [
-    { label: 'Dashboard', path: dashboardPath },
-    { label: 'Logout', action: 'logout' },
-  ];
+
   const toggleDrawer = (open: boolean) => () => {
     setDrawerOpen(open);
   };
