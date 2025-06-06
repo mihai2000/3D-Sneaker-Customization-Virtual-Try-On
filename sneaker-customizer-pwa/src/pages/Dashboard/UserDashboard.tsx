@@ -20,7 +20,7 @@ import TexturesLogos from "../TexturesLogos/TexturesLogos";
 import { ThemeProvider } from "../../providers/ThemeProvider";
 import "./DashboardPanel.scss";
 import Profile from "./Profile";
-
+import DesignServicesIcon from "@mui/icons-material/DesignServices";
 type ViewKey =
 	| "dashboard"
 	| "orders"
@@ -50,7 +50,7 @@ export const UserDashboard: React.FC = () => {
 		},
 		{
 			label: "Saved Designs",
-			icon: <ShoppingCartIcon />,
+			icon: <DesignServicesIcon />,
 			view: "saved-designs",
 		},
 		{ label: "Settings", icon: <SettingsIcon />, view: "profile" },
