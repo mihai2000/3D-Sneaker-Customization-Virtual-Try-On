@@ -75,7 +75,9 @@ export const Dashboard: React.FC = () => {
 						element={
 							<ThemeProvider>
 								<BackToDashboardButton />
-								<Profile />
+								<ThemeProvider>
+									<Profile />
+								</ThemeProvider>
 							</ThemeProvider>
 						}
 					/>
