@@ -1,11 +1,16 @@
-import React, { useState } from 'react';
-import { Button, Grid, Paper, TextField, Typography, Box } from '@mui/material';
+import React, { useEffect, useState } from 'react';
+import { Box, Button, Grid, Paper, TextField, Typography } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
-import { collection, addDoc } from 'firebase/firestore';
+import { collection, addDoc, doc, getDoc, setDoc } from 'firebase/firestore';
 import { db, storage } from '../../services/firebase';
 import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
 import { useThemeContext } from '../../hooks/useTheme';
 import { toast } from 'react-toastify';
+import { useParams } from 'react-router-dom';
+
+interface Props {
+  isEditMode?: boolean;
+}
 
 const defaultProduct = {
   name: '',
@@ -18,7 +23,9 @@ const defaultProduct = {
   modelUrl: '',
 };
 
-export const AddProductForm: React.FC = () => {
+export const AddProductForm: React.FC<Props> = ({ isEditMode = false }) => {
+  const { id } = useParams();
+  const isEdit = isEditMode && id !== 'new';
   const [formData, setFormData] = useState(defaultProduct);
   const [imageFile, setImageFile] = useState<File | null>(null);
   const [modelFile, setModelFile] = useState<File | null>(null);
@@ -26,6 +33,28 @@ export const AddProductForm: React.FC = () => {
   const [loading, setLoading] = useState(false);
 
   const { theme } = useThemeContext();
+
+  useEffect(() => {
+    const fetchProduct = async () => {
+      if (isEdit && id) {
+        const snap = await getDoc(doc(db, 'products', id));
+        if (snap.exists()) {
+          const data = snap.data();
+          setFormData({
+            name: data.name,
+            description: data.description,
+            category: data.category,
+            price: data.price.toString(),
+            stock: data.stock.toString(),
+            effect: data.effect || '',
+            image: data.image || '',
+            modelUrl: data.modelUrl || '',
+          });
+        }
+      }
+    };
+    fetchProduct();
+  }, [isEdit, id]);
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -51,15 +80,12 @@ export const AddProductForm: React.FC = () => {
       (key) => !(formData as any)[key]
     );
 
-    if (!imageFile || !modelFile || missingFields.length > 0) {
+    if (!imageFile && !isEdit) missingFields.push('image');
+    if (!modelFile && !isEdit) missingFields.push('modelUrl');
+
+    if (missingFields.length > 0) {
       toast.error(
-        `Please complete all required fields: ${[
-          ...missingFields,
-          !imageFile ? 'image' : '',
-          !modelFile ? 'modelUrl' : '',
-        ]
-          .filter(Boolean)
-          .join(', ')}`
+        `Please complete all required fields: ${missingFields.join(', ')}`
       );
       setLoading(false);
       return;
@@ -74,47 +100,45 @@ export const AddProductForm: React.FC = () => {
     const validModelTypes = ['model/gltf-binary'];
     const validEffectTypes = ['application/octet-stream', 'model/x-deepar'];
 
-    if (!validImageTypes.includes(imageFile.type)) {
-      toast.error('Invalid image format. Only PNG and JPG allowed.');
-      setLoading(false);
-      return;
-    }
-
-    if (!validModelTypes.includes(modelFile.type)) {
-      toast.error('Invalid model format. Only .glb allowed.');
-      setLoading(false);
-      return;
-    }
-
-    let imageUrl = '';
-    let modelUrl = '';
-    let effectUrl = '';
+    let imageUrl = formData.image;
+    let modelUrl = formData.modelUrl;
+    let effectUrl = formData.effect || '';
 
     try {
-      // Upload image
-      const imageRef = ref(
-        storage,
-        `products/images/${Date.now()}_${imageFile.name}`
-      );
-      await uploadBytes(imageRef, imageFile);
-      imageUrl = await getDownloadURL(imageRef);
+      if (imageFile) {
+        if (!validImageTypes.includes(imageFile.type)) {
+          toast.error('Invalid image format. Only PNG, JPG, AVIF allowed.');
+          setLoading(false);
+          return;
+        }
+        const imageRef = ref(
+          storage,
+          `products/images/${Date.now()}_${imageFile.name}`
+        );
+        await uploadBytes(imageRef, imageFile);
+        imageUrl = await getDownloadURL(imageRef);
+      }
 
-      // Upload model
-      const modelRef = ref(
-        storage,
-        `products/models/${Date.now()}_${modelFile.name}`
-      );
-      await uploadBytes(modelRef, modelFile);
-      modelUrl = await getDownloadURL(modelRef);
+      if (modelFile) {
+        if (!validModelTypes.includes(modelFile.type)) {
+          toast.error('Invalid model format. Only .glb allowed.');
+          setLoading(false);
+          return;
+        }
+        const modelRef = ref(
+          storage,
+          `products/models/${Date.now()}_${modelFile.name}`
+        );
+        await uploadBytes(modelRef, modelFile);
+        modelUrl = await getDownloadURL(modelRef);
+      }
 
-      // Optional effect upload
       if (effectFile) {
         if (!validEffectTypes.includes(effectFile.type)) {
           toast.error('Invalid effect format. Only .deepar allowed.');
           setLoading(false);
           return;
         }
-
         const effectRef = ref(
           storage,
           `products/effects/${Date.now()}_${effectFile.name}`
@@ -129,21 +153,28 @@ export const AddProductForm: React.FC = () => {
         stock: parseInt(formData.stock),
         image: imageUrl,
         modelUrl,
-        effect: effectUrl || '',
-        createdAt: new Date().toISOString(),
+        effect: effectUrl,
+        updatedAt: new Date().toISOString(),
       };
 
-      await addDoc(collection(db, 'products'), productData);
-      toast.success('✅ Product added successfully!');
+      if (isEdit && id) {
+        await setDoc(doc(db, 'products', id), productData);
+        toast.success('✅ Product updated!');
+      } else {
+        await addDoc(collection(db, 'products'), {
+          ...productData,
+          createdAt: new Date().toISOString(),
+        });
+        toast.success('✅ Product added!');
+      }
 
-      // Reset
       setFormData(defaultProduct);
       setImageFile(null);
       setModelFile(null);
       setEffectFile(null);
-    } catch (error) {
-      console.error('Error adding product:', error);
-      toast.error('Failed to add product. Please try again.');
+    } catch (err) {
+      console.error(err);
+      toast.error('❌ Failed to submit product.');
     }
 
     setLoading(false);
@@ -159,7 +190,7 @@ export const AddProductForm: React.FC = () => {
       }}
     >
       <Typography variant="h5" sx={{ mb: 3, color: '#80D0FF' }}>
-        Add New Product
+        {isEdit ? 'Edit Product' : 'Add New Product'}
       </Typography>
 
       <Grid container spacing={2}>
@@ -177,37 +208,76 @@ export const AddProductForm: React.FC = () => {
           </Grid>
         ))}
 
-        {/* Upload Zones */}
         <Grid item xs={12}>
           <Grid container spacing={2}>
             {[
               {
-                label: '🖼️ Upload Image (PNG/JPG)',
+                label: '🖼️ Upload Image (PNG/JPG/AVIF)',
                 id: 'upload-image',
                 accept: 'image/png, image/jpeg, image/jpg, image/avif',
-                onChange: (e: any) => setImageFile(e.target.files?.[0] || null),
+                file: imageFile,
+                setFile: setImageFile,
+                previewUrl: formData.image,
                 border: '#80D0FF',
+                type: 'image',
               },
               {
                 label: '📦 Upload Model (.glb)',
                 id: 'upload-model',
                 accept: '.glb,model/gltf-binary',
-                onChange: (e: any) => setModelFile(e.target.files?.[0] || null),
+                file: modelFile,
+                setFile: setModelFile,
+                previewUrl: formData.modelUrl,
                 border: '#B388FF',
+                type: 'model',
               },
               {
                 label: '✨ Upload Effect (.deepar)',
                 id: 'upload-effect',
                 accept: '.deepar',
-                onChange: (e: any) =>
-                  setEffectFile(e.target.files?.[0] || null),
+                file: effectFile,
+                setFile: setEffectFile,
+                previewUrl: formData.effect,
                 border: '#FF80C5',
+                type: 'effect',
               },
             ].map((item) => (
               <Grid item xs={12} md={4} key={item.id}>
                 <Typography sx={{ mb: 1, color: item.border }}>
                   {item.label}
                 </Typography>
+
+                {/* Preview */}
+                {isEdit && item.previewUrl && !item.file && (
+                  <Box
+                    sx={{
+                      mb: 1,
+                      p: 1,
+                      border: `1px solid ${item.border}`,
+                      borderRadius: '6px',
+                      background: 'rgba(255,255,255,0.03)',
+                      fontSize: '0.85rem',
+                      color: '#aaa',
+                    }}
+                  >
+                    {item.type === 'image' ? (
+                      <img
+                        src={item.previewUrl}
+                        alt="preview"
+                        style={{
+                          width: '400px',
+                          height: '400px',
+                          borderRadius: 4,
+                        }}
+                      />
+                    ) : (
+                      <span>
+                        📁 Current file: {item.previewUrl.split('/').pop()}
+                      </span>
+                    )}
+                  </Box>
+                )}
+
                 <label
                   htmlFor={item.id}
                   style={{
@@ -220,19 +290,13 @@ export const AddProductForm: React.FC = () => {
                     cursor: 'pointer',
                     transition: 'all 0.3s ease',
                   }}
-                  onMouseEnter={(e) =>
-                    (e.currentTarget.style.borderColor = '#fff')
-                  }
-                  onMouseLeave={(e) =>
-                    (e.currentTarget.style.borderColor = item.border)
-                  }
                 >
-                  Click or Drag File Here
+                  {item.file ? 'File Selected ✅' : 'Click or Drag File Here'}
                   <input
                     type="file"
                     id={item.id}
                     accept={item.accept}
-                    onChange={item.onChange}
+                    onChange={(e) => item.setFile(e.target.files?.[0] || null)}
                     style={{ display: 'none' }}
                   />
                 </label>
@@ -263,7 +327,11 @@ export const AddProductForm: React.FC = () => {
               }}
             >
               <AddIcon sx={{ mr: 1 }} />
-              {loading ? 'Uploading...' : 'Add Product'}
+              {loading
+                ? 'Uploading...'
+                : isEdit
+                  ? 'Update Product'
+                  : 'Add Product'}
             </Button>
           </Box>
         </Grid>

@@ -19,9 +19,9 @@ const features = [
     path: null,
   },
   {
-    label: 'Products',
+    label: 'Manage Products',
     icon: <CategorySharpIcon fontSize="large" color="secondary" />,
-    path: 'add-products',
+    path: 'manage-products',
   },
   {
     label: 'Theme Control',
