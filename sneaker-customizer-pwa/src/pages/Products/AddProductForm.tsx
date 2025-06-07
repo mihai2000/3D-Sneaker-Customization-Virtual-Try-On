@@ -1,12 +1,24 @@
 import React, { useEffect, useState } from 'react';
-import { Box, Button, Grid, Paper, TextField, Typography } from '@mui/material';
+import {
+  Box,
+  Button,
+  FormControl,
+  Grid,
+  InputLabel,
+  MenuItem,
+  Paper,
+  Select,
+  SelectChangeEvent,
+  TextField,
+  Typography,
+} from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 import { collection, addDoc, doc, getDoc, setDoc } from 'firebase/firestore';
 import { db, storage } from '../../services/firebase';
 import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
 import { useThemeContext } from '../../hooks/useTheme';
 import { toast } from 'react-toastify';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 interface Props {
   isEditMode?: boolean;
@@ -31,8 +43,8 @@ export const AddProductForm: React.FC<Props> = ({ isEditMode = false }) => {
   const [modelFile, setModelFile] = useState<File | null>(null);
   const [effectFile, setEffectFile] = useState<File | null>(null);
   const [loading, setLoading] = useState(false);
-
   const { theme } = useThemeContext();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -56,13 +68,20 @@ export const AddProductForm: React.FC<Props> = ({ isEditMode = false }) => {
     fetchProduct();
   }, [isEdit, id]);
 
-  const handleChange = (
+  const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
     const { name, value } = e.target;
     setFormData((prev) => ({
       ...prev,
       [name]: value,
+    }));
+  };
+  const handleSelectChange = (e: SelectChangeEvent) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name!]: value,
     }));
   };
 
@@ -97,7 +116,11 @@ export const AddProductForm: React.FC<Props> = ({ isEditMode = false }) => {
       'image/jpg',
       'image/avif',
     ];
-    const validModelTypes = ['model/gltf-binary'];
+    const validModelTypes = [
+      'model/gltf-binary',
+      'application/octet-stream',
+      '',
+    ];
     const validEffectTypes = ['application/octet-stream', 'model/x-deepar'];
 
     let imageUrl = formData.image;
@@ -125,6 +148,11 @@ export const AddProductForm: React.FC<Props> = ({ isEditMode = false }) => {
           setLoading(false);
           return;
         }
+        if (!modelFile.name.endsWith('.glb')) {
+          toast.error('Model must be a .glb file.');
+          return;
+        }
+
         const modelRef = ref(
           storage,
           `products/models/${Date.now()}_${modelFile.name}`
@@ -172,6 +200,7 @@ export const AddProductForm: React.FC<Props> = ({ isEditMode = false }) => {
       setImageFile(null);
       setModelFile(null);
       setEffectFile(null);
+      navigate('/dashboard/manage-products');
     } catch (err) {
       console.error(err);
       toast.error('❌ Failed to submit product.');
@@ -194,7 +223,7 @@ export const AddProductForm: React.FC<Props> = ({ isEditMode = false }) => {
       </Typography>
 
       <Grid container spacing={2}>
-        {['name', 'description', 'category', 'price', 'stock'].map((field) => (
+        {['name', 'description', 'price', 'stock'].map((field) => (
           <Grid item xs={12} sm={6} key={field}>
             <TextField
               fullWidth
@@ -202,11 +231,38 @@ export const AddProductForm: React.FC<Props> = ({ isEditMode = false }) => {
               label={field.charAt(0).toUpperCase() + field.slice(1)}
               name={field}
               value={(formData as any)[field]}
-              onChange={handleChange}
+              onChange={handleInputChange}
               sx={theme.textFieldStyles}
             />
           </Grid>
         ))}
+        <Grid item xs={12} sm={6}>
+          <FormControl fullWidth required sx={theme.textFieldStyles}>
+            <InputLabel id="category-label" sx={{ color: '#aaa' }}>
+              Category
+            </InputLabel>
+            <Select
+              labelId="category-label"
+              id="category"
+              name="category"
+              value={formData.category}
+              onChange={handleSelectChange}
+              label="Category"
+              sx={{
+                ...theme.textFieldStyles,
+                width: '130px',
+                '& .MuiSelect-icon': {
+                  color: '#fff',
+                },
+              }}
+            >
+              <MenuItem value="">Select Category</MenuItem>
+              <MenuItem value="Men">Men</MenuItem>
+              <MenuItem value="Women">Women</MenuItem>
+              <MenuItem value="Unisex">Unisex</MenuItem>
+            </Select>
+          </FormControl>
+        </Grid>
 
         <Grid item xs={12}>
           <Grid container spacing={2}>
@@ -264,15 +320,16 @@ export const AddProductForm: React.FC<Props> = ({ isEditMode = false }) => {
                     }}
                   >
                     {item.type === 'image' ? (
-                      <img
+                      <Box
+                        component="img"
                         src={item.previewUrl}
                         alt="preview"
-                        style={{
-                          width: '100%',
-                          maxWidth: '100%',
-                          height: 'auto',
-                          borderRadius: 4,
-                          objectFit: 'contain',
+                        className="responsive-preview"
+                        sx={{
+                          width: { xs: '100%', md: 400 },
+                          height: { xs: 'auto', md: 400 },
+                          borderRadius: 2,
+                          objectFit: { xs: 'contain', md: 'fill' },
                         }}
                       />
                     ) : (

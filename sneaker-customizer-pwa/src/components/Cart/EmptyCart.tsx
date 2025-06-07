@@ -13,6 +13,7 @@ export default function EmptyCart() {
         alignItems: 'center',
         justifyContent: 'center',
         p: 4,
+        mt:10
       }}
     >
       <Box

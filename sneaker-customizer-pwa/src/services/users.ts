@@ -1,5 +1,5 @@
-import { createUserWithEmailAndPassword } from 'firebase/auth';
-import { auth, db } from './firebase';
+import { createUserWithEmailAndPassword, getAuth } from 'firebase/auth';
+import { db } from './firebase';
 import {
   collection,
   deleteDoc,
@@ -11,6 +11,7 @@ import {
   updateDoc,
   where,
 } from 'firebase/firestore';
+import { initializeApp } from 'firebase/app';
 
 export interface UserProfile {
   name: string;
@@ -49,15 +50,37 @@ export const deleteUserById = async (uid: string) => {
 export const createAppUser = async (
   email: string,
   password: string,
-  name: string
+  name: string,
+  role: 'admin' | 'user' = 'user' 
 ) => {
-  const { user } = await createUserWithEmailAndPassword(auth, email, password);
+  // ✅ Create a temporary Firebase app instance (no export needed)
+  const tempApp = initializeApp(
+    {
+      apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
+      authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
+      projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
+    },
+    'SecondaryApp' // Unique name for the secondary app
+  );
+
+  const tempAuth = getAuth(tempApp);
+
+  const { user } = await createUserWithEmailAndPassword(
+    tempAuth,
+    email,
+    password
+  );
+
   const newUser = {
     email,
     name,
-    role: 'user',
+    role,
     avatarUrl: '',
     createdAt: new Date().toISOString(),
   };
+
   await setDoc(doc(db, 'users', user.uid), newUser);
+
+  // 🧹 Optional: Clean up the temp app
+  ((await tempApp) as any).delete?.();
 };

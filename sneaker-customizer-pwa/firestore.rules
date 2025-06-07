@@ -2,11 +2,40 @@ rules_version = '2';
 
 service cloud.firestore {
   match /databases/{database}/documents {
-   match /users/{userId}/savedDesigns/{designId} {
+
+        // 👮‍♂️ Helper function for admin check
+  function isAdmin() {
+    return get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == "admin";
+  }
+
+  match /users/{userId} {
+    allow read: if request.auth != null && (request.auth.uid == userId || isAdmin());
+    allow update: if request.auth != null && request.auth.uid == userId;
+    allow create: if request.auth != null;
+    allow delete: if isAdmin();
+  }
+
+  match /users/{userId}/designs/{designId} {
+    allow read, write: if request.auth != null && request.auth.uid == userId;
+  }
+
+    // PRODUCTS
+  match /products/{productId} {
+    allow read: if true;
+    allow write: if request.auth != null && isAdmin();
+  }
+  match /cart/{userId}/items/{itemId} {
       allow read, write: if request.auth != null && request.auth.uid == userId;
-    }
-   match /{document=**} {
-      allow read, write: if request.time < timestamp.date(2025, 6, 9);
-    }
+  }
+
+    // ORDERS
+  match /orders/{orderId} {
+    allow read, write: if request.auth != null && request.auth.uid == resource.data.userId;
+  }
+    // 🔐 Admin-only section (for example, analytics)
+  match /analytics/{docId} {
+    allow read, write: if isAdmin();
+  }
   }
 }
+

@@ -14,6 +14,7 @@ import { ThemeProvider } from '../../providers/ThemeProvider';
 import BackToDashboardButton from './BackToDashboardButton';
 import SavedDesigns from '../SavedDesign/SavedDesigns';
 import { AdminProductList } from './AdminProductList';
+import BackToManageProductsButton from './BackToManageProductsButton';
 
 export const Dashboard: React.FC = () => {
   const [userData, setUserData] = useState<UserProfile | null>(null);
@@ -105,12 +106,13 @@ export const Dashboard: React.FC = () => {
             path="manage-products/edit/:id"
             element={
               <ThemeProvider>
-                <BackToDashboardButton />
+                <BackToManageProductsButton />
                 <AddProductForm isEditMode />
               </ThemeProvider>
             }
           />
 
+          <Route path="*" element={<Navigate to="/dashboard" replace />} />
           <Route
             path="saved-designs"
             element={
@@ -120,7 +122,6 @@ export const Dashboard: React.FC = () => {
               </>
             }
           />
-          <Route path="*" element={<Navigate to="/dashboard" replace />} />
         </Route>
       ) : (
         <Route path="*" element={<UserDashboard />} />

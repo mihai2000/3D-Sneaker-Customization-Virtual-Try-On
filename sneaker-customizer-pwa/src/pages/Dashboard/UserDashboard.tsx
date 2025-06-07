@@ -27,6 +27,7 @@ import './DashboardPanel.scss';
 import Profile from './Profile';
 import DesignServicesIcon from '@mui/icons-material/DesignServices';
 import MenuIcon from '@mui/icons-material/Menu';
+import SavedDesigns from '../SavedDesign/SavedDesigns';
 
 type ViewKey =
   | 'dashboard'
@@ -196,6 +197,15 @@ export const UserDashboard: React.FC = () => {
                 Your Textures and Logos
               </Typography>
               <TexturesLogos />
+            </>
+          )}
+
+          {view === 'saved-designs' && (
+            <>
+              <Typography variant="h4" sx={{ color: '#80D0FF', mb: 3 }}>
+                Your Saved Designs
+              </Typography>
+              <SavedDesigns />
             </>
           )}
 

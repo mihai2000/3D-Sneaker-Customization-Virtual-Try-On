@@ -10,6 +10,9 @@ import {
   ListItemText,
   ListItemSecondaryAction,
   Divider,
+  FormControlLabel,
+  Checkbox,
+  InputAdornment,
 } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import PersonAddAltIcon from '@mui/icons-material/PersonAddAlt';
@@ -19,12 +22,16 @@ import {
   createAppUser,
 } from '../../services/users';
 import { useThemeContext } from '../../hooks/useTheme';
+import { Visibility, VisibilityOff } from '@mui/icons-material';
+import { toast } from 'react-toastify';
 
 export const ManageUsersPanel: React.FC = () => {
   const [users, setUsers] = useState<any[]>([]);
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [isAdmin, setIsAdmin] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
 
   const fetchUsers = async () => {
     const data = await getAllUsers();
@@ -37,12 +44,27 @@ export const ManageUsersPanel: React.FC = () => {
   };
 
   const handleCreate = async () => {
-    if (!name || !email || !password) return;
-    await createAppUser(email, password, name);
-    setName('');
-    setEmail('');
-    setPassword('');
-    fetchUsers();
+    if (!name || !email || !password) {
+      toast.error('⚠️ Please fill out all fields before creating a user');
+      return;
+    }
+    try {
+      await createAppUser(
+        email,
+        password,
+        name,
+        isAdmin ? 'admin' : 'user'
+      );
+      setName('');
+      setEmail('');
+      setPassword('');
+      setIsAdmin(false);
+      fetchUsers();
+      toast.success('✅ User created successfully');
+    } catch (err: any) {
+      console.error(err);
+      toast.error(`❌ Failed to create user: ${err.message}`);
+    }
   };
 
   useEffect(() => {
@@ -73,15 +95,43 @@ export const ManageUsersPanel: React.FC = () => {
         <TextField
           label="Email"
           value={email}
+          autoComplete="email"
           onChange={(e) => setEmail(e.target.value)}
           sx={theme.textFieldStyles}
         />
         <TextField
           label="Password"
-          type="password"
+          type={showPassword ? 'text' : 'password'}
+          autoComplete="new-password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           sx={theme.textFieldStyles}
+          InputProps={{
+            endAdornment: (
+              <InputAdornment position="end">
+                <IconButton
+                  onClick={() => setShowPassword((prev) => !prev)}
+                  edge="end"
+                >
+                  {showPassword ? (
+                    <VisibilityOff sx={{ color: '#fff' }} />
+                  ) : (
+                    <Visibility sx={{ color: '#fff' }} />
+                  )}
+                </IconButton>
+              </InputAdornment>
+            ),
+          }}
+        />
+        <FormControlLabel
+          control={
+            <Checkbox
+              checked={isAdmin}
+              onChange={(e) => setIsAdmin(e.target.checked)}
+              sx={{ color: '#80D0FF' }}
+            />
+          }
+          label="Admin"
         />
         <Button
           startIcon={<PersonAddAltIcon />}
