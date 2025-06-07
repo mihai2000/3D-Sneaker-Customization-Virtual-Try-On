@@ -242,7 +242,7 @@ export const AddProductForm: React.FC<Props> = ({ isEditMode = false }) => {
                 type: 'effect',
               },
             ].map((item) => (
-              <Grid item xs={12} md={4} key={item.id}>
+              <Grid item xs={12} md={4} sm={6} key={item.id}>
                 <Typography sx={{ mb: 1, color: item.border }}>
                   {item.label}
                 </Typography>
@@ -258,6 +258,9 @@ export const AddProductForm: React.FC<Props> = ({ isEditMode = false }) => {
                       background: 'rgba(255,255,255,0.03)',
                       fontSize: '0.85rem',
                       color: '#aaa',
+                      wordBreak: 'break-all',
+                      overflowWrap: 'anywhere',
+                      width: '100%',
                     }}
                   >
                     {item.type === 'image' ? (
@@ -265,9 +268,11 @@ export const AddProductForm: React.FC<Props> = ({ isEditMode = false }) => {
                         src={item.previewUrl}
                         alt="preview"
                         style={{
-                          width: '400px',
-                          height: '400px',
+                          width: '100%',
+                          maxWidth: '100%',
+                          height: 'auto',
                           borderRadius: 4,
+                          objectFit: 'contain',
                         }}
                       />
                     ) : (

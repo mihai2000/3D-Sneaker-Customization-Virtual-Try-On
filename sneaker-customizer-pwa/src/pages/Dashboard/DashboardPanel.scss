@@ -1,12 +1,85 @@
+.admin {
+  min-height: 90.8vh !important;
+}
+
+.user {
+  min-height: 89.7vh !important;
+}
 .dashboard-container {
   padding: 2rem;
   padding-top: 4rem;
   background: linear-gradient(145deg, #1a0933, #0d021c);
   color: white;
-}
-.admin {
-  min-height: 92.7vh;
-}
-.user {
-  min-height: 89.7vh;
+
+  &.admin,
+  &.user {
+    display: flex;
+    flex-direction: column;
+  }
+
+  @media screen and (max-width: 426px) {
+    padding: 1rem;
+    padding-top: 3rem;
+
+    .MuiDrawer-paper {
+      position: relative !important;
+      width: 100% !important;
+      margin-top: 0 !important;
+      height: auto !important;
+      border-right: none !important;
+    }
+
+    .MuiList-root {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      justify-content: center;
+      padding: 0.5rem;
+    }
+
+    .MuiListItem-root {
+      flex: 1 1 50%;
+      max-width: 50%;
+      justify-content: center;
+      padding: 0.3rem;
+    }
+
+    .MuiListItemText-root {
+      text-align: center;
+      font-size: 0.75rem;
+    }
+
+    .MuiListItemIcon-root {
+      min-width: auto;
+      justify-content: center;
+    }
+
+    .MuiTypography-h4,
+    .MuiTypography-h5,
+    .MuiTypography-h6 {
+      font-size: 1.2rem;
+    }
+
+    .MuiGrid-root {
+      margin: 0 !important;
+    }
+
+    .MuiGrid-item {
+      padding: 0.5rem !important;
+    }
+
+    .MuiButton-root {
+      font-size: 0.8rem !important;
+      padding: 0.5rem 1rem !important;
+    }
+
+    .MuiTextField-root {
+      font-size: 0.8rem !important;
+      width: 100% !important;
+    }
+
+    .MuiPaper-root {
+      padding: 1rem !important;
+    }
+  }
 }
