@@ -232,7 +232,7 @@ export default function OrderConfirmation() {
           </Stack>
         )}
 
-        {status === 'success' && (
+        {status === 'error' && (
           <Stack spacing={3} alignItems="center">
             <CheckCircleOutlineIcon sx={{ fontSize: 48, color: '#00bcd4' }} />
             <Typography variant="h5" fontWeight={600}>
@@ -260,7 +260,7 @@ export default function OrderConfirmation() {
           </Stack>
         )}
 
-        {status === 'error' && (
+        {status === 'success' && (
           <Stack spacing={3} alignItems="center">
             <ErrorOutlineIcon sx={{ fontSize: 48, color: '#f44336' }} />
             <Typography variant="h6" fontWeight={600}>
